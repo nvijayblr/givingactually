@@ -1,0 +1,140 @@
+// Home Page Slider
+.common-page-slider {
+  .slider-bg {
+    height: 320px;
+    background: url('./../../../assets/images/bg3.jpg') no-repeat center center transparent;
+    background-color: rgba(0, 139, 110, 0.42);
+    background-size: cover;
+    .container {
+      position: relative;
+      height: 100%;
+    }
+    .title {
+      color: #f1f1f1;
+      line-height: 46px;
+      position: absolute;
+      bottom: 30px;
+      width: auto;
+      max-width: 800px;
+    }
+    .btn-wrapper {
+      position: absolute;
+      right: 0;
+      bottom: 30px;
+      .gv-secondary-btn {
+        margin: 0 10px;
+      }
+    }
+  }
+}
+
+.gv-page-body {
+  min-height: 800px;
+  padding: 30px 0;
+  .title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  .sub-title {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  .desc {
+    font-size: 16px;
+    margin-bottom: 20px;
+    line-height: 26px;
+  }
+
+  .support-box {
+    padding: 15px;
+    background: rgba(245, 245, 245, 0.72);
+    border: 0;
+    margin-bottom: 24px;
+    &.user {
+      background-color: transparent;
+      padding: 0;
+      .user-img {
+        font-size: 30px;
+        font-family: 'Roboto Slab';
+        font-weight: 400;
+        color: rgba(0, 0, 0, 0.62);        
+        width: 60px;
+        height: 60px;
+        text-align: center;
+        line-height: 60px;
+        border-radius: 50%;
+        border: 1px solid #ccc;
+        background: rgba(255, 255, 255, 0.62);
+        margin-right: 16px;
+        display: block;
+        float: left;
+      }
+      .user-info {
+        font-size: 14px;      
+        color: rgba(0, 0, 0, 0.72);
+        .s-user {
+          font-size: 18px;
+          margin-bottom: 5px;
+        }
+        .fa {
+          color: #555;
+          font-size: 12px;
+          width: 10px;
+          margin-right: 6px;
+        }
+      }
+    }
+    .inner-box {
+      background: #eaeaea;
+      padding: 10px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .label {
+      font-size: 11px;
+      margin-top: 4px;
+    }
+    .inner-box-right {
+      text-align: right;
+    }
+    .inner-box-left, .inner-box-right {
+      margin-bottom: 24px;
+    }
+    .btn-wrapper {
+      text-align: center;
+      padding: 10px;
+    }
+    .inner-box-border {
+      margin: 20px 0;
+      text-align: center;
+    }
+  }
+
+
+  .right-border {
+    border-right: 1px solid #e2e2e2;
+  }
+
+  .funded-chart {
+    margin: 12px 0 4px;
+    .goals {
+      position: relative;
+      background-color: rgba(181, 181, 181, 0.32);
+      height: 6px;
+      margin-bottom: 8px;
+      .funded {
+        position: absolute;
+        height: 100%;
+        width: 50%;
+        background-color: rgba(23, 188, 156, 0.62);
+      }
+    }
+  }
+
+}
+.mat-card {
+  margin-bottom: 24px;
+  &.no-padding {
+    padding: 0;
+  }
+}

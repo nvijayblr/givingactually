@@ -1,0 +1,404 @@
+// Home Page Slider
+.common-page-slider {
+  .slider-bg {
+    height: 320px;
+    background: url('./../../../assets/images/bg3.jpg') no-repeat center center transparent;
+    background-color: rgba(0, 139, 110, 0.42);
+    background-size: cover;
+    .container {
+      position: relative;
+      height: 100%;
+    }
+    .title {
+      color: #f1f1f1;
+      line-height: 46px;
+      position: absolute;
+      bottom: 30px;
+      width: auto;
+      max-width: 800px;
+      padding: 0 5px;
+      background-color: rgba(0, 139, 110, 0.42);
+    }
+    .btn-wrapper {
+      position: absolute;
+      right: 0;
+      bottom: 30px;
+      .gv-secondary-btn {
+        margin: 0 10px;
+      }
+    }
+  }
+}
+
+.gv-page-body {
+  min-height: 800px;
+  padding: 30px 0;
+  .title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  .sub-title {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  .desc {
+    font-size: 16px;
+    margin-bottom: 20px;
+    line-height: 26px;
+  }
+
+  .support-box {
+    padding: 15px;
+    background: rgba(245, 245, 245, 0.72);
+    border: 0;
+    margin-bottom: 24px;
+    &.user {
+      background-color: transparent;
+      padding: 0;
+      .user-img {
+        font-size: 30px;
+        font-family: 'Roboto Slab';
+        font-weight: 400;
+        color: rgba(0, 0, 0, 0.62);        
+        width: 60px;
+        height: 60px;
+        text-align: center;
+        line-height: 60px;
+        border-radius: 50%;
+        border: 1px solid #ccc;
+        background: rgba(255, 255, 255, 0.62);
+        margin-right: 16px;
+        display: block;
+        float: left;
+      }
+      .user-info {
+        font-size: 14px;      
+        color: rgba(0, 0, 0, 0.72);
+        .s-user {
+          font-size: 18px;
+          margin-bottom: 5px;
+        }
+        .fa {
+          color: #555;
+          font-size: 12px;
+          width: 10px;
+          margin-right: 6px;
+        }
+      }
+    }
+    .inner-box {
+      background: #eaeaea;
+      padding: 10px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .label {
+      font-size: 11px;
+      margin-top: 4px;
+    }
+    .inner-box-right {
+      text-align: right;
+    }
+    .inner-box-left, .inner-box-right {
+      margin-bottom: 24px;
+    }
+    .btn-wrapper {
+      text-align: center;
+      padding: 10px;
+    }
+    .inner-box-border {
+      margin: 20px 0;
+      text-align: center;
+    }
+  }
+
+
+  .right-border {
+    border-right: 1px solid #e2e2e2;
+  }
+
+  .funded-chart {
+    margin: 12px 0 4px;
+    .goals {
+      position: relative;
+      background-color: rgba(181, 181, 181, 0.32);
+      height: 6px;
+      margin-bottom: 8px;
+      .funded {
+        position: absolute;
+        height: 100%;
+        width: 50%;
+        background-color: rgba(23, 188, 156, 0.62);
+      }
+    }
+  }
+
+}
+.mat-card {
+  margin-bottom: 24px;
+  &.no-padding {
+    padding: 0;
+  }
+}
+
+.image-carousel {
+  .owl-carousel {
+    .owl-item {
+      height: 390px;
+      max-height: 390px;
+      margin-bottom: 20px;
+    }
+    .img-bg {
+      background-size: cover;    
+      height: 100%;
+      width: 100%;
+    }
+  }
+  .owl-theme .owl-dots {
+    position: relative;
+    top: -75px;
+  }  
+}
+
+.social-share-wrapper {
+  text-align: right;
+  .title {
+    font-size: 14px;
+    color: #555;
+    display: inline-block;
+  }
+  .social {
+    display: inline-block;
+    cursor: pointer;
+    background: #25D366;
+    color: #fff;
+    padding: 5px;
+    font-size: 20px;
+    line-height: 20px;
+    border-radius: 4px;
+    margin-left: 5px;
+    width: 34px;
+    text-align: center;
+    .fa {
+      margin-right: 0;
+    }
+    &.sb-whatsapp {
+      background: #25D366;
+    }
+    &.sb-facebook {
+      background: #4267B2;
+    }
+    &.sb-twitter {
+      background: #00acee;
+    }
+    &.sb-linkedin {
+      background: #006fa6;
+    }
+    &.sb-pinterest {
+      background: #BD091D;
+    }
+    &.sb-email {
+      background: #FF961C;
+    }
+  }
+  .like-button {
+    height: 30px;
+    line-height: 30px;
+    font-size: 10px;
+    font-family: "Roboto" !important;
+    padding: 0 10px;
+    position: relative;
+    top: -3px;
+    margin-right: 14px;
+    background: #f3f3f3;
+    .fa {
+      position: relative;
+      top: -1px;      
+    }
+  }
+}
+
+.campaign-user-info {
+  color: #807b7b;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 6px;
+  .user-email {
+    position: relative;
+    top: 12px;
+  }
+  .fa {
+    margin-right: 5px;
+  }
+  .cagegory {
+    text-align: right;
+  }
+}
+
+.updates-section {
+  margin-bottom: 20px;
+  .sub-title {
+    font-size: 17px;
+  }
+  .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: #008b6e;
+  }
+  .mat-tab-header, .mat-tab-nav-bar {
+    border-bottom: 1px solid rgba(0, 139, 110, 0.76);
+  }
+  .mat-tab-label {
+    height: 42px;
+    padding: 0 14px;
+  }
+  .mat-tab-label-active {
+    background: rgba(0, 139, 110, 0.22);
+    color: #000;
+    opacity: 1;
+  }
+  .mat-tab-body-content {
+    padding: 20px;
+  }
+}
+
+.comments-section {
+  padding-top: 10px;
+  .comments-wrapper {
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  .sub-title {
+    font-size: 17px;
+  }
+  .comment-item {
+    padding: 16px;
+    border: 1px solid rgba(226, 226, 226, 0.23);
+    background: rgba(232, 232, 232, 0.22);
+    line-height: 24px;
+    margin-bottom: 14px;
+    .user-name {
+      color: #505050;
+      margin-top: 10px;
+      font-size: 12px;
+      text-align: left;
+      .date {
+        font-size: 10px;
+        margin-left: 3px;
+      }
+    }
+    .comment-msg {
+      width: calc(100% - 100px);
+      float: left;
+    }
+    .user-img {
+      font-size: 20px;
+      font-family: "Roboto";
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.62);        
+      width: 60px;
+      height: 60px;
+      text-align: center;
+      line-height: 60px;
+      border-radius: 50%;
+      border: 1px solid #ccc;
+      background: rgba(255, 255, 255, 0.62);
+      margin-right: 16px;
+      display: block;
+      float: right;
+    }    
+  }
+}
+
+.campain-section {
+  margin-bottom: 24px;
+  .campaign-content {
+    max-height: 320px;
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 0;
+    transition: all 0.25s;
+    &.full-height {
+      max-height: 100%;
+      padding-bottom: 70px;
+      transition: all 0.25s;
+    }
+  }
+  .read-more-bg { 
+    position: absolute; 
+    bottom: 0; 
+    left: 0;
+    width: 100%; 
+    text-align: center; 
+    margin: 0; 
+    padding: 30px 0; 
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.72), white);
+  }
+}
+
+.benificiary-section {
+  .sub-title {
+    font-size: 17px;
+  }
+}
+
+.top-donors-section {
+  border: 0;
+  margin-bottom: 24px;
+  .sub-title {
+    font-size: 17px;
+  }
+  .donor-item {
+    background: rgba(245, 245, 245, 0.72);
+    margin: 10px 0;
+    padding: 10px;
+  }
+  .donor-img {
+    font-size: 20px;
+    font-family: "Roboto Slab";
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.62);
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    background: rgba(255, 255, 255, 0.62);
+    margin-right: 16px;
+    display: block;
+    float: left;
+  }
+  .user-info {
+    font-size: 14px;      
+    color: rgba(0, 0, 0, 0.72);
+    .s-user {
+      font-size: 15px;
+      margin-bottom: 5px;
+      margin-top: 3px;
+      font-family: 'Roboto';
+      font-weight: 400;
+    }
+    .donor-amount {
+      font-weight: 500;
+      font-size: 16px;
+    }
+    .donor-address {
+      font-size: 12px;
+    }
+  }
+}
+
+button {
+  &.prev-next-btn {
+    height: 30px;
+    width: 30px;
+    min-width: auto;
+    line-height: 28px;
+    border-radius: 0;
+    padding: 0;
+    margin-left: 10px;
+  }
+}
+
+.view-more-wrapper {
+  text-align: right;
+}

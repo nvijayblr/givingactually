@@ -1,0 +1,50 @@
+<header class="header masthead sticky" [ngClass]="{'white-bg' : isSticky, 'menu-hidden' : isHidden}">
+  <div class="header-top">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-6">
+          <ul class="sub-nav clearfix">
+            <li><a routerLink="/home">Home</a></li>
+            <li><a routerLink="/about-us">About Us</a></li>
+            <li><a routerLink="/services">Services</a></li>
+            <li><a routerLink="/contact-us">Contact Us</a></li>
+            <li><a routerLink="/faq">FAQ</a></li>
+            <li><a routerLink="/highlights">Highlights</a></li>
+          </ul>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-6 text-right">
+          <button mat-stroked-button class="gv-secondary-btn transparent rounded btn-sm" (click)="doLogin()">Login</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="header-navbar" >
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-3">
+          <a class="logo" href="/home">
+            <img src="./../assets/images/logo.png" alt="Giving Actually">
+            <span class="logo-label">Giving Actually</span>
+          </a>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-9">
+          <mat-toolbar>  
+            <button mat-button [matMenuTriggerFor]="menu">
+              Category
+              <mat-icon>keyboard_arrow_down</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>Agriculture</button>
+              <button mat-menu-item>Animals</button>
+              <button mat-menu-item>Charity</button>
+              <button mat-menu-item>Animals</button>
+            </mat-menu>
+            <button mat-button>All Campaigns</button>
+            <button mat-button>Create Campaign</button>
+            <button mat-button>How it Works</button>
+          </mat-toolbar>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,52 @@
+<section class="common-page-slider">
+  <!-- [ngStyle]="{'background-image': 'url(' + campaign.BDisplayPicPath + ')'}" -->
+  <div class="slider-bg" >
+    <div class="container">
+      <h2 class="title">{{categoryName}}</h2>
+      <div class="btn-wrapper">
+        <button mat-stroked-button class="gv-secondary-btn transparent rounded">Donate Now</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gv-page-body">
+  <div class="container">
+    <div class="breadcrumb-wrapper">
+      <ul class="breadcrumb">
+        <li><a routerLink="/home" title="Home">Home <mat-icon>keyboard_arrow_right</mat-icon></a></li>
+        <li><span itemprop="name">{{categoryName}}</span></li>
+      </ul>
+    </div>
+
+    <div class="row">
+      <!-- Left Panel -->
+      <div class="col-xs-12 col-sm-4 col-md-4">
+        <mat-card>
+          <mat-list>
+            <mat-list-item >Agriculture</mat-list-item>
+            <mat-list-item >Animals</mat-list-item>
+            <mat-list-item >Charity</mat-list-item>
+            <mat-list-item >Agriculture</mat-list-item>
+            <mat-list-item >Animals</mat-list-item>
+            <mat-list-item >Charity</mat-list-item>
+            <mat-list-item >Agriculture</mat-list-item>
+            <mat-list-item >Animals</mat-list-item>
+            <mat-list-item >Charity</mat-list-item>
+            <mat-list-item >Agriculture</mat-list-item>
+            <mat-list-item >Animals</mat-list-item>
+            <mat-list-item >Charity</mat-list-item>
+          </mat-list>
+        </mat-card>
+      </div>
+      <!-- End of Left Panel -->
+
+        <!-- Category Panel -->
+        <div class="col-xs-12 col-sm-4 col-md-8">
+          Campaigns
+      </div>
+      <!-- End of Category Panel -->
+    </div>
+
+  </div>
+</section>

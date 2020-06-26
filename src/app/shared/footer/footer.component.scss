@@ -1,0 +1,43 @@
+
+.footer {
+  background: #008b6e;
+  color: #000000;
+  padding: 40px 0 20px 0;
+  .title {
+    font-size: 15px;
+    margin-bottom: 25px;
+  }
+  ul {
+    li {
+      margin: 10px 0;
+    }
+  }
+  a {
+    color: rgba(17, 17, 17, 0.72);
+    line-height: 18px;
+    display: inline-block;
+    font-weight: 400;
+    &:hover {
+      color: #000;
+    }
+  }
+  .footer-copyright {
+    border-top:  1px solid #02a784;
+    padding: 20px 0;
+    margin-top: 20px;
+    color: #Fff;    
+    a {
+      color: #f1f1f1;
+      &:hover {
+        color: #17bc9c;
+      }
+    }
+    .terms {
+      a {
+        display: inline-block;
+        margin-left: 30px;
+      }
+    }
+  }
+}
+
