@@ -13,17 +13,18 @@ export class HeaderComponent implements OnInit {
   isSticky = false;
   isHidden = false;
   prevOffset = 0;
-  // @HostListener('window:scroll', ['$event'])
-  // checkScroll() {
-  //   const curOffset = window.pageYOffset;
-  //   this.isSticky = curOffset >= 100;
-  //   if (curOffset >= 300 && (curOffset > this.prevOffset)) {
-  //     this.isHidden = true;
-  //   } else {
-  //     this.isHidden = false;
-  //   }
-  //   this.prevOffset = curOffset;
-  // }
+  @HostListener('window:scroll')
+
+  checkScroll() {
+    const curOffset = window.pageYOffset;
+    this.isSticky = curOffset >= 100;
+    if (curOffset >= 300 && (curOffset > this.prevOffset)) {
+      this.isHidden = true;
+    } else {
+      this.isHidden = false;
+    }
+    this.prevOffset = curOffset;
+  }
 
   constructor(public dialog: MatDialog, ) { }
 
