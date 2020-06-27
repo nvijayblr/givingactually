@@ -35,106 +35,171 @@
     font-size: 24px;
     margin-bottom: 20px;
   }
-  .sub-title {
-    font-size: 20px;
+  .campaigns-container {
     margin-bottom: 20px;
-  }
-  .desc {
-    font-size: 16px;
-    margin-bottom: 20px;
-    line-height: 26px;
-  }
-
-  .support-box {
-    padding: 15px;
-    background: rgba(245, 245, 245, 0.72);
-    border: 0;
-    margin-bottom: 24px;
-    &.user {
-      background-color: transparent;
-      padding: 0;
-      .user-img {
-        font-size: 30px;
-        font-family: 'Roboto Slab';
-        font-weight: 400;
-        color: rgba(0, 0, 0, 0.62);        
-        width: 60px;
-        height: 60px;
-        text-align: center;
-        line-height: 60px;
-        border-radius: 50%;
-        border: 1px solid #ccc;
-        background: rgba(255, 255, 255, 0.62);
-        margin-right: 16px;
-        display: block;
-        float: left;
-      }
-      .user-info {
-        font-size: 14px;      
-        color: rgba(0, 0, 0, 0.72);
-        .s-user {
-          font-size: 18px;
-          margin-bottom: 5px;
+    .capaigns-wrapper {
+      margin-top: 50px;
+    }
+    .heading {
+      font-size: 22px;
+      margin-bottom: 30px;
+    }
+    .campaigns-wrapper {
+      .campaign-item {
+        margin-bottom: 24px;
+        .campaign-thumbnail {
+          margin: 0;
+          overflow: hidden;
+          position: relative;
+          cursor: pointer;
+          &:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0;
+            background: rgba(0,0,0,.6);
+            opacity: 0;
+            transition: all .3s;
+          }
+          &:hover {
+            .thumb {
+              z-index: -1;
+              .img {
+                transform: scale(1.05,1.05);
+                -webkit-transform: scale(1.05,1.05);
+                -moz-transform: scale(1.05,1.05);
+                -ms-transform: scale(1.05,1.05);
+                -o-transform: scale(1.05,1.05);
+              }
+            }
+            &:before {
+              opacity: 1;
+              transition: all .3s;
+            }
+            .read-more {
+              opacity: 1;
+              transform: scale(1, 1);
+              transition: all .3s;
+            }
+          }            
+          .thumb {
+            width: 100%;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+            transition: all .3s;
+            .img {
+              background-image: url('https://givingactuallyblob.blob.core.windows.net/animal/c5eb8c86-d351-4248-acc7-4fcbc94ecd7f.jpg');
+              background-repeat: no-repeat;
+              background-size: cover;
+              width: 100%;
+              max-width: 100%;
+              height: 100%;
+              vertical-align: middle;
+              -o-transition: all .5s ease-in-out;
+              transition: all .5s ease-in-out;
+            }
+          }
+          .read-more {
+            position: absolute;
+            left: 36%;
+            top: 40%;
+            z-index: 0;
+            transform: scale(1.3,1.3);
+            opacity: 0;
+          }
         }
-        .fa {
-          color: #555;
+        .info {
+          border: 1px solid rgba(156, 156, 156, 0.12);
+          border-top: 0;
+          box-shadow: 0 1px 5px -2px rgba(42, 42, 42, 0.22);
+          min-height: 150px;
+          padding: 20px;
+          .title {
+            font-size: 16px;
+            margin-bottom: 10px;
+            height: 38px;
+            overflow: hidden;
+          }
+          .desc {
+            height: 45px;
+            overflow: hidden;
+          }
+        }
+        .category {
+          font-weight: 400;
           font-size: 12px;
-          width: 10px;
-          margin-right: 6px;
+          margin-top: 10px;
+          margin-bottom: 10px;
+          .fa {
+            margin-right: 5px;
+          }
+        }
+        .funded-chart {
+          margin: 25px 0 8px;
+          .goals {
+            position: relative;
+            background-color: rgba(181, 181, 181, 0.32);
+            height: 6px;
+            .funded {
+              position: absolute;
+              height: 100%;
+              width: 50%;
+              background-color: rgba(23, 188, 156, 0.62);
+            }
+          }
+        }
+        .funded-info {
+          font-weight: 500;
+          .funded {
+            .label {
+              color: rgba(17, 17, 17, 0.42);
+              display: block;
+              text-transform: uppercase;
+              font-weight: 300;
+              font-size: 12px;
+              margin-top: 4px;
+            }
+            &.goals {
+              text-align: right;
+            }
+          }
+        }
+        .campaign-address {
+          height: 20px;
+          overflow: hidden;
         }
       }
     }
-    .inner-box {
-      background: #eaeaea;
-      padding: 10px;
-      margin-bottom: 10px;
-      text-align: center;
-    }
-    .label {
-      font-size: 11px;
-      margin-top: 4px;
-    }
-    .inner-box-right {
-      text-align: right;
-    }
-    .inner-box-left, .inner-box-right {
-      margin-bottom: 24px;
-    }
-    .btn-wrapper {
-      text-align: center;
-      padding: 10px;
-    }
-    .inner-box-border {
-      margin: 20px 0;
-      text-align: center;
-    }
   }
-
-
-  .right-border {
-    border-right: 1px solid #e2e2e2;
-  }
-
-  .funded-chart {
-    margin: 12px 0 4px;
-    .goals {
-      position: relative;
-      background-color: rgba(181, 181, 181, 0.32);
-      height: 6px;
-      margin-bottom: 8px;
-      .funded {
-        position: absolute;
-        height: 100%;
-        width: 50%;
-        background-color: rgba(23, 188, 156, 0.62);
-      }
-    }
-  }
-
 }
+
 .mat-card {
   margin-bottom: 24px;
   &.no-padding {
     padding: 0;
+  }
+}
+
+.gv-page-body {
+  .category-nav-list {
+    padding: 0 0 16px 0;
+    .mat-list-base .mat-list-item .mat-list-item-content, .mat-list-base .mat-list-option .mat-list-item-content {
+      font-size: 12px;
+    }
+    .mat-list-base .mat-list-item, .mat-list-base .mat-list-option {
+      color: #008b6e;
+      height: 28px;
+      cursor: pointer;
+      font-weight: 400;
+      letter-spacing: 0.32px;
+      cursor: pointer;
+      &:focus {
+        outline: none;
+      }
+    }
   }
 }

@@ -17,6 +17,7 @@ export class HttpServiceService  {
 
   private cancelCompaignsListReq$ = new Subject<void>();
   private cancelCompaignDetailsReq$ = new Subject<void>();
+  private cancelCompaignByCategoryReg$ = new Subject<void>();
 
   getCompaignsList(): Observable<any> {
     return this.http.get<any>(`${this.rootUrl}api/campaign/`).pipe(
@@ -57,4 +58,22 @@ export class HttpServiceService  {
   }
 
 
+  getCompaignByCategory(category, page, pageSize): Observable<any> {
+    return this.http.get<any>(`${this.rootUrl}api/campaign/?Category=${category}&page=${page}&page_size=${pageSize}`).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+      takeUntil(this.onCancelCompaignByCategoryReg())
+    );
+  }
+
+  public cancelCompaignByCategoryReg() {
+    this.cancelCompaignByCategoryReg$.next();
+  }
+
+  public onCancelCompaignByCategoryReg() {
+    return this.cancelCompaignByCategoryReg$.asObservable();
+  }
 }
