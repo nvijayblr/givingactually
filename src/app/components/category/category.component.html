@@ -22,6 +22,10 @@
         <mat-card class="category-nav-list">
           <mat-nav-list>
             <mat-list-item 
+              routerLink="/category/All"
+              [ngClass]="{'active': categoryName === 'All'}"
+            >All Campaigns</mat-list-item>            
+            <mat-list-item 
               *ngFor="let category of categories" 
               routerLink="/category/{{category}}"
               [ngClass]="{'active': categoryName === category}"
