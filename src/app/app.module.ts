@@ -5,9 +5,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { CarouselModule } from 'ngx-owl-carousel-o';
-import { ShareModule, ShareService } from 'ngx-sharebuttons';
-import { HttpServiceService } from './services/http-service.service';
+import { ShareModule } from 'ngx-sharebuttons';
 
+import { HttpServiceService } from './services/http-service.service';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -39,12 +39,13 @@ import { CategoryComponent } from './components/category/category.component';
     AppRoutingModule,
     SocialLoginModule,
     CarouselModule,
-    ShareModule,
+    ShareModule.withConfig({
+      debug: false
+    }),
     SharedModule
   ],
   providers: [
     HttpServiceService,
-    ShareService,
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {

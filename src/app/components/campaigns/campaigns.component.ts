@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { HttpServiceService } from '../../services/http-service.service';
+import { ShareService } from 'ngx-sharebuttons';
 import { Subscriber } from 'rxjs';
 import * as moment from 'moment';
 
@@ -9,7 +10,8 @@ import * as moment from 'moment';
   selector: 'app-campaigns',
   templateUrl: './campaigns.component.html',
   styleUrls: ['./campaigns.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  providers: [ShareService]
 })
 export class CampaignsComponent implements OnInit {
   OwlOptions: OwlOptions = {
