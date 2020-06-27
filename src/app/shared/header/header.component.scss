@@ -111,3 +111,12 @@
     font-family: "Roboto", Arial, sans-serif !important;
   }
 }
+.nav-category-item.mat-menu-item {
+  height: 30px;
+  line-height: 30px;
+  min-width: 220px;
+  &.active {
+    color: #008b6e;
+    font-weight: 500;
+  }
+}

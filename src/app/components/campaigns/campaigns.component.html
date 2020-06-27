@@ -145,136 +145,139 @@
 
       <!-- Right Panel -->
       <div class="col-xs-12 col-sm-4 col-md-4">
-        <!-- Campaign Info -->
-        <mat-card class="no-padding">
-          <div class="support-box campaign">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="funded-chart">
-                  <div class="goals">
-                    <div class="funded" [ngStyle]="{'width': campaign.RaisedPercentage + '%'}"></div>
+        <div class="sticky-right-panel">
+          <!-- Campaign Info -->
+          <mat-card class="no-padding">
+            <div class="support-box campaign">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="funded-chart">
+                    <div class="goals">
+                      <div class="funded" [ngStyle]="{'width': campaign.RaisedPercentage + '%'}"></div>
+                    </div>
+                    <p class="label">{{campaign.RaisedPercentage}}% AMOUNT ACHIEVED OF ₹{{toLocaleString(campaign.CampaignTargetMoney)}}</p>
                   </div>
-                  <p class="label">{{campaign.RaisedPercentage}}% AMOUNT ACHIEVED OF ₹{{toLocaleString(campaign.CampaignTargetMoney)}}</p>
+                </div>
+                <div class="col-md-6">
+                  <div class="inner-box-left">
+                    <h4>₹ {{toLocaleString(campaign.RaisedAmount)}}</h4>
+                    <p class="label">Money Raised</p>
+                  </div>
+                  <div class="inner-box">
+                    <h4>{{campaign.CampaignDonationList.length}}</h4>
+                    <p class="label">Donors</p>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="inner-box-right">
+                    <h4>₹ {{toLocaleString(campaign.CampaignTargetMoney)}}</h4>
+                    <p class="label">Goal</p>
+                  </div>
+                  <div class="inner-box">
+                    <h4>{{campaign?.EndorsementsList.EndCount}}</h4>
+                    <p class="label">Endorsements</p>
+                  </div>
                 </div>
               </div>
-              <div class="col-md-6">
-                <div class="inner-box-left">
-                  <h4>₹ {{toLocaleString(campaign.RaisedAmount)}}</h4>
-                  <p class="label">Money Raised</p>
+              <div class="row">
+                <div class="col-md-4 right-border">
+                  <div class="inner-box-border">
+                    <h4>{{campaign.LikeCount}}</h4>
+                    <p class="label">Likes</p>
+                    <i class="fa fa-thumbs-up"></i>
+                  </div>
                 </div>
-                <div class="inner-box">
-                  <h4>{{campaign.CampaignDonationList.length}}</h4>
-                  <p class="label">Donors</p>
+                <div class="col-md-4 right-border">
+                  <div class="inner-box-border">
+                    <h4>{{campaign.CommentCount}}</h4>
+                    <p class="label">Comments</p>
+                    <i class="fa fa-comments"></i>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="inner-box-border">
+                    <h4>{{campaign.sharecount}}</h4>
+                    <p class="label">Shares</p>
+                    <i class="fa fa-share"></i>
+                  </div>
                 </div>
               </div>
-              <div class="col-md-6">
-                <div class="inner-box-right">
-                  <h4>₹ {{toLocaleString(campaign.CampaignTargetMoney)}}</h4>
-                  <p class="label">Goal</p>
-                </div>
-                <div class="inner-box">
-                  <h4>{{campaign?.EndorsementsList.EndCount}}</h4>
-                  <p class="label">Endorsements</p>
-                </div>
+              <div class="center btn-wrapper">
+                <button mat-stroked-button class="gv-secondary-btn rounded">Donate Now</button>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-4 right-border">
-                <div class="inner-box-border">
-                  <h4>{{campaign.LikeCount}}</h4>
-                  <p class="label">Likes</p>
-                  <i class="fa fa-thumbs-up"></i>
-                </div>
-              </div>
-              <div class="col-md-4 right-border">
-                <div class="inner-box-border">
-                  <h4>{{campaign.CommentCount}}</h4>
-                  <p class="label">Comments</p>
-                  <i class="fa fa-comments"></i>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="inner-box-border">
-                  <h4>{{campaign.sharecount}}</h4>
-                  <p class="label">Shares</p>
-                  <i class="fa fa-share"></i>
-                </div>
-              </div>
-            </div>
-            <div class="center btn-wrapper">
-              <button mat-stroked-button class="gv-secondary-btn rounded">Donate Now</button>
-            </div>
-          </div>
-        </mat-card>
-        <!-- User Info -->
+          </mat-card>
+          <!-- User Info -->
 
-        <!-- Campainer Owner -->
-        <mat-card class="benificiary-section">
-          <h3 class="sub-title">Benificiary</h3>
+          <!-- Campainer Owner -->
+          <mat-card class="benificiary-section">
+            <h3 class="sub-title">Benificiary</h3>
 
-          <div class="support-box user">
-            <a href="" class="user-img">
-              {{getFirstLetter(campaign.BenificiaryName)}}
-            </a>
-            <div class="user-info">
-              <a href="" class="user-name">
-                <h3 class="s-user">{{campaign.BenificiaryName ? campaign.BenificiaryName : '-'}}</h3>
+            <div class="support-box user">
+              <a href="" class="user-img">
+                {{getFirstLetter(campaign.BenificiaryName)}}
               </a>
-              <p class="s-loc">
-                <i class="fa fa-map-marker"></i>
-                <span>{{campaign.CampainOrganizer?.placeNmae}}</span>
-              </p>
-              <p class="s-email">
-                <i class="fa fa-envelope"></i>
-                <a href="mailto:{{campaign.CreatedBy}}" target="_blank">{{campaign.CreatedBy}}</a>
-              </p>
-            </div>
-          </div>
-        </mat-card>
-
-        <!-- Top Donors -->
-        <mat-card *ngIf="campaign.CampaignDonationList.length">
-          <div class="top-donors-section">
-            <h3 class="sub-title">Top Donors</h3>
-            <div class="donor-item clearfix" *ngFor="let donor of campaign.CampaignDonationList">
-              <a href="" class="donor-img">{{getFirstLetter(donor.DonatedBy)}}</a>
               <div class="user-info">
-                <div class="user-name">
-                  <h3 class="s-user">{{donor.DonatedBy}}</h3>
-                </div>
-                <p class="donor-amount">
-                  <span>₹ {{toLocaleString(donor.DonationAmnt)}}</span>
+                <a href="" class="user-name">
+                  <h3 class="s-user">{{campaign.BenificiaryName ? campaign.BenificiaryName : '-'}}</h3>
+                </a>
+                <p class="s-loc">
+                  <i class="fa fa-map-marker"></i>
+                  <span>{{campaign.CampainOrganizer?.placeNmae}}</span>
+                </p>
+                <p class="s-email">
+                  <i class="fa fa-envelope"></i>
+                  <a href="mailto:{{campaign.CreatedBy}}" target="_blank">{{campaign.CreatedBy}}</a>
                 </p>
               </div>
             </div>
-            <div class="view-more-wrapper">
-              <a href="" class="view-more">View All</a>
-            </div>
-          </div>
-        </mat-card>        
+          </mat-card>
 
-
-        <!-- Endorsements List -->
-        <mat-card *ngIf="campaign.EndorsementsList.endList.length">
-          <div class="top-donors-section">
-            <h3 class="sub-title">Endorsements</h3>
-            <div class="donor-item clearfix" *ngFor="let endorsment of campaign.EndorsementsList.endList">
-              <div class="user-info">
-                <div class="user-name">
-                  <h3 class="s-user">{{endorsment.NGOName}}</h3>
+          <!-- Top Donors -->
+          <mat-card *ngIf="campaign.CampaignDonationList.length">
+            <div class="top-donors-section">
+              <h3 class="sub-title">Top Donors</h3>
+              <div class="donor-item clearfix" *ngFor="let donor of campaign.CampaignDonationList">
+                <a href="" class="donor-img">{{getFirstLetter(donor.DonatedBy)}}</a>
+                <div class="user-info">
+                  <div class="user-name">
+                    <h3 class="s-user">{{donor.DonatedBy}}</h3>
+                  </div>
+                  <p class="donor-amount">
+                    <span>₹ {{toLocaleString(donor.DonationAmnt)}}</span>
+                  </p>
                 </div>
-                <p class="donor-address">
-                  <span *ngIf="endorsment.NGOType">{{endorsment.NGOType}} | </span>
-                  <span *ngIf="endorsment.NGOSector">{{endorsment.NGOSector}} | </span>
-                  <span *ngIf="endorsment.NGOAddress">{{endorsment.NGOAddress}}</span>
-                </p>
+              </div>
+              <div class="view-more-wrapper">
+                <a href="" class="view-more">View All</a>
               </div>
             </div>
-            <div class="view-more-wrapper">
-              <a href="" class="view-more">View All</a>
+          </mat-card>        
+
+
+          <!-- Endorsements List -->
+          <mat-card *ngIf="campaign.EndorsementsList.endList.length">
+            <div class="top-donors-section">
+              <h3 class="sub-title">Endorsements</h3>
+              <div class="donor-item clearfix" *ngFor="let endorsment of campaign.EndorsementsList.endList">
+                <div class="user-info">
+                  <div class="user-name">
+                    <h3 class="s-user">{{endorsment.NGOName}}</h3>
+                  </div>
+                  <p class="donor-address">
+                    <span *ngIf="endorsment.NGOType">{{endorsment.NGOType}} | </span>
+                    <span *ngIf="endorsment.NGOSector">{{endorsment.NGOSector}} | </span>
+                    <span *ngIf="endorsment.NGOAddress">{{endorsment.NGOAddress}}</span>
+                  </p>
+                </div>
+              </div>
+              <div class="view-more-wrapper">
+                <a href="" class="view-more">View All</a>
+              </div>
             </div>
-          </div>
-        </mat-card>        
+          </mat-card> 
+        </div>
+               
 
       </div>
     </div>

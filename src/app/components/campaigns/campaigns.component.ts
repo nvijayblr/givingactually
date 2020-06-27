@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import { HttpServiceService } from '../../services/http-service.service';
+import { HttpService } from '../../services/http-service.service';
 import { ShareService } from 'ngx-sharebuttons';
 import { Subscriber } from 'rxjs';
 import * as moment from 'moment';
@@ -55,7 +55,7 @@ export class CampaignsComponent implements OnInit {
   };
   curComment = 1;
 
-  constructor(private route: ActivatedRoute, private http: HttpServiceService) { }
+  constructor(private route: ActivatedRoute, private http: HttpService) { }
 
   ngOnInit() {
     this.campaignId = this.route.snapshot.params.campaignId;

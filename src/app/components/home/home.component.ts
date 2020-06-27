@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import { HttpServiceService } from '../../services/http-service.service';
+import { HttpService } from '../../services/http-service.service';
 
 @Component({
   selector: 'app-home',
@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
   campaignsList: any = [];
 
   constructor(
-    private http: HttpServiceService
+    private http: HttpService
   ) { }
 
   ngOnInit() {

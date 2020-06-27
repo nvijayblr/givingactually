@@ -7,7 +7,7 @@ import { takeUntil } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 
-export class HttpServiceService  {
+export class HttpService  {
 
   constructor(
     private http: HttpClient,
@@ -76,4 +76,16 @@ export class HttpServiceService  {
   public onCancelCompaignByCategoryReg() {
     return this.cancelCompaignByCategoryReg$.asObservable();
   }
+
+  // Get Categories
+  getCategories(): Observable<any> {
+    return this.http.get<any>(`${this.rootUrl}api/List/Category`).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
 }

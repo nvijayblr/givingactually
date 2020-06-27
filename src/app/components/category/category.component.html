@@ -9,28 +9,11 @@
 
 <section class="gv-page-body">
   <div class="container">
-    <div class="row">
-      <div class="col-md-6">
-        <div class="breadcrumb-wrapper">
-          <ul class="breadcrumb">
-            <li><a routerLink="/home" title="Home">Home <mat-icon>keyboard_arrow_right</mat-icon></a></li>
-            <li><span itemprop="name">{{categoryName}}</span></li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <!-- Pagination -->
-        <div class="pagination-wrapper">
-          <mat-paginator 
-            *ngIf="total"
-            [length]="total"
-            [pageSize]="pageSize"
-            [pageSizeOptions]="[6, 12, 24]"
-            [showFirstLastButtons]="true"
-            (page)="pageEvent = onPaginationChange($event)">
-          </mat-paginator>
-        </div>
-      </div>
+    <div class="breadcrumb-wrapper">
+      <ul class="breadcrumb">
+        <li><a routerLink="/home" title="Home">Home <mat-icon>keyboard_arrow_right</mat-icon></a></li>
+        <li><span itemprop="name">{{categoryName}}</span></li>
+      </ul>
     </div>
 
     <div class="row">
@@ -38,18 +21,11 @@
       <div class="col-xs-12 col-sm-4 col-md-2">
         <mat-card class="category-nav-list">
           <mat-nav-list>
-            <mat-list-item routerLink="/home">Agriculture</mat-list-item>
-            <mat-list-item >Animals</mat-list-item>
-            <mat-list-item >Charity</mat-list-item>
-            <mat-list-item >Agriculture</mat-list-item>
-            <mat-list-item >Animals</mat-list-item>
-            <mat-list-item >Charity</mat-list-item>
-            <mat-list-item >Agriculture</mat-list-item>
-            <mat-list-item >Animals</mat-list-item>
-            <mat-list-item >Charity</mat-list-item>
-            <mat-list-item >Agriculture</mat-list-item>
-            <mat-list-item >Animals</mat-list-item>
-            <mat-list-item >Charity</mat-list-item>
+            <mat-list-item 
+              *ngFor="let category of categories" 
+              routerLink="/category/{{category}}"
+              [ngClass]="{'active': categoryName === category}"
+              >{{category}}</mat-list-item>
           </mat-nav-list>
         </mat-card>
       </div>
@@ -59,8 +35,8 @@
         <div class="col-xs-12 col-sm-4 col-md-10 campaigns-container">
 
           <div class="row campaigns-wrapper">
+
             <app-progress-bar class="loader" message="Loading Campaigns..." *ngIf="isLoading"></app-progress-bar>
-  
 
             <!-- Items -->
             <div class="col-xs-12 col-sm-6 col-md-4 campaign-item" *ngFor="let campaign of campaignsList">
@@ -105,6 +81,19 @@
             <!-- End of the item -->
 
           </div>
+
+          <!-- Pagination -->
+          <div class="pagination-wrapper" [hidden]="isLoading">
+            <mat-paginator 
+              *ngIf="total"
+              [length]="total"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="[6, 12, 24]"
+              [showFirstLastButtons]="true"
+              (page)="pageEvent = onPaginationChange($event)">
+            </mat-paginator>
+          </div>
+
       </div>
       <!-- End of Category Panel -->
     </div>

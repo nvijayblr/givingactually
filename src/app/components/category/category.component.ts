@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import { HttpServiceService } from '../../services/http-service.service';
+import { HttpService } from '../../services/http-service.service';
+import { CommonService } from '../../services/common.service';
 import { MatPaginatorIntl } from '@angular/material';
 
 const customPaginatorIntl = new MatPaginatorIntl();
@@ -25,10 +26,21 @@ export class CategoryComponent implements OnInit {
   total = 0;
   page = 1;
   pageSize = 6;
+  categories = [];
 
-  constructor(private route: ActivatedRoute, private http: HttpServiceService) { }
+  constructor(private route: ActivatedRoute, private http: HttpService, public common: CommonService) {
+    this.categories = this.common.categories;
+  }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(queryParams => {
+    });
+
+    this.route.params.subscribe(params => {
+      this.categoryName = params.categoryId;
+      this.getCampainsByCategory(this.categoryName);
+    });
+
     this.categoryName = this.route.snapshot.params.categoryId;
     if (this.categoryName) {
       this.getCampainsByCategory(this.categoryName);
@@ -56,6 +68,7 @@ export class CategoryComponent implements OnInit {
     this.page = event.pageIndex + 1;
     this.pageSize = event.pageSize;
     this.getCampainsByCategory(this.categoryName);
+    window.scrollTo(0, 0);
   }
 
   toLocaleString(value) {

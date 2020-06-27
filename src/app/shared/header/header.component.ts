@@ -1,6 +1,9 @@
 import { Component, OnInit, HostListener, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoginSignupComponent } from './../login-signup/login-signup.component';
+import { CommonService } from '../../services/common.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -13,8 +16,10 @@ export class HeaderComponent implements OnInit {
   isSticky = false;
   isHidden = false;
   prevOffset = 0;
-  @HostListener('window:scroll')
+  categories = [];
+  categoryName = '';
 
+  @HostListener('window:scroll')
   checkScroll() {
     const curOffset = window.pageYOffset;
     this.isSticky = curOffset >= 100;
@@ -26,9 +31,16 @@ export class HeaderComponent implements OnInit {
     this.prevOffset = curOffset;
   }
 
-  constructor(public dialog: MatDialog, ) { }
+  constructor(public dialog: MatDialog, public common: CommonService, private router: Router, private activatedRoute: ActivatedRoute) {
+    this.categories = this.common.categories;
+  }
 
   ngOnInit() {
+    console.log(this.categoryName);
+    this.router.events.subscribe(params => {
+      // console.log(this.router.routerState.root);
+      // this.categoryName = params.categoryId;
+    });
   }
 
   doLogin() {
