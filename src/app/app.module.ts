@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { CarouselModule } from 'ngx-owl-carousel-o';
-import { ShareModule } from 'ngx-sharebuttons';
+import { ShareModule, ShareService } from 'ngx-sharebuttons';
 import { HttpServiceService } from './services/http-service.service';
 
 import { SharedModule } from './shared/shared.module';
@@ -44,6 +44,7 @@ import { CategoryComponent } from './components/category/category.component';
   ],
   providers: [
     HttpServiceService,
+    ShareService,
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
