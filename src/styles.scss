@@ -45,6 +45,16 @@ button {
     height: 30px;
     line-height: 28px;
   }
+  &.btn-action {
+    height: 50px;
+    line-height: 50px;
+    font-size: 20px;
+    font-family: "Roboto" !important;
+    letter-spacing: 0.42px;
+    font-weight: 300 !important;
+    border: 1px solid #17bc9c;
+    border-radius: 0;
+  }
 }
 
 .gv-secondary-btn {
@@ -59,7 +69,11 @@ button {
     color: #f1f1f1;
   }
 }
-
+.gv-secondary-btn.flat-btn {
+    font-weight: 400;
+    font-family: "Roboto" !important;
+    border-radius: 0;
+}
 .gv-secondary-btn.btn-bg {
   background-color: #17bc9c !important;
   color: #f1f1f1;
@@ -151,4 +165,258 @@ button {
 }
 .loader {
   margin: auto;
+}
+.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: #008b6e;
+}
+.mat-tab-header, .mat-tab-nav-bar {
+  border-bottom: 1px solid rgba(0, 139, 110, 0.76);
+}
+.mat-tab-label {
+  height: 42px;
+  padding: 0 14px;
+}
+.mat-tab-label-active {
+  background: rgba(0, 139, 110, 0.22);
+  color: #000;
+  opacity: 1;
+}
+.mat-tab-body-content {
+  padding: 20px;
+}
+
+.funded-chart {
+  margin: 12px 0 4px;
+  .goals {
+    position: relative;
+    background-color: rgba(181, 181, 181, 0.32);
+    height: 6px;
+    margin-bottom: 8px;
+    .funded {
+      position: absolute;
+      height: 100%;
+      width: 50%;
+      background-color: rgba(23, 188, 156, 0.62);
+    }
+  }
+  .label {
+    font-size: 11px;
+    margin-top: 4px;
+  }
+}
+
+.mat-card {
+  margin-bottom: 24px;
+  &.no-padding {
+    padding: 0;
+  }
+  &.light-bg {
+    background: #fdfdfd;
+    border: 1px solid rgba(204, 204, 204, 0.32);
+  }
+}
+
+.campaign-item {
+  margin-bottom: 24px;
+  .campaign-thumbnail {
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 0;
+      background: rgba(0,0,0,.6);
+      opacity: 0;
+      transition: all .3s;
+    }
+    &:hover {
+      .thumb {
+        z-index: -1;
+        .img {
+          transform: scale(1.05,1.05);
+          -webkit-transform: scale(1.05,1.05);
+          -moz-transform: scale(1.05,1.05);
+          -ms-transform: scale(1.05,1.05);
+          -o-transform: scale(1.05,1.05);
+        }
+      }
+      &:before {
+        opacity: 1;
+        transition: all .3s;
+      }
+      .read-more {
+        opacity: 1;
+        transform: scale(1, 1);
+        transition: all .3s;
+      }
+    }            
+    .thumb {
+      width: 100%;
+      height: 200px;
+      position: relative;
+      overflow: hidden;
+      transition: all .3s;
+      .img {
+        background-image: url('https://givingactuallyblob.blob.core.windows.net/animal/c5eb8c86-d351-4248-acc7-4fcbc94ecd7f.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 100%;
+        max-width: 100%;
+        height: 100%;
+        vertical-align: middle;
+        -o-transition: all .5s ease-in-out;
+        transition: all .5s ease-in-out;
+      }
+    }
+    .read-more {
+      position: absolute;
+      left: 36%;
+      top: 40%;
+      z-index: 0;
+      transform: scale(1.3,1.3);
+      opacity: 0;
+    }
+  }
+  .info {
+    border: 1px solid rgba(156, 156, 156, 0.12);
+    border-top: 0;
+    box-shadow: 0 1px 5px -2px rgba(42, 42, 42, 0.22);
+    min-height: 150px;
+    padding: 20px;
+    .title {
+      font-size: 16px;
+      margin-bottom: 10px;
+      height: 38px;
+      overflow: hidden;
+    }
+    .desc {
+      height: 45px;
+      overflow: hidden;
+    }
+  }
+  .category {
+    font-weight: 400;
+    font-size: 12px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    .fa {
+      margin-right: 5px;
+    }
+  }
+  .funded-chart {
+    margin: 25px 0 8px;
+    .goals {
+      position: relative;
+      background-color: rgba(181, 181, 181, 0.32);
+      height: 6px;
+      .funded {
+        position: absolute;
+        height: 100%;
+        width: 50%;
+        background-color: rgba(23, 188, 156, 0.62);
+      }
+    }
+  }
+  .funded-info {
+    font-weight: 500;
+    .funded {
+      .label {
+        color: rgba(17, 17, 17, 0.42);
+        display: block;
+        text-transform: uppercase;
+        font-weight: 300;
+        font-size: 12px;
+        margin-top: 4px;
+      }
+      &.goals {
+        text-align: right;
+      }
+    }
+  }
+  .campaign-address {
+    height: 20px;
+    overflow: hidden;
+  }
+}
+
+.gv-file-input {
+  padding: 14px 10px;
+  background-color: rgba(0, 0, 0, 0.04);
+  border-bottom: 1px solid #949494;
+  line-height: 32px;
+  color: #747474;
+  font-size: 14px;
+}
+
+.left {
+  text-align: left !important;
+}
+
+.right {
+  text-align: right !important;
+}
+.box-error-msg{
+  display: block;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #f44336;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+.gv-btn-link {
+  background: transparent;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 300;
+  font-family: Roboto !important;
+  letter-spacing: 0.72px;
+}
+
+// Spinner style
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+ 
+.spinner:before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.62);
+  border-top-color: #008b6e;
+  animation: spinner .8s linear infinite;
+}
+
+.mat-card {
+  position: relative;
+}
+app-progress-bar.page {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.62);
+  z-index: 1;
+  .progress-wrapper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    height: 230px;
+    left: 0;
+    right: 0;
+  }
 }

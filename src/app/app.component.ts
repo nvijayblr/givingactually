@@ -10,7 +10,7 @@ import { CommonService } from './services/common.service';
 })
 export class AppComponent implements OnInit {
 
-  isLoading = false;
+  isLoading = true;
 
   constructor(private route: ActivatedRoute, private http: HttpService, public common: CommonService) {
   }
@@ -20,14 +20,13 @@ export class AppComponent implements OnInit {
   }
 
   initCategories() {
-    this.isLoading = false;
+    this.isLoading = true;
     this.http.getCategories().subscribe((result: any) => {
-      console.log(result);
       this.common.setCategories(result ? result : []);
-      this.isLoading = true;
+      this.isLoading = false;
     }, (error) => {
       this.common.categories = [];
-      this.isLoading = true;
+      this.isLoading = false;
     });
   }
 

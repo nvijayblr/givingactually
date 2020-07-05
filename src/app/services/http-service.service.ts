@@ -1,9 +1,10 @@
 import { Injectable, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 // import { APP_CONFIG, AppConfig} from '@bli-shared/utils/app-config.module';
 import { tap, catchError } from 'rxjs/operators';
 import { Observable, throwError, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { AuthGuardService } from './auth-guard.service';
 
 @Injectable({ providedIn: 'root' })
 
@@ -11,6 +12,7 @@ export class HttpService  {
 
   constructor(
     private http: HttpClient,
+    private authGuardService: AuthGuardService
   ) { }
 
   private rootUrl = 'https://givingactuallyapi.azurewebsites.net/';
@@ -87,5 +89,123 @@ export class HttpService  {
       }),
     );
   }
+
+
+
+  // Authorized API
+  signupRequest(payload): Observable<any> {
+    return this.http.post<any>(`${this.rootUrl}api/register`, payload).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  loginRequest(payload): Observable<any> {
+    const body = `username=${payload.username}&password=${payload.password}&grant_type=${payload.grant_type}`;
+    return this.http.post<any>(`${this.rootUrl}token`, body).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  // Create Campaign
+
+  getAuthHeaders(): any {
+    const token = this.authGuardService.getToken();
+    const header = {
+      headers: new HttpHeaders()
+        .set('Authorization',  `Bearer ${token}`)
+      };
+    return header;
+  }
+
+  createCampaignBasic(payload): Observable<any> {
+    const header: any = this.getAuthHeaders();
+    return this.http.post<any>(`${this.rootUrl}api/campaign/Phase1`, payload, header).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  updateCampaignBasic(campaignId, payload): Observable<any> {
+    const header: any = this.getAuthHeaders();
+    return this.http.put<any>(`${this.rootUrl}api/campaign/Phase1?campaignId=${campaignId}`, payload, header).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  updateCampaignLocation(campaignId, payload, formData): Observable<any> {
+    const header: any = this.getAuthHeaders();
+    const urlParams = `campaignId=${campaignId}&placeName=${payload.placeName}&Latitude=${payload.Latitude}&Longitude=${payload.Longitude}`;
+    return this.http.put<any>(`${this.rootUrl}api/campaign/Phase2?${urlParams}`, formData, header).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  updateCampaignDescription(campaignId, payload): Observable<any> {
+    // x-www-form-urlencoded data
+    const params = new HttpParams({
+      fromObject: {
+        campaignId,
+        StoryDescription: payload.StoryDescription
+      }
+    });
+
+    const token = this.authGuardService.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Bearer ${token}`
+      })
+    };
+
+    return this.http.put<any>(`${this.rootUrl}api/campaign/Phase3?campaignId=${campaignId}`, params, httpOptions).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  uploadGalleryImagesVideos(campaignId, formData): Observable<any> {
+    const header: any = this.getAuthHeaders();
+    return this.http.put<any>(`${this.rootUrl}api/campaign/Phase3Image?campaignId=${campaignId}`, formData, header).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  getUserCampaigns(page, pageSize): Observable<any> {
+    const header: any = this.getAuthHeaders();
+    return this.http.get<any>(`${this.rootUrl}api/campaign/userCampaigns?page=${page}&page_size=${pageSize}`, header).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
 
 }

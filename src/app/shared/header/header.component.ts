@@ -1,9 +1,11 @@
-import { Component, OnInit, HostListener, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoginSignupComponent } from './../login-signup/login-signup.component';
 import { CommonService } from '../../services/common.service';
-import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
+import { MessageService } from '../../services/message.service';
+import { AuthGuardService } from '../../services/auth-guard.service';
 
 @Component({
   selector: 'app-header',
@@ -12,12 +14,14 @@ import { Observable } from 'rxjs';
   encapsulation: ViewEncapsulation.None
 })
 
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   isSticky = false;
   isHidden = false;
   prevOffset = 0;
   categories = [];
   categoryName = '';
+  user: any = {};
+  subscription: Subscription;
 
   @HostListener('window:scroll')
   checkScroll() {
@@ -31,15 +35,25 @@ export class HeaderComponent implements OnInit {
     this.prevOffset = curOffset;
   }
 
-  constructor(public dialog: MatDialog, public common: CommonService, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(
+    public dialog: MatDialog,
+    public common: CommonService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private messageService: MessageService,
+    private authGuardService: AuthGuardService) {
     this.categories = this.common.categories;
   }
 
   ngOnInit() {
-    console.log(this.categoryName);
+    // console.log(this.categoryName, this.authGuardService.getUserLogin());
+    this.user = this.authGuardService.getUserLogin();
     this.router.events.subscribe(params => {
       // console.log(this.router.routerState.root);
       // this.categoryName = params.categoryId;
+    });
+    this.subscription = this.messageService.getLoginMessage().subscribe(user => {
+      this.user = user;
     });
   }
 
@@ -53,6 +67,16 @@ export class HeaderComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
     });
+  }
+
+  doLogout() {
+    this.user.isLoggedIn = false;
+    localStorage.removeItem('ga_token');
+    this.router.navigate([`/home`]);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

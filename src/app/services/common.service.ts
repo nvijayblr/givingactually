@@ -4,7 +4,7 @@ import { Injectable, Inject } from '@angular/core';
 
 export class CommonService  {
 
-  public categories = [1, 2, 3];
+  public categories = [];
   constructor(
   ) { }
 

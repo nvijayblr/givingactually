@@ -1,9 +1,12 @@
 import { Component, OnInit, Inject, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SocialAuthService } from 'angularx-social-login';
 import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 import { SocialUser } from 'angularx-social-login';
+import { HttpService } from '../../services/http-service.service';
+import { MessageService } from '../../services/message.service';
 
 @Component({
   selector: 'app-login-signup',
@@ -17,14 +20,18 @@ export class LoginSignupComponent implements OnInit {
   signupForm: FormGroup;
   user: SocialUser;
   isSubmitted = false;
-  loginInvalid = false;
+  isLoading = false;
+  errorMessage = '';
   mode = 'login';
 
   constructor(
     public dialogRef: MatDialogRef<LoginSignupComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
     private fb: FormBuilder,
-    private socialAuthService: SocialAuthService
+    private socialAuthService: SocialAuthService,
+    private http: HttpService,
+    private router: Router,
+    private messageService: MessageService
   ) { }
 
   ngOnInit() {
@@ -35,25 +42,63 @@ export class LoginSignupComponent implements OnInit {
 
     this.loginForm = this.fb.group({
       username: ['', Validators.email],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
+      grant_type: ['password']
     });
 
     this.signupForm = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', Validators.email],
-      password: ['', Validators.required],
-      confirm_password: ['', Validators.required]
+      DPName: ['', Validators.required],
+      UserName: ['', Validators.email],
+      Password: ['', Validators.required],
+      ConfirmPassword: ['', Validators.required],
+      IsNGO: [false],
+      canEndorse: [false]
     });
-
   }
 
-  loginSubmit() {
-    console.log(this.loginForm.value);
+  doLogin() {
     this.isSubmitted = true;
     if (this.loginForm.invalid) {
       return;
     }
-    console.log('Valid form...');
+    this.isLoading = true;
+    this.http.loginRequest(this.loginForm.value).subscribe((result: any) => {
+      this.isLoading = false;
+      this.setLoginSessionAndRouting(result);
+    }, (error) => {
+      this.isLoading = false;
+      this.errorMessage = error.error.ResponseMsg;
+    });
+  }
+
+  doSignup() {
+    this.isSubmitted = true;
+    if (this.signupForm.invalid) {
+      return;
+    }
+    this.isLoading = true;
+    this.http.signupRequest(this.signupForm.value).subscribe((result: any) => {
+      this.isLoading = false;
+      const { UserName, Password } = this.signupForm.value;
+      // this.setLoginSessionAndRouting(result);
+      this.loginForm.controls.username.setValue(UserName);
+      this.loginForm.controls.password.setValue(Password);
+      this.doLogin();
+    }, (error) => {
+      this.isLoading = false;
+      this.errorMessage = error.error.ResponseMsg;
+    });
+  }
+
+  setLoginSessionAndRouting(result) {
+    const session = {
+      ...result,
+      isLoggedIn: true
+    };
+    localStorage.setItem('ga_token', JSON.stringify(session));
+    this.messageService.sendLoginMessage(session);
+    this.dialogRef.close();
+    this.router.navigate([`/accounts/${result.UserId}`]);
   }
 
   signInWithGoogle(): void {

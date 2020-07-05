@@ -66,7 +66,7 @@ export class CampaignsComponent implements OnInit {
 
   getCampaignDetails(campaignId) {
     this.isLoading = true;
-    this.http.cancelCompaignsListReq();
+    this.http.cancelCompaignDetailsReq();
     this.http.getCompaignDetails(campaignId).subscribe((result: any) => {
       this.campaign = result ? result : {};
       this.isLoading = false;

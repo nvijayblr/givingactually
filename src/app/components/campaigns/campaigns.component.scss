@@ -116,29 +116,6 @@
   .right-border {
     border-right: 1px solid #e2e2e2;
   }
-
-  .funded-chart {
-    margin: 12px 0 4px;
-    .goals {
-      position: relative;
-      background-color: rgba(181, 181, 181, 0.32);
-      height: 6px;
-      margin-bottom: 8px;
-      .funded {
-        position: absolute;
-        height: 100%;
-        width: 50%;
-        background-color: rgba(23, 188, 156, 0.62);
-      }
-    }
-  }
-
-}
-.mat-card {
-  margin-bottom: 24px;
-  &.no-padding {
-    padding: 0;
-  }
 }
 
 .image-carousel {
@@ -239,24 +216,6 @@
   margin-bottom: 20px;
   .sub-title {
     font-size: 17px;
-  }
-  .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
-    background-color: #008b6e;
-  }
-  .mat-tab-header, .mat-tab-nav-bar {
-    border-bottom: 1px solid rgba(0, 139, 110, 0.76);
-  }
-  .mat-tab-label {
-    height: 42px;
-    padding: 0 14px;
-  }
-  .mat-tab-label-active {
-    background: rgba(0, 139, 110, 0.22);
-    color: #000;
-    opacity: 1;
-  }
-  .mat-tab-body-content {
-    padding: 20px;
   }
 }
 

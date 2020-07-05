@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, CanActivate } from '@angular/router';
+import { AuthGuardService as AuthGaurd } from './services/auth-guard.service';
+
 import { HomeComponent } from './components/home/home.component';
 import { AboutusComponent } from './components/aboutus/aboutus.component';
 import { ServicesComponent } from './components/services/services.component';
@@ -8,6 +10,10 @@ import { FaqComponent } from './components/faq/faq.component';
 import { HighlightsComponent } from './components/highlights/highlights.component';
 import { CampaignsComponent } from './components/campaigns/campaigns.component';
 import { CategoryComponent } from './components/category/category.component';
+
+// Authorized components
+import { AccountsComponent } from './components/authorized/accounts/accounts.component';
+import { CreateCampaignComponent } from './components/authorized/create-campaign/create-campaign.component';
 
 const routes: Routes = [{
     path: 'home',
@@ -18,6 +24,18 @@ const routes: Routes = [{
   }, {
     path: 'category/:categoryId',
     component: CategoryComponent
+  }, {
+    path: 'accounts/:userId',
+    component: AccountsComponent,
+    canActivate: [AuthGaurd]
+  }, {
+    path: 'create-campaign',
+    component: CreateCampaignComponent,
+    canActivate: [AuthGaurd]
+  }, {
+    path: 'edit-campaign',
+    component: CreateCampaignComponent,
+    canActivate: [AuthGaurd]
   }, {
     path: 'about-us',
     component: AboutusComponent

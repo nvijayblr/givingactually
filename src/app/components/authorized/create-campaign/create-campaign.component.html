@@ -1,0 +1,251 @@
+<section class="common-page-slider">
+  <div class="slider-bg">
+    <div class="container">
+      <div class="btn-wrapper">
+        <button mat-stroked-button class="gv-secondary-btn transparent rounded" routerLink="/accounts/1">My Account</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gv-page-body profile-body">
+  <div class="container">
+    <!-- <app-progress-bar message="Loading Account..." *ngIf="isLoading"></app-progress-bar> -->
+    <div class="row user-campaign-wrapper">
+
+      <!-- Create Campaigns -->
+      <div class="col-xs-12 col-sm-4 col-md-8">
+        <mat-card class="stepper light-bg">
+
+          <app-progress-bar class="page" [message]="loaderMessage" *ngIf="isLoading" ></app-progress-bar>
+
+          <mat-horizontal-stepper (selectionChange)="setStepperIndex($event)" #stepper>
+
+            <mat-step [stepControl]="campaignBasicForm">
+              <form [formGroup]="campaignBasicForm">
+                <ng-template matStepLabel>Campaign Details</ng-template>
+                <mat-form-field appearance="standard">
+                  <mat-label>Campaign Title</mat-label>
+                  <input matInput placeholder="Campaign Title" formControlName="CampaignTitle" autocomplete="off"/>
+                </mat-form-field>
+
+                <!-- <mat-form-field appearance="standard">
+                  <mat-label>Short Description</mat-label>
+                  <textarea matInput placeholder="Short Description" autocomplete="off"></textarea>
+                </mat-form-field> -->
+
+                <mat-form-field appearance="fill">
+                  <mat-label>Category</mat-label>
+                  <mat-select formControlName="CategoryType">
+                    <mat-option *ngFor="let category of categories" [value]="category">{{category}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <div class="row">
+                  <div class="col-xs-12 col-sm-4 col-md-4">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Currency</mat-label>
+                      <mat-select formControlName="CampaignTargetMoneyType">
+                        <mat-option value="INR">INR</mat-option>
+                        <mat-option value="EUR">EUR</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-xs-12 col-sm-8 col-md-8">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Goal Amount</mat-label>
+                      <input matInput type="number" placeholder="Goal Amount" formControlName="CampaignTargetMoney" autocomplete="off"/>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-xs-12 col-sm-4 col-md-4">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Campaign For</mat-label>
+                      <mat-select formControlName="BeneficiaryType">
+                        <mat-option value="Myself">Myself</mat-option>
+                        <mat-option value="FamilyIndividual">Family Individual</mat-option>
+                        <mat-option value="FamilyGroup">Family Group</mat-option>
+                        <mat-option value="FriendIndividual">Friend Individual</mat-option>
+                        <mat-option value="FriendGroup">Friend Group</mat-option>
+                        <mat-option value="FamilyGroup">Family Group</mat-option>
+                        <mat-option value="NGO">NGO</mat-option>
+                        <mat-option value="Others">Others</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-xs-12 col-sm-8 col-md-8">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Beneficiary Name</mat-label>
+                      <input matInput placeholder="Beneficiary Name" formControlName="BGroupName" autocomplete="off"/>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="btn-wrapper">
+                  <button mat-button class="gv-secondary-btn flat-btn btn-action" (click)="basicNextClick(stepper)" [disabled]="isLoading" [class.spinner]="isLoading">
+                    Save & Next
+                  </button>
+                </div>
+              </form>
+            </mat-step>
+
+            <mat-step [stepControl]="campaignLocationForm">
+              <form [formGroup]="campaignLocationForm">
+                <ng-template matStepLabel>Campaign Display</ng-template>
+
+                <app-image-cropper
+                  label="Display Picture"
+                  (imageCroppedCompleted)="displayImageCroppedCompleted($event)"
+                ></app-image-cropper>
+                
+                <mat-form-field>
+                  <mat-label>Location, Country</mat-label>
+                  <input matInput placeholder="Bangalore, IN" formControlName="placeName" autocomplete="off">
+                </mat-form-field>
+
+                <div class="row">
+                  <div class="col-xs-12 col-sm-6 col-md-6">
+                    <mat-form-field>
+                      <mat-label>Latitude</mat-label>
+                      <input matInput placeholder="Latitude" formControlName="Latitude" autocomplete="off">
+                    </mat-form-field>
+                  </div>
+                  <div class="col-xs-12 col-sm-6 col-md-6">
+                    <mat-form-field>
+                      <mat-label>Longitude</mat-label>
+                      <input matInput placeholder="Longitude" formControlName="Longitude" autocomplete="off">
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <label>To get the latitute and logitude, drag and drop the marker in the map.</label>
+                <div class="form-group no-margin">
+                  <label>Enter address</label>
+                  <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()" placeholder="Search Nearest Location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search>
+                </div>
+              
+                <agm-map 
+                    [latitude]="latitude" 
+                    [longitude]="longitude" 
+                    [zoom]="zoom" >
+                    <agm-marker 
+                      [latitude]="latitude" 
+                      [longitude]="longitude"
+                      [markerDraggable]="true"
+                      (dragEnd)="markerDragEnd($event)"
+                    >
+                    </agm-marker>
+                </agm-map>
+
+                <div class="btn-wrapper">
+                  <button mat-button matStepperPrevious class="gv-secondary-btn flat-btn btn-action">Prev</button>
+                  <button mat-button (click)="locationNextClick(stepper)" [disabled]="isLoading" [class.spinner]="isLoading" class="gv-secondary-btn flat-btn btn-action">Save & Next</button>
+                </div>
+              </form>
+            </mat-step>
+
+            <mat-step [stepControl]="campaignDescriptionForm">
+              <form [formGroup]="campaignDescriptionForm">
+                <ng-template matStepLabel>Campaign Story</ng-template>
+                <!-- <mat-form-field appearance="standard">
+                  <mat-label>Description</mat-label>
+                  <textarea matInput placeholder="Description" formControlName="firstCtrl" autocomplete="off"></textarea>
+                </mat-form-field> -->
+
+                <mat-label class="form-label">Description</mat-label>
+                <angular-editor [config]="editorConfig" formControlName="StoryDescription"></angular-editor>
+
+                <div class="row" *ngFor="let attachment of galleryImgVideos; let i = index">
+                  <div class="col-xs-12 col-sm-8 col-md-8">
+                    <div class="attachment-wrapper">
+                      <mat-card class="gallery-preview" *ngIf="attachment.FilePath">
+                        <p class="label">Image {{i+1}}</p>
+                        <img  src="{{attachment.FilePath}}" />
+                      </mat-card>
+                      <app-image-cropper
+                        [hidden]="attachment.FilePath"
+                        label="Attachment (Image / Video)"
+                        (imageCroppedCompleted)="galleryImageCroppedCompleted($event, i)"
+                      ></app-image-cropper>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-4 col-md-4">
+                    <button mat-icon-button class="add-img-btn" *ngIf="i === (galleryImgVideos.length - 1)" (click)="addImageToAttachments()">
+                      <mat-icon>add</mat-icon>
+                    </button>
+                    <button mat-icon-button class="delete-img-btn" *ngIf="galleryImgVideos.length > 1" (click)="deleteImageFromAttachments(i)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </div>
+                
+                <div class="btn-wrapper">
+                  <mat-error class="action-error-msg" *ngIf="errorMessage">
+                    {{errorMessage}}
+                  </mat-error>
+                  <button mat-button matStepperPrevious class="gv-secondary-btn flat-btn btn-action">Prev</button>
+                  <button mat-button (click)="uploadGalleryImgVideos()" [disabled]="isLoading" [class.spinner]="isLoading" class="gv-secondary-btn flat-btn btn-action btn-bg">Complete</button>
+                </div>
+              </form>
+          </mat-step>
+
+          </mat-horizontal-stepper>
+        </mat-card>
+
+      </div>
+      <!-- End of User Campaigns -->
+
+
+      <!-- Right Panel -->
+      <div class="col-xs-12 col-sm-4 col-md-4">
+        <div class="sticky-right-panel">
+          <section>
+            <div class="campaign-item">
+              <div class="campaign-thumbnail">
+                <div class="thumb">
+                  <!-- <div class="img" [ngStyle]="{'background-image': 'url(' + campaign.BDisplayPicPath + ')'}"></div> -->
+                  <img *ngIf="croppedImage" [src]="croppedImage" class="cropped-image" />
+                </div>
+                <button mat-stroked-button class="gv-secondary-btn transparent rounded read-more">Preview</button>
+              </div>
+              <div class="info">
+                <h4 class="title"><a routerLink="/campaigns/{{campaign.Id}}" title={{campaign.CampaignTitle}}>{{campaign.CampaignTitle}}</a></h4>
+                <div class="desc" [innerHTML]="campaign.campaignDescription.StripedDescription"></div>
+                <div class="row category">
+                  <div class="col-xs-12 col-sm-6 col-md-6 campaign-address">
+                    <i class="fa fa-tag"></i>
+                    <span>{{campaign.CategoryName}}</span>
+                  </div>
+                  <div class="col-xs-12 col-sm-6 col-md-6 campaign-address" [title]="campaign.CampainOrganizer.placeNmae">
+                    <i class="fa fa-map-marker"></i>
+                    <span>{{campaign.CampainOrganizer.placeNmae}}</span>
+                  </div>
+                </div>
+    
+                <div class="funded-chart">
+                  <div class="goals">
+                    <div class="funded" [ngStyle]="{'width': campaign.RaisedPercentage + '%'}"></div>
+                  </div>
+                </div>
+    
+                <div class="row funded-info">
+                  <div class="col-xs-12 col-sm-4 col-md-6 funded">
+                    ${{toLocaleString(campaign.RaisedAmount)}}
+                    <span class="label">FUNDED</span>
+                  </div>
+                  <div class="col-xs-12 col-sm-4 col-md-6 funded goals">
+                    ${{toLocaleString(campaign.CampaignTargetMoney)}}
+                    <span class="label">GOAL</span>
+                  </div>
+                </div>
+              </div>
+            </div>            
+          </section>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

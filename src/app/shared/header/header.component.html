@@ -13,7 +13,18 @@
           </ul>
         </div>
         <div class="col-xs-12 col-sm-4 col-md-6 text-right">
-          <button mat-stroked-button class="gv-secondary-btn transparent rounded btn-sm" (click)="doLogin()">Login</button>
+          <button mat-stroked-button class="gv-secondary-btn transparent rounded btn-sm" *ngIf="!user.isLoggedIn" (click)="doLogin()">
+            Login
+          </button>
+
+          <div class="logged-in-wrp" *ngIf="user.isLoggedIn">
+            <button mat-flat-button class="gv-btn-link" routerLink="/accounts/{{user.UserId}}">
+              {{user.DisplayName ? user.DisplayName : user.userName}}
+            </button>
+            <button mat-flat-button class="gv-btn-link" (click)="doLogout()">
+              Logout
+            </button>
+          </div>
         </div>
       </div>
     </div>

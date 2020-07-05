@@ -174,7 +174,7 @@
                     <p class="label">Goal</p>
                   </div>
                   <div class="inner-box">
-                    <h4>{{campaign?.EndorsementsList.EndCount}}</h4>
+                    <h4>{{campaign?.EndorsementsList.TotalCount}}</h4>
                     <p class="label">Endorsements</p>
                   </div>
                 </div>
@@ -256,10 +256,10 @@
 
 
           <!-- Endorsements List -->
-          <mat-card *ngIf="campaign.EndorsementsList.endList.length">
+          <mat-card *ngIf="campaign.EndorsementsList.EndorseList.length">
             <div class="top-donors-section">
               <h3 class="sub-title">Endorsements</h3>
-              <div class="donor-item clearfix" *ngFor="let endorsment of campaign.EndorsementsList.endList">
+              <div class="donor-item clearfix" *ngFor="let endorsment of campaign.EndorsementsList.EndorseList">
                 <div class="user-info">
                   <div class="user-name">
                     <h3 class="s-user">{{endorsment.NGOName}}</h3>

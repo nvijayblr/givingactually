@@ -5,9 +5,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { AgmCoreModule } from '@agm/core';
 import { ShareModule } from 'ngx-sharebuttons';
 
 import { HttpService } from './services/http-service.service';
+import { AuthGuardService } from './services/auth-guard.service';
+import { MessageService } from './services/message.service';
+
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +24,10 @@ import { FaqComponent } from './components/faq/faq.component';
 import { HighlightsComponent } from './components/highlights/highlights.component';
 import { CategoryComponent } from './components/category/category.component';
 
+// Authorized components
+import { AccountsComponent } from './components/authorized/accounts/accounts.component';
+import { CreateCampaignComponent } from './components/authorized/create-campaign/create-campaign.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +39,8 @@ import { CategoryComponent } from './components/category/category.component';
     FaqComponent,
     HighlightsComponent,
     CategoryComponent,
+    AccountsComponent,
+    CreateCampaignComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,10 +52,16 @@ import { CategoryComponent } from './components/category/category.component';
     ShareModule.withConfig({
       debug: false
     }),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBhcjuEadBRT5gygiNPVewKXxrnw88Eus0',
+      libraries: ['places']
+    }),
     SharedModule
   ],
   providers: [
     HttpService,
+    AuthGuardService,
+    MessageService,
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {

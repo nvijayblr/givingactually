@@ -1,0 +1,32 @@
+<div class="image-crop-wrapper">
+  <mat-card class="image-crop-card">
+    <div class="file-form-group" *ngIf="!croppedImage">
+      <label class="form-label" for="file">{{label}}</label>
+      <input type="file" class="gv-file-input" (change)="fileChangeEvent($event)">
+    </div>
+    <button mat-icon-button class="delete-btn" title="Delete" (click)="deleteImage()" *ngIf="croppedImage">
+      <mat-icon>delete</mat-icon>
+    </button>
+    <image-cropper
+      class="image-cropper"
+      [imageChangedEvent]="imageChangedEvent"
+      [maintainAspectRatio]="true"
+      [containWithinAspectRatio]="containWithinAspectRatio"
+      [aspectRatio]="6 / 4"
+      [resizeToWidth]="350"
+      [cropperMinWidth]="200"
+      [onlyScaleDown]="true"
+      [roundCropper]="false"
+      [canvasRotation]="canvasRotation"
+      [transform]="transform"
+      [alignImage]="'left'"
+      [style.display]="showCropper ? null : 'none'"
+      format="png"
+      (imageCropped)="imageCropped($event)"
+      (imageLoaded)="imageLoaded()"
+      (cropperReady)="cropperReady($event)"
+      (loadImageFailed)="loadImageFailed()"
+    ></image-cropper>
+  </mat-card>
+  
+</div>

@@ -1,4 +1,6 @@
-<div class="giving-actually-app" *ngIf="isLoading">
+<app-progress-bar class="page" [message]="'Loading Giving Actually...'" *ngIf="isLoading" ></app-progress-bar>
+
+<div class="giving-actually-app" *ngIf="!isLoading">
   <app-header></app-header>
   <main>
     <router-outlet></router-outlet>

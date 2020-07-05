@@ -1,0 +1,220 @@
+<section class="common-page-slider">
+  <div class="slider-bg">
+    <div class="container">
+      <div class="btn-wrapper">
+        <button mat-stroked-button class="gv-secondary-btn transparent rounded" routerLink="/create-campaign">Create Campaign</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gv-page-body profile-body">
+  <div class="container">
+    <!-- <app-progress-bar message="Loading Account..." *ngIf="isLoading"></app-progress-bar> -->
+    <div class="user-wrapper">
+      <div class="user-profile-img">
+        <h4 class="profile-pic-small">V</h4>
+      </div>
+      <div class="user-stats">
+        <div class="row">
+          <div class="col-xs-12 col-sm-3 col-md-3">
+            <h4 class="count">14</h4>
+            <p class="desc">Total<br/>Campaigns</p>
+          </div>
+          <div class="col-xs-12 col-sm-3 col-md-3">
+            <h4 class="count">12L</h4>
+            <p class="desc">Total<br/>Goals</p>
+          </div>
+          <div class="col-xs-12 col-sm-3 col-md-3">
+            <h4 class="count">80K</h4>
+            <p class="desc">Money<br/>Received</p>
+          </div>
+          <div class="col-xs-12 col-sm-3 col-md-3">
+            <h4 class="count">100</h4>
+            <p class="desc">Total<br/>Donors</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row user-campaign-wrapper">
+
+      <!-- User Campaigns -->
+      <div class="col-xs-12 col-sm-4 col-md-8">
+        <mat-tab-group>  
+          <mat-tab label="My Campaigns">
+            <div class="user-campaigns">
+
+              <app-progress-bar class="page" [message]="'Loading Camapigns...'" *ngIf="isLoading" ></app-progress-bar>
+
+              <!-- Campaing Item -->
+              <mat-card class="light-bg campaign-item" *ngFor="let campaign of campaignsList">
+                <div class="row">
+                  <div class="col-xs-12 col-sm-8 col-md-8">
+                    <div class="campaign-info">
+                      <div class="campaign-banner-wrp">
+                        <div class="campaign-pic" [ngStyle]="{'background-image': 'url(' + campaign.BDisplayPicPath + ')'}"></div>
+                        <div class="campaign-social-info">
+                          <div class="row">
+                            <div class="col-md-4 right-border">
+                              <div class="inner-box-border">
+                                <h4>{{campaign.LikesTotalCount}}</h4>
+                                <p class="label">Likes <i class="fa fa-thumbs-up"></i></p>
+                              </div>
+                            </div>
+                            <div class="col-md-4 right-border">
+                              <div class="inner-box-border">
+                                <h4>{{campaign.CommentTotalCount}}</h4>
+                                <p class="label">Comments <i class="fa fa-comments"></i></p>
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="inner-box-border">
+                                <h4>{{campaign.ShareTotalCount}}</h4>
+                                <p class="label">Shares <i class="fa fa-share"></i></p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <h3 class="sub-title">
+                        <a routerLink="/campaigns/{{campaign.Id}}" target="_blank">{{campaign.CampaignTitle}}</a>
+                        <span class="status" [ngClass]="campaign.CampaignStatus">{{campaign.CampaignStatus}}</span>
+                      </h3>
+                      <div class="inner-box-top">
+                        <p class="label"><a routerLink="/category/{{campaign.CategoryName}}" target="_blank">
+                          <i class="fa fa-tag"></i>
+                          {{campaign.CategoryName}}
+                        </a></p>
+                        <p class="label"><a routerLink="/home">
+                          <i class="fa fa-map-marker"></i>
+                          {{campaign.placeName}}
+                        </a></p>
+                      </div>
+                      <div class="short-desc">{{campaign.CampaignDescription}}</div>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-12 col-sm-4 col-md-4">
+                    <div class="funded-chart">
+                      <div class="goals">
+                        <!-- [ngStyle]="{'width': campaign.RaisedPercentage + '%'}" -->
+                        <div class="funded" [ngStyle]="{'width': campaign.RaisedPercentage + '%'}"></div>
+                      </div>
+                      <p class="label">{{campaign.RaisedPercentage}}% AMOUNT ACHIEVED OF ₹{{campaign.CampaignTargetMoney}}</p>
+                    </div>
+                    <div class="inner-box">
+                      <h4>₹ {{campaign.CampaignTargetMoney}}</h4>
+                      <p class="label">Goal</p>
+                    </div>
+                    <div class="inner-box">
+                      <h4>₹ {{campaign.RaisedAmount}}</h4>
+                      <p class="label">Money Raised</p>
+                    </div>
+                    <div class="inner-box">
+                      <h4>{{campaign.DonorsTotalCount}}</h4>
+                      <p class="label">Donors</p>
+                    </div>
+                    <div class="inner-box">
+                      <h4>{{campaign.EndorseTotalCount}}</h4>
+                      <p class="label">Endorsements</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="btn-wrapper left">
+                  <!-- Draft Status -->
+                  <div class="draft-state-btns" *ngIf="campaign.CampaignStatus === 'Draft'">
+                    <button 
+                      mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg" 
+                      routerLink="/edit-campaign" [queryParams]="{id: campaign.Id, step: 1}">
+                        Edit
+                    </button>
+                    <button mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg">Delete</button>
+                  </div>
+
+                  <!-- InActive Status -->
+                  <div class="draft-state-btns" *ngIf="campaign.CampaignStatus === 'InActive'">
+                    <button 
+                      mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg" 
+                      routerLink="/edit-campaign" [queryParams]="{id: campaign.Id, step: 1}">
+                        Edit
+                    </button>
+                    <button mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg">Activate</button>
+                  </div>
+
+                  <!-- Pending Approval Status -->
+                  <div class="draft-state-btns" *ngIf="campaign.CampaignStatus === 'Pending Approval'">
+                    <button 
+                      mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg" 
+                      routerLink="/edit-campaign" [queryParams]="{id: campaign.Id, step: 1}">
+                        Edit
+                    </button>
+                    <button mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg">Delete</button>
+                  </div>
+
+                  <!-- Active Status -->
+                  <div class="draft-state-btns" *ngIf="campaign.CampaignStatus === 'Active'">
+                    <button 
+                      mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg" 
+                      routerLink="/edit-campaign" [queryParams]="{id: campaign.Id, step: 1}">
+                        Edit
+                    </button>
+                    <button mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg">Inactive</button>
+                    <button mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg">Extend Duration</button>
+                  </div>
+
+                </div>
+              </mat-card>
+              <!-- Campaing Item -->
+
+              <!-- Pagination -->
+              <div class="pagination-wrapper" [hidden]="isLoading">
+                <mat-paginator 
+                  *ngIf="total"
+                  [length]="total"
+                  [pageSize]="pageSize"
+                  [pageSizeOptions]="[3, 6, 12, 24]"
+                  [showFirstLastButtons]="true"
+                  (page)="pageEvent = onPaginationChange($event)">
+                </mat-paginator>
+              </div>
+
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Personal Details">
+            <div class="user-campaigns">
+              Personal Details
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Payment Information">
+            <div class="user-campaigns">
+              Payment Information
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Donations">
+            <div class="user-campaigns">
+              Donations
+            </div>
+          </mat-tab>
+
+        </mat-tab-group>
+
+      </div>
+      <!-- End of User Campaigns -->
+
+
+      <!-- Right Panel -->
+      <div class="col-xs-12 col-sm-4 col-md-4">
+        <div class="sticky-right-panel">
+          User Profile / Social Connect
+        </div>
+               
+
+      </div>
+    </div>
+
+
+  </div>
+</section>
