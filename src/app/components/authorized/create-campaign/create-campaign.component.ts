@@ -202,7 +202,12 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
       StoryDescription: [campaign.campaignDescription.StoryDescription, Validators.required]
     });
     this.galleryImgVideos = campaign.UploadedImages ? campaign.UploadedImages : [];
-    console.log(this.galleryImgVideos);
+    if (!this.galleryImgVideos.length) {
+      this.galleryImgVideos.push({
+        file: '',
+        type: 'image'
+      });
+    }
   }
 
   descriptionNextClick() {

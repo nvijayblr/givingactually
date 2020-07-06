@@ -83,7 +83,7 @@
                   </div>
                 </div>
 
-                <div class="btn-wrapper">
+                <div class="cc-btn-wrapper">
                   <button mat-button class="gv-secondary-btn flat-btn btn-action" (click)="basicNextClick(stepper)" [disabled]="isLoading" [class.spinner]="isLoading">
                     Save & Next
                   </button>
@@ -139,7 +139,7 @@
                     </agm-marker>
                 </agm-map>
 
-                <div class="btn-wrapper">
+                <div class="cc-btn-wrapper">
                   <button mat-button matStepperPrevious class="gv-secondary-btn flat-btn btn-action">Prev</button>
                   <button mat-button (click)="locationNextClick(stepper)" [disabled]="isLoading" [class.spinner]="isLoading" class="gv-secondary-btn flat-btn btn-action">Save & Next</button>
                 </div>
@@ -181,7 +181,7 @@
                   </div>
                 </div>
                 
-                <div class="btn-wrapper">
+                <div class="cc-btn-wrapper">
                   <mat-error class="action-error-msg" *ngIf="errorMessage">
                     {{errorMessage}}
                   </mat-error>
