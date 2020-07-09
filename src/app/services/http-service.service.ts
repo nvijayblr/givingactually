@@ -1,5 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams,
+  HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse
+ } from '@angular/common/http';
 // import { APP_CONFIG, AppConfig} from '@bli-shared/utils/app-config.module';
 import { tap, catchError } from 'rxjs/operators';
 import { Observable, throwError, Subject } from 'rxjs';
@@ -21,6 +23,20 @@ export class HttpService  {
   private cancelCompaignDetailsReq$ = new Subject<void>();
   private cancelCompaignByCategoryReg$ = new Subject<void>();
 
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    console.log('interceptor fired!');
+    return next.handle(request).pipe( tap(() => {},
+      (err: any) => {
+        console.log('intercept', err);
+      // if (err instanceof HttpErrorResponse) {
+      //   if (err.status !== 401) {
+      //    return;
+      //   }
+      //   this.router.navigate(['login']);
+      // }
+    }));
+  }
+
   getCompaignsList(): Observable<any> {
     return this.http.get<any>(`${this.rootUrl}api/campaign/`).pipe(
       tap((res) => {
@@ -41,7 +57,8 @@ export class HttpService  {
   }
 
   getCompaignDetails(campaignId): Observable<any> {
-    return this.http.get<any>(`${this.rootUrl}api/campaign/${campaignId}`).pipe(
+    const header: any = this.getAuthHeaders();
+    return this.http.get<any>(`${this.rootUrl}api/campaign/${campaignId}`, header).pipe(
       tap((res) => {
       }),
       catchError(err => {
@@ -114,7 +131,18 @@ export class HttpService  {
     );
   }
 
+  socialLoginRequest(payload): Observable<any> {
+    return this.http.post<any>(`${this.rootUrl}api/Register/ExternalLogin`, payload).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
   // Create Campaign
+
 
   getAuthHeaders(): any {
     const token = this.authGuardService.getToken();
@@ -207,5 +235,52 @@ export class HttpService  {
     );
   }
 
+  // Add Like
+  updateUserLike(payload): Observable<any> {
+    const header: any = this.getAuthHeaders();
+    return this.http.post<any>(`${this.rootUrl}api/like`, payload, header).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  // Add Endorsement
+  updateUserEndorsement(payload): Observable<any> {
+    const header: any = this.getAuthHeaders();
+    return this.http.post<any>(`${this.rootUrl}api/Endorsements`, payload, header).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  // Add Endorsement
+  updateUserComments(payload): Observable<any> {
+    const header: any = this.getAuthHeaders();
+    return this.http.post<any>(`${this.rootUrl}api/comments`, payload, header).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  // Add Endorsement
+  updateUserShares(payload): Observable<any> {
+    const header: any = this.getAuthHeaders();
+    return this.http.post<any>(`${this.rootUrl}api/share`, payload, header).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
 
 }

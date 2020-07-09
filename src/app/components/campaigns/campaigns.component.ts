@@ -1,9 +1,14 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from '../../services/http-service.service';
 import { ShareService } from 'ngx-sharebuttons';
 import { Subscriber } from 'rxjs';
+import { AuthGuardService } from '../../services/auth-guard.service';
+import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
+
 import * as moment from 'moment';
 
 @Component({
@@ -42,6 +47,10 @@ export class CampaignsComponent implements OnInit {
 
   isLoading = true;
   isReadMore = false;
+  isLikesLoading = false;
+  isSharesLoading = false;
+  isEndorseLoading = false;
+  isCommentLoading = false;
 
   campaignId: any = '';
   campaign: any = {
@@ -54,10 +63,29 @@ export class CampaignsComponent implements OnInit {
     // }]
   };
   curComment = 1;
+  userSession: any = {};
+  isUserLoggedIn = false;
+  isUserCanEndorse = false;
 
-  constructor(private route: ActivatedRoute, private http: HttpService) { }
+  commentsFormGroup: FormGroup;
+
+  constructor(
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private http: HttpService,
+    private authGuardService: AuthGuardService,
+    public dialog: MatDialog) {
+    this.userSession = this.authGuardService.getLoggedInUserDetails();
+    this.isUserLoggedIn = this.authGuardService.isUserLoggedIn();
+    if (this.userSession && this.userSession.canEndorse === 'True') {
+      this.isUserCanEndorse = true;
+    }
+  }
 
   ngOnInit() {
+    this.commentsFormGroup = this.fb.group({
+      CommentText: ['', Validators.required]
+    });
     this.campaignId = this.route.snapshot.params.campaignId;
     if (this.campaignId) {
       this.getCampaignDetails(this.campaignId);
@@ -70,7 +98,6 @@ export class CampaignsComponent implements OnInit {
     this.http.getCompaignDetails(campaignId).subscribe((result: any) => {
       this.campaign = result ? result : {};
       this.isLoading = false;
-      console.log(this.campaign);
     }, (error) => {
       this.campaign = {};
       this.isLoading = false;
@@ -86,6 +113,90 @@ export class CampaignsComponent implements OnInit {
   onReadMore() {
     this.isReadMore = !this.isReadMore;
   }
+
+  likeCampaign(campaign) {
+    const payload = {
+      campaignId: campaign.Id
+    };
+    this.isLikesLoading = true;
+    this.http.updateUserLike(payload).subscribe((result: any) => {
+      this.isLikesLoading = false;
+      campaign.IsSupportedByCtUser = true;
+      this.campaign.LikeCount = result.LikesCount;
+    }, (error) => {
+      this.isLikesLoading = false;
+      console.log(error.statusText);
+    });
+  }
+
+  endorseCampaign(campaign) {
+    const payload = {
+      campaignId: campaign.Id
+    };
+    this.isEndorseLoading = true;
+    this.http.updateUserEndorsement(payload).subscribe((result: any) => {
+      console.log(result);
+      this.isEndorseLoading = false;
+      campaign.isCtNGOEndorsed = true;
+      this.campaign.EndorsementsList.EndorseList.unshift(result);
+    }, (error) => {
+      this.isEndorseLoading = false;
+      console.log(error.statusText);
+    });
+  }
+
+  showEndorseConfirm() {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '300px',
+      data: {
+        title: 'Endorsement',
+        message: 'Are you sure want to endorse this campaign?',
+        cancelLable: 'No',
+        okLable: 'Yes'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(action => {
+      if (action === 'ok') {
+        this.endorseCampaign(this.campaign);
+      }
+    });
+
+  }
+
+  createShares(media) {
+    const payload = {
+      campaignId: this.campaign.Id,
+      media,
+    };
+    this.isCommentLoading = true;
+    this.http.updateUserShares(payload).subscribe((result: any) => {
+      this.isCommentLoading = false;
+    }, (error) => {
+      this.isCommentLoading = false;
+      console.log(error.statusText);
+    });
+  }
+
+  createComment() {
+    const payload = {
+      campaignId: this.campaign.Id,
+      CommentText: this.commentsFormGroup.controls.CommentText.value,
+      commentId: 0
+    };
+    this.isCommentLoading = true;
+    this.http.updateUserComments(payload).subscribe((result: any) => {
+      this.isCommentLoading = false;
+      this.campaign.Comments.unshift(result);
+      this.commentsFormGroup.controls.CommentText.setValue('');
+      this.commentsFormGroup.reset();
+    }, (error) => {
+      this.isCommentLoading = false;
+      console.log(error.statusText);
+    });
+  }
+
+
 
   toLocaleString(value) {
     if (value) {

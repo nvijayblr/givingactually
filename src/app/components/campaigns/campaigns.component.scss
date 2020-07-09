@@ -134,7 +134,14 @@
   .owl-theme .owl-dots {
     position: relative;
     top: -75px;
-  }  
+  }
+  .video-wrp {
+    height: 390px;
+    max-height: 390px;
+    &:focus {
+      outline: 0;
+    }
+  }
 }
 
 .social-share-wrapper {
@@ -181,15 +188,19 @@
   .like-button {
     height: 30px;
     line-height: 30px;
-    font-size: 10px;
+    font-size: 11px;
     font-family: "Roboto" !important;
     padding: 0 10px;
     position: relative;
     top: -3px;
-    margin-right: 14px;
-    background: #f3f3f3;
+    margin-right: 10px;
+    letter-spacing: 0.32px;
+    &.liked {
+      pointer-events: none;
+    }
     .fa {
       position: relative;
+      margin-right: 1px;
       top: -1px;      
     }
   }
@@ -364,4 +375,8 @@ button {
 .sticky-right-panel {
   position: sticky;
   top: 0;
+}
+
+.create-comment-wrp {
+  margin-bottom: 24px;
 }

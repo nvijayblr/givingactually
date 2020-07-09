@@ -37,7 +37,7 @@
             </mat-error>
           </mat-form-field>
           <div class="btn-wrpper">
-            <button mat-raised-button color="primary" (click)="doLogin()" class="full-width btn-google" [disabled]="isLoading" [class.spinner]="isLoading">
+            <button mat-raised-button color="primary" (click)="doLogin()" class="full-width btn-google" [disabled]="isLoading" [class.loading]="isLoading">
               Login
             </button>
           </div>
@@ -121,7 +121,7 @@
           </mat-checkbox>
 
           <div class="btn-wrpper">
-            <button mat-raised-button color="primary" (click)="doSignup()" class="full-width btn-google" [disabled]="isLoading" [class.spinner]="isLoading">
+            <button mat-raised-button color="primary" (click)="doSignup()" class="full-width btn-google" [disabled]="isLoading" [class.loading]="isLoading">
               Sign up
             </button>
           </div>

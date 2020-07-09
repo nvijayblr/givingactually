@@ -27,6 +27,10 @@
       (cropperReady)="cropperReady($event)"
       (loadImageFailed)="loadImageFailed()"
     ></image-cropper>
+    <div class="img-preview" *ngIf="preview && !croppedImage">
+      <p class="label">Preview</p>
+      <img  src="{{preview}}" />
+    </div>
   </mat-card>
   
 </div>

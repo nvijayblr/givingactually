@@ -15,6 +15,7 @@ import { base64ToFile } from 'ngx-image-cropper';
 export class ImageCropperComponent implements OnInit {
 
   @Input() label = 'Select Image';
+  @Input() preview = '';
   @Output() imageCroppedCompleted = new EventEmitter<any>();
 
   imageChangedEvent: any = '';
@@ -44,6 +45,16 @@ export class ImageCropperComponent implements OnInit {
   }
 
   fileChangeEvent(event: any): void {
+    if (event.target.files && event.target.files.length) {
+      const file = event.target.files[0];
+      if (file.type.indexOf('video') >= 0) {
+        this.imageCroppedCompleted.emit({
+          image: '',
+          file,
+          type: 'video'
+        });
+      }
+    }
     this.imageChangedEvent = event;
   }
 
@@ -51,7 +62,8 @@ export class ImageCropperComponent implements OnInit {
     this.croppedImage = event.base64;
     this.imageCroppedCompleted.emit({
       image: event.base64,
-      file: base64ToFile(event.base64)
+      file: base64ToFile(event.base64),
+      type: 'image'
     });
   }
 

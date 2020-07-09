@@ -89,7 +89,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
       }
     });
 
-    this.user = this.authGuardService.getUserLogin();
+    this.user = this.authGuardService.getLoggedInUserDetails();
     this.initBasicDetails(this.campaign);
     this.initLocationDetails(this.campaign);
     this.initCampaignDescription(this.campaign);
@@ -133,7 +133,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
       this.isLoading = true;
       this.http.updateCampaignBasic(this.campaignId, this.campaignBasicForm.value).subscribe((result: any) => {
         this.isLoading = false;
-        this.location.go(`/create-campaign?id=${this.campaignId}&step=2`);
+        this.location.go(`/ce-campaign?id=${this.campaignId}&step=2`);
         stepper.next();
       }, (error) => {
         this.isLoading = false;
@@ -147,7 +147,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
     this.http.createCampaignBasic(this.campaignBasicForm.value).subscribe((result: any) => {
       this.isLoading = false;
       this.campaignId = result.campaignId;
-      this.location.go(`/create-campaign?id=${this.campaignId}&step=2`);
+      this.location.go(`/ce-campaign?id=${this.campaignId}&step=2`);
       this.stepper.next();
     }, (error) => {
       this.isLoading = false;
@@ -187,7 +187,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
     this.http.updateCampaignLocation(this.campaignId, this.campaignLocationForm.value, formData).subscribe((result: any) => {
       this.isLoading = false;
       this.displayImageFile = '';
-      this.location.go(`/create-campaign?id=${this.campaignId}&step=3`);
+      this.location.go(`/ce-campaign?id=${this.campaignId}&step=3`);
       stepper.next();
     }, (error) => {
       this.isLoading = false;
@@ -199,7 +199,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
   // Campaign Location - Phase 3
   initCampaignDescription(campaign) {
     this.campaignDescriptionForm = this.fb.group({
-      StoryDescription: [campaign.campaignDescription.StoryDescription, Validators.required]
+      StoryDescription: [campaign.campaignDescription.StoryDescription, Validators.required, Validators.maxLength(1000)]
     });
     this.galleryImgVideos = campaign.UploadedImages ? campaign.UploadedImages : [];
     if (!this.galleryImgVideos.length) {
@@ -218,7 +218,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
     this.isLoading = true;
     this.http.updateCampaignDescription(this.campaignId, this.campaignDescriptionForm.value).subscribe((result: any) => {
       this.isLoading = false;
-      this.router.navigate([`/accounts/${this.user.UserId}`]);
+      // this.router.navigate([`/accounts/${this.user.UserId}`]);
     }, (error) => {
       this.isLoading = false;
       this.errorMessage = error.error.ResponseMsg;
@@ -233,6 +233,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
     const formData: any = new FormData();
     this.galleryImgVideos.map((imageVideo) => {
       if (imageVideo.file) {
+        console.log(imageVideo.file);
         formData.append('file', imageVideo.file);
         isUploadFound = true;
       }

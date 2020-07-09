@@ -2,7 +2,7 @@
   <div class="slider-bg">
     <div class="container">
       <div class="btn-wrapper">
-        <button mat-stroked-button class="gv-secondary-btn transparent rounded" routerLink="/create-campaign">Create Campaign</button>
+        <button mat-stroked-button class="gv-secondary-btn transparent rounded" routerLink="/ce-campaign">Create Campaign</button>
       </div>
     </div>
   </div>
@@ -125,7 +125,7 @@
                   <div class="draft-state-btns" *ngIf="campaign.CampaignStatus === 'Draft'">
                     <button 
                       mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg" 
-                      routerLink="/edit-campaign" [queryParams]="{id: campaign.Id, step: 1}">
+                      routerLink="/ce-campaign" [queryParams]="{id: campaign.Id, step: 1}">
                         Edit
                     </button>
                     <button mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg">Delete</button>
@@ -135,7 +135,7 @@
                   <div class="draft-state-btns" *ngIf="campaign.CampaignStatus === 'InActive'">
                     <button 
                       mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg" 
-                      routerLink="/edit-campaign" [queryParams]="{id: campaign.Id, step: 1}">
+                      routerLink="/ce-campaign" [queryParams]="{id: campaign.Id, step: 1}">
                         Edit
                     </button>
                     <button mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg">Activate</button>
@@ -145,7 +145,7 @@
                   <div class="draft-state-btns" *ngIf="campaign.CampaignStatus === 'Pending Approval'">
                     <button 
                       mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg" 
-                      routerLink="/edit-campaign" [queryParams]="{id: campaign.Id, step: 1}">
+                      routerLink="/ce-campaign" [queryParams]="{id: campaign.Id, step: 1}">
                         Edit
                     </button>
                     <button mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg">Delete</button>
@@ -155,7 +155,7 @@
                   <div class="draft-state-btns" *ngIf="campaign.CampaignStatus === 'Active'">
                     <button 
                       mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg" 
-                      routerLink="/edit-campaign" [queryParams]="{id: campaign.Id, step: 1}">
+                      routerLink="/ce-campaign" [queryParams]="{id: campaign.Id, step: 1}">
                         Edit
                     </button>
                     <button mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg">Inactive</button>

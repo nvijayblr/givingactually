@@ -29,27 +29,70 @@
         <div class="image-carousel">
           <owl-carousel-o [options]="OwlOptions" style="height: 400px;">
             <ng-template carouselSlide *ngFor="let image of campaign.UploadedImages">
-              <div class="img-bg" [ngStyle]="{'background-image': 'url(' + image.FilePath + ')'}"></div>
+              <div
+                *ngIf="image.ContentType.indexOf('image')>=0" 
+                class="img-bg" 
+                [ngStyle]="{'background-image': 'url(' + image.FilePath + ')'}">
+              </div>
+              <video
+                *ngIf="image.ContentType.indexOf('video')>=0" 
+                class="video-wrp" 
+                controls 
+                poster="">
+                <source src="https://givingactuallyblob.blob.core.windows.net/videos/Test.mp4?sv=2018-03-28&sr=b&sig=AOuYP64HZAXuC0AHY7KFFEmGv5fkvkZnL7BEW4nXijs%3D&se=2020-07-08T17%3A14%3A37Z&sp=r" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
             </ng-template>  
           </owl-carousel-o>
         </div>
 
         <!-- User Info -->
         <div class="row campaign-user-info">
-          <div class="col-xs-12 col-sm-4 col-md-6 user-email">
+          <div class="col-xs-12 col-sm-4 col-md-4 user-email">
             <i class="fa fa-envelope"></i>
             <a href="mailto:{{campaign.CreatedBy}}" target="_blank">{{campaign.CreatedBy}}</a>
           </div>
-          <div class="col-xs-12 col-sm-4 col-md-6 cagegory">
+          <div class="col-xs-12 col-sm-4 col-md-8 cagegory">
             <!-- Social Share -->
             <div class="social-share-wrapper">
-              <button mat-stroked-button class="like-button"><i class="fa fa-thumbs-up"></i> Like</button>
-              <span class="social whatsapp" shareButton="whatsapp"><i class="fa fa-whatsapp"></i></span>
-              <span class="social facebook" shareButton="facebook"><i class="fa fa-facebook"></i></span>
-              <span class="social twitter" shareButton="twitter"><i class="fa fa-twitter"></i></span>
-              <span class="social linkedin" shareButton="linkedin"><i class="fa fa-linkedin"></i></span>
-              <span class="social pinterest" shareButton="pinterest"><i class="fa fa-pinterest"></i></span>
-              <span class="social email" shareButton="email"><i class="fa fa-envelope-o"></i></span>
+              <!-- Like -->
+              <button mat-stroked-button 
+                *ngIf="isUserLoggedIn && !campaign.IsSupportedByCtUser" 
+                class="gv-secondary-btn like-button"
+                (click)="likeCampaign(campaign)" 
+                [disabled]="isLikesLoading" 
+                [class.loading]="isLikesLoading"
+                >
+                <i class="fa fa-thumbs-up"></i> Like
+              </button>
+              <button mat-stroked-button class="gv-secondary-btn btn-bg like-button liked" *ngIf="isUserLoggedIn && campaign.IsSupportedByCtUser">
+                <i class="fa fa-check"></i> Liked
+              </button>
+
+              <!-- Endorsements -->
+              <button mat-stroked-button 
+                *ngIf="(isUserLoggedIn && isUserCanEndorse) && !campaign.isCtNGOEndorsed" 
+                class="gv-secondary-btn like-button"
+                (click)="showEndorseConfirm()" 
+                [disabled]="isEndorseLoading" 
+                [class.loading]="isEndorseLoading"
+                >
+                <i class="fa fa-handshake-o"></i> Endorsement
+              </button>
+              <button 
+                mat-stroked-button 
+                class="gv-secondary-btn btn-bg like-button liked" 
+                *ngIf="(isUserLoggedIn && isUserCanEndorse) && campaign.isCtNGOEndorsed">
+                <i class="fa fa-check"></i> Endorsed
+              </button>
+
+              <!-- Shares -->
+              <span class="social whatsapp" shareButton="whatsapp" (click)="createShares('Whatsapp')"><i class="fa fa-whatsapp"></i></span>
+              <span class="social facebook" shareButton="facebook" (click)="createShares('Facebook')"><i class="fa fa-facebook"></i></span>
+              <span class="social twitter" shareButton="twitter" (click)="createShares('Twitter')"><i class="fa fa-twitter"></i></span>
+              <span class="social linkedin" shareButton="linkedin" (click)="createShares('Linkedin')"><i class="fa fa-linkedin"></i></span>
+              <span class="social pinterest" shareButton="pinterest" (click)="createShares('Pinterest')"><i class="fa fa-pinterest"></i></span>
+              <span class="social email" shareButton="email" (click)="createShares('Email')"><i class="fa fa-envelope-o"></i></span>
             </div>
           </div>
         </div>
@@ -81,20 +124,39 @@
         </mat-card>
         
         <!-- Comments -->
-        <mat-card class="comments-section" *ngIf="campaign.Comments.length">
+        <mat-card class="comments-section">
           <h3 class="sub-title">Comments ({{campaign.Comments.length}})</h3>
-          <div class="comments-wrapper">
+          <div class="create-comment-wrp">
+            <form [formGroup]="commentsFormGroup" class="right" *ngIf="isUserLoggedIn">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Comment</mat-label>
+                <textarea matInput placeholder="Your Comments here..." formControlName="CommentText" autocomplete="off"></textarea>
+                <mat-error>
+                  Comments should not be empty and allowed maximum 2000 characters.
+                </mat-error>
+              </mat-form-field>
+              <button 
+                mat-stroked-button class="gv-secondary-btn btn-bg" 
+                (click)="createComment()"
+                [disabled]="isCommentLoading || commentsFormGroup.status === 'INVALID'" 
+                [class.loading]="isCommentLoading">
+                POST
+              </button>
+            </form>
+          </div>
+
+          <div class="comments-wrapper" *ngIf="campaign.Comments.length">
             <div class="comment-item" *ngFor="let comment of campaign?.Comments">
               <div class="comment-item-wrapper clearfix">
                 <div class="comment-msg">
                   <div class="comment">{{comment.CommentMsg}}</div>
-                  <div class="user-name">
+                  <div class="user-name" *ngIf="comment.Users">
                     {{comment.Users.DisplayName ? comment.Users.DisplayName : comment.Users.UserName}},
                     <span class="date">{{comment.Users.NGOAddress}}.</span>
                     <span class="date">{{formatDate(comment.CommentedDate)}}</span>
                   </div>
                 </div>
-                <div class="user-img">{{getFirstLetter(comment.Users.DisplayName)}}</div>
+                <div class="user-img" *ngIf="comment.Users">{{getFirstLetter(comment.Users.DisplayName)}}</div>
               </div>
             </div>
           </div>
@@ -124,13 +186,13 @@
                   <div class="comment-item-wrapper clearfix">
                     <div class="comment-msg">
                       <div class="comment">{{comment.CommentMsg}}</div>
-                      <div class="user-name">
+                      <div class="user-name" *ngIf="comment.Users">
                         {{comment.Users.DisplayName ? comment.Users.DisplayName : comment.Users.UserName}},
                         <span class="date">{{comment.Users.NGOAddress}}.</span>
                         <span class="date">{{formatDate(comment.CommentedDate)}}</span>
                       </div>
                     </div>
-                    <div class="user-img">{{getFirstLetter(comment.Users.DisplayName)}}</div>
+                    <div class="user-img" *ngIf="comment.Users">{{getFirstLetter(comment.Users.DisplayName)}}</div>
                   </div>
                 </div>
               </ng-template>
@@ -174,7 +236,7 @@
                     <p class="label">Goal</p>
                   </div>
                   <div class="inner-box">
-                    <h4>{{campaign?.EndorsementsList.TotalCount}}</h4>
+                    <h4>{{campaign.EndorsementsList.EndorseList.length}}</h4>
                     <p class="label">Endorsements</p>
                   </div>
                 </div>

@@ -84,7 +84,7 @@
                 </div>
 
                 <div class="cc-btn-wrapper">
-                  <button mat-button class="gv-secondary-btn flat-btn btn-action" (click)="basicNextClick(stepper)" [disabled]="isLoading" [class.spinner]="isLoading">
+                  <button mat-button class="gv-secondary-btn flat-btn btn-action" (click)="basicNextClick(stepper)" [disabled]="isLoading" [class.loading]="isLoading">
                     Save & Next
                   </button>
                 </div>
@@ -97,9 +97,10 @@
 
                 <app-image-cropper
                   label="Display Picture"
+                  [preview]="campaign.BDisplayPicPath"
                   (imageCroppedCompleted)="displayImageCroppedCompleted($event)"
                 ></app-image-cropper>
-                
+
                 <mat-form-field>
                   <mat-label>Location, Country</mat-label>
                   <input matInput placeholder="Bangalore, IN" formControlName="placeName" autocomplete="off">
@@ -141,7 +142,7 @@
 
                 <div class="cc-btn-wrapper">
                   <button mat-button matStepperPrevious class="gv-secondary-btn flat-btn btn-action">Prev</button>
-                  <button mat-button (click)="locationNextClick(stepper)" [disabled]="isLoading" [class.spinner]="isLoading" class="gv-secondary-btn flat-btn btn-action">Save & Next</button>
+                  <button mat-button (click)="locationNextClick(stepper)" [disabled]="isLoading" [class.loading]="isLoading" class="gv-secondary-btn flat-btn btn-action">Save & Next</button>
                 </div>
               </form>
             </mat-step>
@@ -186,7 +187,7 @@
                     {{errorMessage}}
                   </mat-error>
                   <button mat-button matStepperPrevious class="gv-secondary-btn flat-btn btn-action">Prev</button>
-                  <button mat-button (click)="uploadGalleryImgVideos()" [disabled]="isLoading" [class.spinner]="isLoading" class="gv-secondary-btn flat-btn btn-action btn-bg">Complete</button>
+                  <button mat-button (click)="uploadGalleryImgVideos()" [disabled]="isLoading" [class.loading]="isLoading" class="gv-secondary-btn flat-btn btn-action btn-bg">Complete</button>
                 </div>
               </form>
           </mat-step>

@@ -384,7 +384,7 @@ button {
   to {transform: rotate(360deg);}
 }
  
-.spinner:before {
+.loading:before {
   content: '';
   box-sizing: border-box;
   position: absolute;

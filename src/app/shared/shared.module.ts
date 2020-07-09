@@ -11,6 +11,7 @@ import { FooterComponent } from './footer/footer.component';
 import { LoginSignupComponent } from './login-signup/login-signup.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { ImageCropperComponent } from './image-cropper/image-cropper.component';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { ImageCropperComponent } from './image-cropper/image-cropper.component';
     FooterComponent,
     LoginSignupComponent,
     ProgressBarComponent,
-    ImageCropperComponent
+    ImageCropperComponent,
+    ConfirmDialogComponent
   ],
   exports: [
     FormsModule,
@@ -39,11 +41,13 @@ import { ImageCropperComponent } from './image-cropper/image-cropper.component';
     FooterComponent,
     LoginSignupComponent,
     ProgressBarComponent,
-    ImageCropperComponent
+    ImageCropperComponent,
+    ConfirmDialogComponent
   ],
   providers: [DatePipe],
   entryComponents: [
-    LoginSignupComponent
+    LoginSignupComponent,
+    ConfirmDialogComponent
   ]
 })
 export class SharedModule {}

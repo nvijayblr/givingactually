@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, HostListener, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SocialAuthService } from 'angularx-social-login';
 import { LoginSignupComponent } from './../login-signup/login-signup.component';
 import { CommonService } from '../../services/common.service';
 import { Subscription } from 'rxjs';
@@ -41,13 +42,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private messageService: MessageService,
-    private authGuardService: AuthGuardService) {
+    private authGuardService: AuthGuardService,
+    private socialAuthService: SocialAuthService) {
     this.categories = this.common.categories;
   }
 
   ngOnInit() {
-    // console.log(this.categoryName, this.authGuardService.getUserLogin());
-    this.user = this.authGuardService.getUserLogin();
+    // console.log(this.categoryName, this.authGuardService.getLoggedInUserDetails());
+    this.user = this.authGuardService.getLoggedInUserDetails();
     this.router.events.subscribe(params => {
       // console.log(this.router.routerState.root);
       // this.categoryName = params.categoryId;
@@ -70,6 +72,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   doLogout() {
+    const userSession = this.authGuardService.getLoggedUser();
+    if (userSession.isisSocial) {
+      this.socialAuthService.signOut();
+    }
     this.user.isLoggedIn = false;
     localStorage.removeItem('ga_token');
     this.router.navigate([`/home`]);

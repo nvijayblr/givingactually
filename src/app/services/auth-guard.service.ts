@@ -21,11 +21,19 @@ export class AuthGuardService implements CanActivate {
   }
 
   public getToken() {
-    return this.session.access_token;
+    return this.session && this.session.access_token ? this.session.access_token : '';
   }
 
-  public getUserLogin() {
+  public getLoggedUser() {
+    return this.session && this.session ? this.session : {};
+  }
+
+  public getLoggedInUserDetails() {
     return this.session ? this.session : {};
+  }
+
+  get isUserLoggedIn() {
+    return this.isAuthenticated;
   }
 
   canActivate(): boolean {

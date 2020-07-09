@@ -29,11 +29,7 @@ const routes: Routes = [{
     component: AccountsComponent,
     canActivate: [AuthGaurd]
   }, {
-    path: 'create-campaign',
-    component: CreateCampaignComponent,
-    canActivate: [AuthGaurd]
-  }, {
-    path: 'edit-campaign',
+    path: 'ce-campaign',
     component: CreateCampaignComponent,
     canActivate: [AuthGaurd]
   }, {

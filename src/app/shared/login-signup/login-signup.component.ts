@@ -36,8 +36,11 @@ export class LoginSignupComponent implements OnInit {
 
   ngOnInit() {
     this.socialAuthService.authState.subscribe((user) => {
+      if (!user) {
+        return;
+      }
       this.user = user;
-      console.log(user);
+      this.doSocialLogin(this.user);
     });
 
     this.loginForm = this.fb.group({
@@ -90,10 +93,39 @@ export class LoginSignupComponent implements OnInit {
     });
   }
 
-  setLoginSessionAndRouting(result) {
+  doSocialLogin(user) {
+    let payload = {};
+    if (user.provider === 'GOOGLE') {
+      payload = {
+        userName: user.email,
+        DPName: user.name,
+        provider: user.provider,
+        AId: user.id,
+      };
+    } else {
+      payload = {
+        userName: user.email,
+        DPName: user.name,
+        provider: user.provider,
+        AId: user.id,
+      };
+    }
+    this.isSubmitted = true;
+    this.isLoading = true;
+    this.http.socialLoginRequest(payload).subscribe((result: any) => {
+      this.isLoading = false;
+      this.setLoginSessionAndRouting(result, true);
+    }, (error) => {
+      this.isLoading = false;
+      this.errorMessage = error.error.ResponseMsg;
+    });
+  }
+
+  setLoginSessionAndRouting(result, isSocial?) {
     const session = {
       ...result,
-      isLoggedIn: true
+      isLoggedIn: true,
+      isSocial
     };
     localStorage.setItem('ga_token', JSON.stringify(session));
     this.messageService.sendLoginMessage(session);
