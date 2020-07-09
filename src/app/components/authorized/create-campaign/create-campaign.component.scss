@@ -236,6 +236,10 @@
     font-weight: 400;
     margin-bottom: 10px;
   }
+  .video-wrp {
+    max-width: 422px;
+    max-height: 180px;
+  }
 }
 
 angular-editor {
@@ -252,4 +256,15 @@ angular-editor {
 
 agm-map {
   height: 300px;
+}
+.stepper {
+  .form-error {
+    font-weight: 400;
+    font-size: 14px;
+    margin-top: 5px;
+    .mat-icon {
+      position: relative;
+      top: 6px;
+    }
+  }
 }

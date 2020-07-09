@@ -199,7 +199,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
   // Campaign Location - Phase 3
   initCampaignDescription(campaign) {
     this.campaignDescriptionForm = this.fb.group({
-      StoryDescription: [campaign.campaignDescription.StoryDescription, Validators.required, Validators.maxLength(1000)]
+      StoryDescription: [campaign.campaignDescription.StoryDescription, Validators.required]
     });
     this.galleryImgVideos = campaign.UploadedImages ? campaign.UploadedImages : [];
     if (!this.galleryImgVideos.length) {
@@ -218,7 +218,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
     this.isLoading = true;
     this.http.updateCampaignDescription(this.campaignId, this.campaignDescriptionForm.value).subscribe((result: any) => {
       this.isLoading = false;
-      // this.router.navigate([`/accounts/${this.user.UserId}`]);
+      this.router.navigate([`/accounts/${this.user.UserId}`]);
     }, (error) => {
       this.isLoading = false;
       this.errorMessage = error.error.ResponseMsg;

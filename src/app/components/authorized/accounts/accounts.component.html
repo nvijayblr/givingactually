@@ -77,11 +77,11 @@
                         </div>
                       </div>
                       <h3 class="sub-title">
-                        <a routerLink="/campaigns/{{campaign.Id}}" target="_blank">{{campaign.CampaignTitle}}</a>
+                        <a routerLink="/campaigns/{{campaign.Id}}">{{campaign.CampaignTitle}}</a>
                         <span class="status" [ngClass]="campaign.CampaignStatus">{{campaign.CampaignStatus}}</span>
                       </h3>
                       <div class="inner-box-top">
-                        <p class="label"><a routerLink="/category/{{campaign.CategoryName}}" target="_blank">
+                        <p class="label"><a routerLink="/category/{{campaign.CategoryName}}">
                           <i class="fa fa-tag"></i>
                           {{campaign.CategoryName}}
                         </a></p>
@@ -103,11 +103,11 @@
                       <p class="label">{{campaign.RaisedPercentage}}% AMOUNT ACHIEVED OF ₹{{campaign.CampaignTargetMoney}}</p>
                     </div>
                     <div class="inner-box">
-                      <h4>₹ {{campaign.CampaignTargetMoney}}</h4>
+                      <h4>₹{{campaign.CampaignTargetMoney}}</h4>
                       <p class="label">Goal</p>
                     </div>
                     <div class="inner-box">
-                      <h4>₹ {{campaign.RaisedAmount}}</h4>
+                      <h4>₹{{campaign.RaisedAmount}}</h4>
                       <p class="label">Money Raised</p>
                     </div>
                     <div class="inner-box">

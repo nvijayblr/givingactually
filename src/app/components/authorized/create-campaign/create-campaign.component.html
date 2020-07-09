@@ -53,8 +53,8 @@
                   </div>
                   <div class="col-xs-12 col-sm-8 col-md-8">
                     <mat-form-field appearance="fill">
-                      <mat-label>Goal Amount</mat-label>
-                      <input matInput type="number" placeholder="Goal Amount" formControlName="CampaignTargetMoney" autocomplete="off"/>
+                      <mat-label>Goal Amount (Minimum $2000)</mat-label>
+                      <input matInput type="number" placeholder="Minimum 2000" formControlName="CampaignTargetMoney" autocomplete="off"/>
                     </mat-form-field>
                   </div>
                 </div>
@@ -87,6 +87,10 @@
                   <button mat-button class="gv-secondary-btn flat-btn btn-action" (click)="basicNextClick(stepper)" [disabled]="isLoading" [class.loading]="isLoading">
                     Save & Next
                   </button>
+                  <mat-error *ngIf="campaignBasicForm.status === 'INVALID'" class="form-error">
+                    <mat-icon>info</mat-icon>
+                    Please fill all the required fields.
+                  </mat-error>
                 </div>
               </form>
             </mat-step>
@@ -161,9 +165,16 @@
                 <div class="row" *ngFor="let attachment of galleryImgVideos; let i = index">
                   <div class="col-xs-12 col-sm-8 col-md-8">
                     <div class="attachment-wrapper">
-                      <mat-card class="gallery-preview" *ngIf="attachment.FilePath">
+                      <mat-card class="gallery-preview" *ngIf="attachment.FilePath && attachment.ContentType.indexOf('image')>=0">
                         <p class="label">Image {{i+1}}</p>
                         <img  src="{{attachment.FilePath}}" />
+                      </mat-card>
+                      <mat-card class="gallery-preview" *ngIf="attachment.FilePath && attachment.ContentType.indexOf('video')>=0">
+                        <p class="label">Video {{i+1}}</p>
+                        <video class="video-wrp" controls poster="">
+                          <source src="{{attachment.FilePath}}" type="video/mp4">
+                          Your browser does not support the video tag.
+                        </video>
                       </mat-card>
                       <app-image-cropper
                         [hidden]="attachment.FilePath"
@@ -233,11 +244,11 @@
     
                 <div class="row funded-info">
                   <div class="col-xs-12 col-sm-4 col-md-6 funded">
-                    ${{toLocaleString(campaign.RaisedAmount)}}
+                    ₹{{toLocaleString(campaign.RaisedAmount)}}
                     <span class="label">FUNDED</span>
                   </div>
                   <div class="col-xs-12 col-sm-4 col-md-6 funded goals">
-                    ${{toLocaleString(campaign.CampaignTargetMoney)}}
+                    ₹{{toLocaleString(campaign.CampaignTargetMoney)}}
                     <span class="label">GOAL</span>
                   </div>
                 </div>

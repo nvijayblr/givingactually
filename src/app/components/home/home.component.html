@@ -34,10 +34,10 @@
       <div class="capaigns-wrapper">
         <!-- Campain Category Title -->
         <div class="row">
-          <div class="col-xs-12 col-sm-4 col-md-6">
+          <div class="col-xs-12 col-sm-4 col-md-₹{{">
             <h2 class="heading">Top Campaigns Today!</h2>
           </div>
-          <div class="col-xs-12 col-sm-4 col-md-6 text-right">
+          <div class="col-xs-12 col-sm-4 col-md-₹{{ text-right">
             <button mat-stroked-button class="gv-secondary-btn prev-next-btn" (click)="owlCar.prev()">
               <mat-icon>keyboard_arrow_left</mat-icon>
             </button>
@@ -66,11 +66,11 @@
                   <h4 class="title"><a routerLink="/campaigns/{{campaign.Id}}">{{campaign.CampaignTitle}}</a></h4>
                   <p class="desc">{{campaign.CampaignDescription}}</p>
                   <div class="row category">
-                    <div class="col-xs-12 col-sm-6 col-md-6 campaign-address">
+                    <div class="col-xs-12 col-sm-₹{{ col-md-₹{{ campaign-address">
                       <i class="fa fa-tag"></i>
                       <span>{{campaign.CategoryName}}</span>
                     </div>
-                    <div class="col-xs-12 col-sm-6 col-md-6 campaign-address" [title]="campaign.placeName">
+                    <div class="col-xs-12 col-sm-₹{{ col-md-₹{{ campaign-address" [title]="campaign.placeName">
                       <i class="fa fa-map-marker"></i>
                       <span>{{campaign.placeName}}</span>
                     </div>
@@ -83,12 +83,12 @@
                   </div>
       
                   <div class="row funded-info">
-                    <div class="col-xs-12 col-sm-4 col-md-6 funded">
-                      ${{toLocaleString(campaign.RaisedAmount)}}
+                    <div class="col-xs-12 col-sm-4 col-md-₹{{ funded">
+                      ₹{{toLocaleString(campaign.RaisedAmount)}}
                       <span class="label">FUNDED</span>
                     </div>
-                    <div class="col-xs-12 col-sm-4 col-md-6 funded goals">
-                      ${{toLocaleString(campaign.CampaignTargetMoney)}}
+                    <div class="col-xs-12 col-sm-4 col-md-₹{{ funded goals">
+                      ₹{{toLocaleString(campaign.CampaignTargetMoney)}}
                       <span class="label">GOAL</span>
                     </div>
                   </div>
