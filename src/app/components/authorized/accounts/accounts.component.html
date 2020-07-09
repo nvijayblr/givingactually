@@ -13,7 +13,7 @@
     <!-- <app-progress-bar message="Loading Account..." *ngIf="isLoading"></app-progress-bar> -->
     <div class="user-wrapper">
       <div class="user-profile-img">
-        <h4 class="profile-pic-small">V</h4>
+        <h4 class="profile-pic-small">{{getFirstLetter(user.DisplayName)}}</h4>
       </div>
       <div class="user-stats">
         <div class="row">

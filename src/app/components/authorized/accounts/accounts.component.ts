@@ -6,6 +6,7 @@ import { ShareService } from 'ngx-sharebuttons';
 import { Subscriber } from 'rxjs';
 import * as moment from 'moment';
 import { MatPaginatorIntl } from '@angular/material';
+import { AuthGuardService } from '../../../services/auth-guard.service';
 
 const customPaginatorIntl = new MatPaginatorIntl();
 customPaginatorIntl.itemsPerPageLabel = 'Campaigns per page:';
@@ -23,6 +24,7 @@ export class AccountsComponent implements OnInit {
 
   isLoading = true;
 
+  user: any = {};
   userId: any = '';
   campaignsList: any = [];
   pageEvent: any = {};
@@ -30,11 +32,14 @@ export class AccountsComponent implements OnInit {
   page = 1;
   pageSize = 3;
 
-  constructor(private route: ActivatedRoute, private http: HttpService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpService,
+    private authGuardService: AuthGuardService, ) { }
 
   ngOnInit() {
+    this.user = this.authGuardService.getLoggedInUserDetails();
     this.userId = this.route.snapshot.params.userId;
-    console.log(this.userId);
     if (this.userId) {
       this.getUserCampaigns();
     }
