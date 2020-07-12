@@ -20,8 +20,8 @@ export class HttpService  {
   private cancelCompaignDetailsReq$ = new Subject<void>();
   private cancelCompaignByCategoryReq$ = new Subject<void>();
 
-  getCompaignsList(): Observable<any> {
-    return this.http.get<any>(`${this.rootUrl}api/campaign/`).pipe(
+  getTopCompaignsList(): Observable<any> {
+    return this.http.get<any>(`${this.rootUrl}api/Campaign/TopCampaigns/`).pipe(
       tap((res) => {
       }),
       catchError(err => {

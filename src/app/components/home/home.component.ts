@@ -59,7 +59,7 @@ export class HomeComponent implements OnInit {
   initHomePageCampaigns() {
     this.isLoading = true;
     this.http.cancelCompaignsListReq();
-    this.http.getCompaignsList().subscribe((result: any) => {
+    this.http.getTopCompaignsList().subscribe((result: any) => {
       if (result && result.CampaignLists) {
         this.campaignsList = result.CampaignLists;
       }  else {

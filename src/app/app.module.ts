@@ -76,12 +76,12 @@ import { DonationComponent } from './components/authorized/donation/donation.com
         providers: [{
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              '624796833023-clhjgupm0pu6vgga7k5i5bsfp6qp6egh.apps.googleusercontent.com'
+              '604426761950-4p91h2avv8q5aj72r0um6poiv4a29m14.apps.googleusercontent.com'
             ),
           },
           {
             id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider('561602290896109'),
+            provider: new FacebookLoginProvider('894504637650396'),
           }
         ],
       } as SocialAuthServiceConfig,
