@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonService } from '../../services/common.service';
 
 @Component({
   selector: 'app-footer',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
-  constructor() { }
+  categories: any = [];
+  categoriesFirstFive: any = [];
+  categoriesSecondFive: any = [];
+  constructor(public common: CommonService, ) { }
 
   ngOnInit() {
+    this.categories = this.common.categories;
+    if (this.categories && this.categories.length) {
+      this.categoriesFirstFive = JSON.parse(JSON.stringify(this.common.categories)).splice(0, 5);
+      this.categoriesSecondFive = JSON.parse(JSON.stringify(this.common.categories)).splice(5, 5);
+    }
   }
 
 }

@@ -399,3 +399,13 @@ button {
 .create-comment-wrp {
   margin-bottom: 24px;
 }
+
+.endorse-scroll-wrapper {
+  max-height: 310px;
+  overflow-y: auto;
+}
+
+.donors-scroll-wrapper {
+  max-height: 340px;
+  overflow-y: auto;
+}

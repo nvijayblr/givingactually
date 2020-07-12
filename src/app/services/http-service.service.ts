@@ -125,6 +125,26 @@ export class HttpService  {
     );
   }
 
+  validateOTP(payload): Observable<any> {
+    return this.http.post<any>(`${this.rootUrl}api/Register/CheckOTP`, payload).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  resendOTP(username): Observable<any> {
+    return this.http.post<any>(`${this.rootUrl}api/Register/ResendOTP?UserName=${username}`, {}).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
   loginRequest(payload): Observable<any> {
     const body = `username=${payload.username}&password=${payload.password}&grant_type=${payload.grant_type}`;
     return this.http.post<any>(`${this.rootUrl}token`, body).pipe(
@@ -344,6 +364,29 @@ export class HttpService  {
   updateUserPersonalDetails(payload): Observable<any> {
     const header: any = this.getAuthHeaders();
     return this.http.put<any>(`${this.rootUrl}api/User`, payload, header).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  // Payment (Donation)
+  registerDonation(payload): Observable<any> {
+    const header: any = this.getAuthHeaders();
+    return this.http.post<any>(`${this.rootUrl}api/Donation`, payload, header).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  confirmPaymentSuccess(payload): Observable<any> {
+    const header: any = this.getAuthHeaders();
+    return this.http.post<any>(`${this.rootUrl}api/Donation/Charge`, payload, header).pipe(
       tap((res) => {
       }),
       catchError(err => {

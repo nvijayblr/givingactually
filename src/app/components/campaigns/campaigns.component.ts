@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -69,6 +69,9 @@ export class CampaignsComponent implements OnInit {
   isUserLoggedIn = false;
   isUserCanEndorse = false;
 
+  isViewAllDonors = false;
+  isViewAllEndorsements = false;
+
   commentsFormGroup: FormGroup;
 
   donationForm: FormGroup;
@@ -78,7 +81,8 @@ export class CampaignsComponent implements OnInit {
     private route: ActivatedRoute,
     private http: HttpService,
     private authGuardService: AuthGuardService,
-    public dialog: MatDialog) {
+    public dialog: MatDialog,
+    private router: Router, ) {
     this.userSession = this.authGuardService.getLoggedInUserDetails();
     this.isUserLoggedIn = this.authGuardService.isUserLoggedIn();
     if (this.userSession && this.userSession.canEndorse === 'True') {
@@ -87,6 +91,7 @@ export class CampaignsComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('init campaign...');
     this.commentsFormGroup = this.fb.group({
       CommentText: ['', Validators.required]
     });
@@ -102,6 +107,9 @@ export class CampaignsComponent implements OnInit {
     this.http.getCompaignDetails(campaignId).subscribe((result: any) => {
       this.campaign = result ? result : {};
       this.isLoading = false;
+      if (!this.campaign.Id) {
+        this.router.navigate([`/home`]);
+      }
     }, (error) => {
       this.campaign = {};
       this.isLoading = false;

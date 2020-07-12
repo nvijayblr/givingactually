@@ -13,7 +13,7 @@
       <!-- Donation Form -->
       <div class="col-xs-12 col-sm-4 col-md-8">
         <mat-card class="no-padding">
-          <app-progress-bar class="page" [message]="'Loading Camapigns...'" *ngIf="isLoading" ></app-progress-bar>
+          <app-progress-bar class="page" [message]="loaderMessage ? loaderMessage : 'Loading details...'" *ngIf="isLoading" ></app-progress-bar>
 
           <div class="support-box campaign">
             <form [formGroup]="donationForm">
@@ -40,7 +40,7 @@
                 <input matInput placeholder="First name, Last name" formControlName="DonorName" autocomplete="off"/>
               </mat-form-field>
 
-              <mat-checkbox class="mat-form-field" formControlName="isAnanymous" (change)="setAnanymous()">
+              <mat-checkbox class="mat-form-field" formControlName="isAnanymous">
                 Make your Donation as Ananymous
               </mat-checkbox>
 
@@ -85,7 +85,7 @@
       <!-- Right Panel -->
       <div class="col-xs-12 col-sm-4 col-md-4">
         <div class="sticky-right-panel">
-          <app-progress-bar class="page" [message]="'Loading Camapigns...'" *ngIf="isLoading" ></app-progress-bar>
+          <app-progress-bar class="page" [message]="loaderMessage ? loaderMessage : 'Loading details...'" *ngIf="isLoading" ></app-progress-bar>
 
           <section>
             <div class="campaign-item">

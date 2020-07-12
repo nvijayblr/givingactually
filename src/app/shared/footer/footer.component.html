@@ -17,22 +17,17 @@
       <div class="col-xs-12 col-sm-4 col-md-3">
         <h3 class="title">CATEGORIES</h3>
         <ul>
-          <li><a href="#">Agriculture</a></li>
-          <li><a href="#">Charity</a></li>
-          <li><a href="#">Education</a></li>
-          <li><a href="#">Sports</a></li>
-          <li><a href="#">Medical Illness</a></li>
+          <li *ngFor="let category of categoriesFirstFive">
+            <a href="/category/{{category}}">{{category}}</a>
+          </li>
         </ul>
-
       </div>
       <div class="col-xs-12 col-sm-4 col-md-3">
-        <h3 class="title">RECENT CAMPAIGNS</h3>
+        <h3 class="title">CATEGORIES</h3>
         <ul>
-          <li><a href="#">Help to Cataract Surgeries for A child.</a></li>
-          <li><a href="#">Help to heart Surgeries for A ABC.</a></li>
-          <li><a href="#">Donate for Orphanage children treatment</a></li>
-          <li><a href="#">Campaign Title 4</a></li>
-          <li><a href="#">Campaign Title 5</a></li>
+          <li *ngFor="let category of categoriesSecondFive">
+            <a href="/category/{{category}}">{{category}}</a>
+          </li>
         </ul>
       </div>
     </div>

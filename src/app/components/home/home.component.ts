@@ -26,7 +26,18 @@ export class HomeComponent implements OnInit {
     navSpeed: 700,
     navText: [ '<i class="fa-chevron-left"></i>', '<i class="fa-chevron-right></i>"' ],
     items: 3,
-    nav: false
+    nav: false,
+    responsive: {
+      0: {
+        items: 1
+      },
+      740: {
+        items: 2
+      },
+      940: {
+        items: 3
+      }
+    },
   };
 
   isUserLoggedIn = false;

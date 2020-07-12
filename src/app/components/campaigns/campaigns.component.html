@@ -330,19 +330,27 @@
           <mat-card *ngIf="campaign.CampaignDonationList.length">
             <div class="top-donors-section">
               <h3 class="sub-title">Top Donors</h3>
-              <div class="donor-item clearfix" *ngFor="let donor of campaign.CampaignDonationList">
-                <a href="" class="donor-img">{{getFirstLetter(donor.DonatedBy)}}</a>
-                <div class="user-info">
-                  <div class="user-name">
-                    <h3 class="s-user">{{donor.DonatedBy}}</h3>
+              <div class="donors-scroll-wrapper">
+                <div 
+                  class="donor-item clearfix" 
+                  *ngFor="let donor of campaign.CampaignDonationList; let i = index;"
+                  [hidden]="!isViewAllDonors && i > 3"
+                  >
+                  <a href="" class="donor-img">{{getFirstLetter(donor.DonatedBy)}}</a>
+                  <div class="user-info">
+                    <div class="user-name">
+                      <h3 class="s-user">{{donor.DonatedBy}}</h3>
+                    </div>
+                    <p class="donor-amount">
+                      <span>₹ {{toLocaleString(donor.DonationAmnt)}}</span>
+                    </p>
                   </div>
-                  <p class="donor-amount">
-                    <span>₹ {{toLocaleString(donor.DonationAmnt)}}</span>
-                  </p>
                 </div>
               </div>
-              <div class="view-more-wrapper">
-                <a href="" class="view-more">View All</a>
+              <div class="view-more-wrapper" *ngIf="!isViewAllDonors && campaign.CampaignDonationList.length > 4">
+                <button mat-button color="primary" class="view-more" (click)="isViewAllDonors = true">
+                  View All
+                </button>
               </div>
             </div>
           </mat-card>        
@@ -352,20 +360,27 @@
           <mat-card *ngIf="campaign.EndorsementsList.EndorseList.length">
             <div class="top-donors-section">
               <h3 class="sub-title">Endorsements</h3>
-              <div class="donor-item clearfix" *ngFor="let endorsment of campaign.EndorsementsList.EndorseList">
-                <div class="user-info">
-                  <div class="user-name">
-                    <h3 class="s-user">{{endorsment.NGOName}}</h3>
+              <div class="endorse-scroll-wrapper">
+                <div class="donor-item clearfix"
+                  *ngFor="let endorsment of campaign.EndorsementsList.EndorseList; let i = index"
+                  [hidden]="!isViewAllEndorsements && i > 3"
+                  >
+                  <div class="user-info">
+                    <div class="user-name">
+                      <h3 class="s-user">{{endorsment.NGOName}}</h3>
+                    </div>
+                    <p class="donor-address">111
+                      <span *ngIf="endorsment.NGOType">{{endorsment.NGOType}} | </span>
+                      <span *ngIf="endorsment.NGOSector">{{endorsment.NGOSector}} | </span>
+                      <span *ngIf="endorsment.NGOAddress">{{endorsment.NGOAddress}}</span>
+                    </p>
                   </div>
-                  <p class="donor-address">
-                    <span *ngIf="endorsment.NGOType">{{endorsment.NGOType}} | </span>
-                    <span *ngIf="endorsment.NGOSector">{{endorsment.NGOSector}} | </span>
-                    <span *ngIf="endorsment.NGOAddress">{{endorsment.NGOAddress}}</span>
-                  </p>
                 </div>
               </div>
-              <div class="view-more-wrapper">
-                <a href="" class="view-more">View All</a>
+              <div class="view-more-wrapper" *ngIf="!isViewAllEndorsements && campaign.EndorsementsList.EndorseList.length > 4">
+                <button mat-button color="primary" class="view-more" (click)="isViewAllEndorsements = true">
+                  View All
+                </button>
               </div>
             </div>
           </mat-card> 

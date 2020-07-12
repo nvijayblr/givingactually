@@ -2,10 +2,14 @@ import { Component, OnInit, AfterViewInit, ViewEncapsulation, ViewChild, Element
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { HttpService } from '../../../services/http-service.service';
 import { AuthGuardService } from '../../../services/auth-guard.service';
 import { CommonService } from '../../../services/common.service';
+import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
+
+declare var Razorpay: any;
 
 @Component({
   selector: 'app-donation',
@@ -25,13 +29,15 @@ export class DonationComponent implements OnInit, AfterViewInit {
   };
   campaignId = '';
   donationForm: FormGroup;
+  razorPayments: any = {};
 
   constructor(
     private fb: FormBuilder,
     private http: HttpService,
     private authGuardService: AuthGuardService,
     private route: ActivatedRoute,
-    private router: Router, ) {
+    private router: Router,
+    public dialog: MatDialog) {
     }
 
   ngOnInit() {
@@ -65,12 +71,81 @@ export class DonationComponent implements OnInit, AfterViewInit {
     });
   }
 
-  setAnanymous() {
-
+  donateClick() {
+    if (this.donationForm.invalid) {
+      return;
+    }
+    this.isLoading = true;
+    this.loaderMessage = 'Resistering your dontation...';
+    this.http.registerDonation(this.donationForm.value).subscribe((result: any) => {
+      this.razorPayments = result;
+      this.isLoading = false;
+      this.makeRazerpayPayment(this.razorPayments);
+    }, (error) => {
+      this.isLoading = false;
+      this.errorMessage = error.error.ResponseMsg;
+    });
   }
 
-  donateClick() {
-    console.log(this.donationForm.value);
+  makeRazerpayPayment(payment) {
+    const aThis = this;
+    const options = {
+      key: payment.RazorPayKey,
+      amount: payment.Amount,
+      name: 'MARKET',
+      description: payment.orderId,
+      handler(response) {
+        const paymentObj = {
+          razorpay_order_id: payment.orderId,
+          razorpay_payment_id: response.razorpay_payment_id,
+          razorpay_signature: payment.RazorPayKey
+        };
+        aThis.confirmPaymentSuccess(paymentObj);
+      },
+      prefill: {
+          name:  this.donationForm.controls.DonorName.value,
+          email: payment.Email,
+          contact: payment.PhNo,
+      },
+      notes: {},
+      theme: {
+        color: '#008b6e'
+      }
+    };
+    const razorpay = new Razorpay(options);
+    razorpay.open();
+  }
+
+  confirmPaymentSuccess(paymentObj) {
+    this.isLoading = true;
+    this.loaderMessage = 'Confirming your dontation...';
+    this.http.confirmPaymentSuccess(paymentObj).subscribe((result: any) => {
+      this.isLoading = false;
+      this.showSuccessPayment();
+    }, (error) => {
+      this.isLoading = false;
+      this.errorMessage = error.error.ResponseMsg;
+    });
+  }
+
+  showSuccessPayment() {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '300px',
+      data: {
+        title: 'Donation',
+        message: 'Thank you. We have received your donation.',
+        cancelLable: 'Go to Home',
+        okLable: 'Go to Campaign'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(action => {
+      if (action === 'ok') {
+        this.router.navigate([`/campaigns/${this.campaignId}`]);
+      } else {
+        this.router.navigate([`/home`]);
+      }
+    });
   }
 
   // Get Campaign details

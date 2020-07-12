@@ -50,16 +50,47 @@
     }
   }
 }
+.otp-wrpper {
+  text-align: center;
+  p {
+    margin-top: 24px;
+  }
+  .custom-login-wrapper {
+    border-left-width: 0;
+    padding-left: 0;
+  }
+  .btn-wrpper {
+    text-align: center;
+  }
+}
 .mat-dialog-content {
   height: 100%;
   max-height: 100%;
 }
 
 .signup-wrapper {
+  .mat-dialog-content {
+    max-height: calc(100vh - 100px);
+    overflow-y: scroll;
+  }
   .social-btn-wrapper {
-    margin-top: 174px;
+    margin-top: 10px;
+    max-width: 100%;
+    .mat-primary {
+      margin: 0 5px;
+    }
   }
   .custom-login-wrapper {
     padding-top: 20px;
-  }  
+  }
+  .custom-login-wrapper {
+    border-left-width: 0;
+    padding-left: 0;
+  }
+  .custom-mat-error {
+    font-size: 11px;
+    position: relative;
+    top: -26px;
+    left: 10px;
+  }
 }
