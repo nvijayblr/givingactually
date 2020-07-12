@@ -23,6 +23,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   categoryName = '';
   user: any = {};
   subscription: Subscription;
+  commonSub: Subscription;
 
   @HostListener('window:scroll')
   checkScroll() {
@@ -57,6 +58,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.subscription = this.messageService.getLoginMessage().subscribe(user => {
       this.user = user;
     });
+    this.commonSub = this.messageService.getCommonMessage().subscribe(message => {
+      if (message.topic === 'logout') {
+        this.doLogout();
+      }
+      if (message.topic === 'showLogin') {
+        this.doLogin();
+      }
+    });
   }
 
   doLogin() {
@@ -83,6 +92,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.commonSub.unsubscribe();
   }
 
 }

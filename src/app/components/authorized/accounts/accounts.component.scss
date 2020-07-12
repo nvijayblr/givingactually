@@ -204,8 +204,38 @@
     }
   }
 }
+
 .user-campaigns {
   min-height: 500px;
+}
+
+.user-personal-details {
+  padding: 20px 50px 0;
+  .mat-form-field {
+    font-size: 20px;
+    font-weight: 300;
+    margin-bottom: 24px;
+    width: 100%;
+  }
+}
+
+.cc-btn-wrapper {
+  margin-top: 10px;
+  margin-bottom: 40px;
+  text-align: right;
+  .gv-secondary-btn {
+    margin-left: 10px;
+  }
+}
+
+.form-error {
+  font-weight: 400;
+  font-size: 14px;
+  margin-top: 5px;
+  .mat-icon {
+    position: relative;
+    top: 6px;
+  }
 }
 
 .sticky-right-panel {

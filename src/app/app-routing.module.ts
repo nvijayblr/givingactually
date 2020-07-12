@@ -14,6 +14,8 @@ import { CategoryComponent } from './components/category/category.component';
 // Authorized components
 import { AccountsComponent } from './components/authorized/accounts/accounts.component';
 import { CreateCampaignComponent } from './components/authorized/create-campaign/create-campaign.component';
+import { CampaignUpdatesComponent } from './components/authorized/campaign-updates/campaign-updates.component';
+import { DonationComponent } from './components/authorized/donation/donation.component';
 
 const routes: Routes = [{
     path: 'home',
@@ -32,6 +34,13 @@ const routes: Routes = [{
     path: 'ce-campaign',
     component: CreateCampaignComponent,
     canActivate: [AuthGaurd]
+  }, {
+    path: 'campaign-updates',
+    component: CampaignUpdatesComponent,
+    canActivate: [AuthGaurd]
+  }, {
+    path: 'donation',
+    component: DonationComponent,
   }, {
     path: 'about-us',
     component: AboutusComponent

@@ -292,7 +292,7 @@ button {
     .title {
       font-size: 16px;
       margin-bottom: 10px;
-      height: 38px;
+      max-height: 38px;
       overflow: hidden;
     }
     .desc {

@@ -62,12 +62,16 @@ export class CampaignsComponent implements OnInit {
     //   Users: {}
     // }]
   };
+  selectedUpdatesTabIndex = 0;
+
   curComment = 1;
   userSession: any = {};
   isUserLoggedIn = false;
   isUserCanEndorse = false;
 
   commentsFormGroup: FormGroup;
+
+  donationForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -104,6 +108,7 @@ export class CampaignsComponent implements OnInit {
       console.log(error.statusText);
     });
   }
+
 
   onCommentsChanges(event) {
     this.curComment = (event.startPosition + 1);
@@ -196,7 +201,10 @@ export class CampaignsComponent implements OnInit {
     });
   }
 
-
+  updatesTabChange(tab) {
+    console.log(tab.index);
+    this.selectedUpdatesTabIndex = tab.index;
+  }
 
   toLocaleString(value) {
     if (value) {

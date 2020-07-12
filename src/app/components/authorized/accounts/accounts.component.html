@@ -40,7 +40,7 @@
 
       <!-- User Campaigns -->
       <div class="col-xs-12 col-sm-4 col-md-8">
-        <mat-tab-group>  
+        <mat-tab-group (selectedTabChange)="tabChange($event)">  
           <mat-tab label="My Campaigns">
             <div class="user-campaigns">
 
@@ -158,8 +158,12 @@
                       routerLink="/ce-campaign" [queryParams]="{id: campaign.Id, step: 1}">
                         Edit
                     </button>
-                    <button mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg">Inactive</button>
-                    <button mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg">Extend Duration</button>
+                    <button mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg" 
+                      routerLink="/campaign-updates" [queryParams]="{id: campaign.Id}">
+                      Add Updates
+                    </button>
+                    <!-- <button mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg">Inactive</button>
+                    <button mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg">Extend Duration</button> -->
                   </div>
 
                 </div>
@@ -182,14 +186,140 @@
           </mat-tab>
 
           <mat-tab label="Personal Details">
-            <div class="user-campaigns">
-              Personal Details
+            <app-progress-bar class="page" [message]="loaderMessage ? loaderMessage : 'Loading personal details...'" *ngIf="isPersonalDetLoading" ></app-progress-bar>
+            <div class="user-personal-details">
+              <form [formGroup]="personalDetailsForm">
+                <mat-form-field appearance="fill">
+                  <mat-label>Username</mat-label>
+                  <input matInput placeholder="First name, Last name" formControlName="UserName" autocomplete="off"/>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                  <mat-label>Display Name</mat-label>
+                  <input matInput placeholder="First name, Last name" formControlName="DPName" autocomplete="off"/>
+                </mat-form-field>
+
+                <!-- <mat-form-field appearance="fill">
+                  <mat-label>About</mat-label>
+                  <textarea matInput placeholder="About" autocomplete="off"></textarea>
+                </mat-form-field> -->
+
+                <mat-checkbox class="mat-form-field" formControlName="IsNGO" (change)="setNGOValidators()">Are You an NGO?</mat-checkbox>
+
+                <div class="ngo-fields" *ngIf="personalDetailsForm.controls.IsNGO.value">
+                  
+                  <mat-checkbox class="mat-form-field" formControlName="CanEndorse" (change)="setCanEndorseValidators()">
+                    Would you Like to Endorse Campaigns?
+                  </mat-checkbox>
+
+                  <div class="row" *ngIf="personalDetailsForm.controls.CanEndorse.value">
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                      <mat-form-field appearance="fill">
+                        <mat-label>NGO Secotor</mat-label>
+                        <mat-select formControlName="NGOSector">
+                          <mat-option *ngFor="let sector of ngoList.ngoSectors" value="{{sector.Text}}">{{sector.Text}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                      <mat-form-field appearance="fill">
+                        <mat-label>NGO Type</mat-label>
+                        <mat-select formControlName="NGOType">
+                          <mat-option *ngFor="let type of ngoList.ngoTypes" value="{{type.Text}}">{{type.Text}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+  
+                  <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Registration No.</mat-label>
+                        <input matInput placeholder="Registration No." formControlName="RegisterationNo" autocomplete="off"/>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Registered At</mat-label>
+                        <input matInput placeholder="Registered at" formControlName="Registeredat" autocomplete="off"/>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <mat-form-field appearance="fill">
+                    <mat-label>City</mat-label>
+                    <input matInput placeholder="City" formControlName="cityName" autocomplete="off"/>
+                  </mat-form-field>
+  
+  
+                  <mat-form-field appearance="fill">
+                    <mat-label>State</mat-label>
+                    <input matInput placeholder="State" formControlName="stateName" autocomplete="off"/>
+                  </mat-form-field>
+  
+                  <mat-form-field appearance="fill">
+                    <mat-label>Country</mat-label>
+                    <input matInput placeholder="Country" formControlName="countryName" autocomplete="off"/>
+                  </mat-form-field>
+  
+                </div>
+
+                <div class="cc-btn-wrapper right">
+                  <button mat-button class="gv-secondary-btn flat-btn btn-action" (click)="savePersonalDetails()" [disabled]="isPersonalDetLoading" [class.loading]="isPersonalDetLoading">
+                    Update
+                  </button>
+                  <mat-error *ngIf="!personalDetailsForm.valid" class="form-error">
+                    <mat-icon>info</mat-icon>
+                    Please fill all the required fields.
+                  </mat-error>
+                </div>
+              </form>
             </div>
           </mat-tab>
 
           <mat-tab label="Payment Information">
             <div class="user-campaigns">
-              Payment Information
+              <app-progress-bar class="page" [message]="loaderMessage ? loaderMessage : 'Loading personal details...'" *ngIf="isbankAccountDetLoading" ></app-progress-bar>
+              <div class="user-personal-details">
+                <form [formGroup]="bankAccountDetailsForm">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Account Name</mat-label>
+                    <input matInput placeholder="Account Name" formControlName="AccountName" autocomplete="off"/>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="fill">
+                    <mat-label>Account Number</mat-label>
+                    <input matInput placeholder="Account Number" formControlName="AccountNumber" autocomplete="off"/>
+                  </mat-form-field>
+
+
+                  <mat-form-field appearance="fill">
+                    <mat-label>Bank Name</mat-label>
+                    <input matInput placeholder="Bank Name" formControlName="BankName" autocomplete="off"/>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="fill">
+                    <mat-label>IFSC Code</mat-label>
+                    <input matInput placeholder="IFSC Code" formControlName="IFSCCode" autocomplete="off"/>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="fill">
+                    <mat-label>Branch and Address</mat-label>
+                    <input matInput placeholder="Address" formControlName="BranchAddress" autocomplete="off"/>
+                  </mat-form-field>
+
+
+                  <div class="cc-btn-wrapper right">
+                    <button mat-button class="gv-secondary-btn flat-btn btn-action" (click)="saveBankAccountDetails()" [disabled]="isPersonalDetLoading" [class.loading]="isPersonalDetLoading">
+                      Update
+                    </button>
+                    <mat-error *ngIf="!bankAccountDetailsForm.valid" class="form-error">
+                      <mat-icon>info</mat-icon>
+                      Please fill all the required fields.
+                    </mat-error>
+                  </div>
+                </form>
+              </div>
             </div>
           </mat-tab>
 

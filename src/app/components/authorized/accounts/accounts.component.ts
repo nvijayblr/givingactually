@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { HttpService } from '../../../services/http-service.service';
 import { ShareService } from 'ngx-sharebuttons';
-import { Subscriber } from 'rxjs';
+import { forkJoin, Subscriber } from 'rxjs';
 import * as moment from 'moment';
 import { MatPaginatorIntl } from '@angular/material';
 import { AuthGuardService } from '../../../services/auth-guard.service';
@@ -32,7 +33,20 @@ export class AccountsComponent implements OnInit {
   page = 1;
   pageSize = 3;
 
+  personalDetailsForm: FormGroup;
+  isPersonalDetLoading = false;
+  loaderMessage = '';
+
+  ngoList: any = {
+    ngoSectors: [],
+    ngoTypes: []
+  };
+
+  bankAccountDetailsForm: FormGroup;
+  isbankAccountDetLoading = false;
+
   constructor(
+    private fb: FormBuilder,
     private route: ActivatedRoute,
     private http: HttpService,
     private authGuardService: AuthGuardService, ) { }
@@ -41,7 +55,9 @@ export class AccountsComponent implements OnInit {
     this.user = this.authGuardService.getLoggedInUserDetails();
     this.userId = this.route.snapshot.params.userId;
     if (this.userId) {
+      this.initPersonalDetails({});
       this.getUserCampaigns();
+      this.initBankAccountDetails();
     }
   }
 
@@ -63,6 +79,130 @@ export class AccountsComponent implements OnInit {
     this.pageSize = event.pageSize;
     this.getUserCampaigns();
     window.scrollTo(0, 0);
+  }
+
+  getUserPersonalDetails() {
+    this.isPersonalDetLoading = true;
+    this.http.getUserDetails(this.userId).subscribe((result: any) => {
+      this.isPersonalDetLoading = false;
+      this.initPersonalDetails(result);
+    }, (error) => {
+      this.isPersonalDetLoading = false;
+    });
+  }
+
+  initPersonalDetails(user) {
+    this.personalDetailsForm = this.fb.group({
+      UserName: [{value: user.UserName, disabled: true}],
+      DPName: [user.DisplayName, [Validators.required, Validators.maxLength(120)]],
+      IsNGO: [user.IsNGO],
+      CanEndorse: [user.CanEndorse],
+      NGOSector: [user.NGOSectorName],
+      NGOType: [user.NGOTypeName],
+      RegisterationNo: [user.RegisterationNo],
+      Registeredat: [user.Registeredat],
+      cityName: [user.cityName],
+      stateName: [user.stateName],
+      countryName: [user.countryName],
+    });
+    this.setNGOValidators();
+  }
+
+  setNGOValidators() {
+    const IsNGO = this.personalDetailsForm.controls.IsNGO.value;
+    if (IsNGO) {
+      this.personalDetailsForm.controls.RegisterationNo.setValidators([Validators.required]);
+      this.personalDetailsForm.controls.Registeredat.setValidators([Validators.required]);
+      this.personalDetailsForm.controls.cityName.setValidators([Validators.required]);
+      this.personalDetailsForm.controls.stateName.setValidators([Validators.required]);
+      this.personalDetailsForm.controls.countryName.setValidators([Validators.required]);
+    } else {
+      this.personalDetailsForm.controls.RegisterationNo.setValidators(null);
+      this.personalDetailsForm.controls.Registeredat.setValidators(null);
+      this.personalDetailsForm.controls.cityName.setValidators(null);
+      this.personalDetailsForm.controls.stateName.setValidators(null);
+      this.personalDetailsForm.controls.countryName.setValidators(null);
+
+      this.personalDetailsForm.controls.RegisterationNo.setValue(null);
+      this.personalDetailsForm.controls.Registeredat.setValue(null);
+      this.personalDetailsForm.controls.cityName.setValue(null);
+      this.personalDetailsForm.controls.stateName.setValue(null);
+      this.personalDetailsForm.controls.countryName.setValue(null);
+    }
+    this.setCanEndorseValidators();
+    // this.personalDetailsForm.markAllAsTouched();
+  }
+
+  setCanEndorseValidators() {
+    const CanEndorse = this.personalDetailsForm.controls.CanEndorse.value;
+    if (CanEndorse) {
+      this.personalDetailsForm.controls.NGOSector.setValidators([Validators.required]);
+      this.personalDetailsForm.controls.NGOType.setValidators([Validators.required]);
+    } else {
+      this.personalDetailsForm.controls.NGOSector.setValidators(null);
+      this.personalDetailsForm.controls.NGOType.setValidators(null);
+
+      this.personalDetailsForm.controls.NGOSector.setValue(null);
+      this.personalDetailsForm.controls.NGOType.setValue(null);
+    }
+    // this.personalDetailsForm.markAllAsTouched();
+  }
+
+  savePersonalDetails() {
+    if (!this.personalDetailsForm.valid) {
+      return;
+    }
+    this.loaderMessage = 'Saving...';
+    this.isPersonalDetLoading = true;
+    const psersonalDetails = {
+      ...this.personalDetailsForm.value,
+      UserId: 28
+    };
+    this.http.updateUserPersonalDetails(psersonalDetails).subscribe((result: any) => {
+      this.isPersonalDetLoading = false;
+    }, (error) => {
+      this.isPersonalDetLoading = false;
+    });
+
+  }
+
+  initBankAccountDetails() {
+    this.bankAccountDetailsForm = this.fb.group({
+      AccountName: [''],
+      AccountNumber: [''],
+      BankName: [''],
+      IFSCCode: [''],
+      BranchAddress: [''],
+    });
+  }
+
+  saveBankAccountDetails() {
+
+  }
+
+  tabChange(tab) {
+    // Personal Deitails Tab
+    if (tab.index === 1) {
+      this.getUserPersonalDetails();
+      if (this.ngoList.ngoSectors.length === 0) {
+        forkJoin([this.http.getNGOSectors(), this.http.getNGOTypes()]).subscribe(responses => {
+          this.ngoList = {
+            ngoSectors: responses[0],
+            ngoTypes: responses[1]
+          };
+          console.log(this.ngoList);
+        }, err => {
+          this.ngoList = {
+            ngoSectors: [],
+            ngoTypes: []
+          };
+        });
+      }
+    }
+    // Load bank account details.
+    if (tab.index === 2) {
+      this.initBankAccountDetails();
+    }
   }
 
   toLocaleString(value) {

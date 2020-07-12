@@ -1,0 +1,84 @@
+<section class="common-page-slider">
+  <div class="slider-bg">
+    <div class="container">
+      <h2 class="title">Campaing Updates</h2>
+      <div class="btn-wrapper">
+        <button mat-stroked-button class="gv-secondary-btn transparent rounded" routerLink="/accounts/{{user.UserId}}">My Account</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gv-page-body profile-body">
+  <div class="container">
+    <div class="row user-campaign-wrapper">
+
+      <!-- Create Campaigns -->
+      <div class="col-xs-12 col-sm-4 col-md-8">
+        <mat-card class="stepper light-bg">
+
+          <app-progress-bar class="page" [message]="loaderMessage" *ngIf="isLoading" ></app-progress-bar>
+
+          <div class="campaing-updates-wrapper">
+            <form [formGroup]="campaignDescriptionForm">
+
+              <mat-label class="form-label">Description</mat-label>
+              <angular-editor [config]="editorConfig" formControlName="StoryDescription"></angular-editor>
+
+              <div class="row" *ngFor="let attachment of galleryImgVideos; let i = index">
+                <div class="col-xs-12 col-sm-8 col-md-8">
+                  <div class="attachment-wrapper">
+                    <mat-card class="gallery-preview" *ngIf="attachment.FilePath && attachment.ContentType.indexOf('image')>=0">
+                      <p class="label">Image {{i+1}}</p>
+                      <img  src="{{attachment.FilePath}}" />
+                    </mat-card>
+                    <mat-card class="gallery-preview" *ngIf="attachment.FilePath && attachment.ContentType.indexOf('video')>=0">
+                      <p class="label">Video {{i+1}}</p>
+                      <video class="video-wrp" controls poster="">
+                        <source src="{{attachment.FilePath}}" type="video/mp4">
+                        Your browser does not support the video tag.
+                      </video>
+                    </mat-card>
+                    <app-image-cropper
+                      [hidden]="attachment.FilePath"
+                      label="Attachment (Image / Video)"
+                      (imageCroppedCompleted)="galleryImageCroppedCompleted($event, i)"
+                    ></app-image-cropper>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4">
+                  <button mat-icon-button class="add-img-btn" *ngIf="i === (galleryImgVideos.length - 1)" (click)="addImageToAttachments()">
+                    <mat-icon>add</mat-icon>
+                  </button>
+                  <button mat-icon-button class="delete-img-btn" *ngIf="galleryImgVideos.length > 1" (click)="deleteImageFromAttachments(i)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+              
+              <div class="cc-btn-wrapper">
+                <mat-error class="action-error-msg" *ngIf="errorMessage">
+                  {{errorMessage}}
+                </mat-error>
+                <button mat-button class="gv-secondary-btn flat-btn btn-action" routerLink="/accounts/{{user.UserId}}">Cancel</button>
+                <button mat-button 
+                  class="gv-secondary-btn flat-btn btn-action btn-bg"
+                  (click)="campaignUpdatesSave()" 
+                  [disabled]="isLoading" 
+                  [class.loading]="isLoading">
+                  Save</button>
+                  <mat-error *ngIf="campaignDescriptionForm.status === 'INVALID'" class="form-error">
+                    <mat-icon>info</mat-icon>
+                    Please fill all the required fields.
+                  </mat-error>
+                </div>
+          </form>
+          </div>
+        </mat-card>
+
+      </div>
+      <!-- End of User Campaigns -->
+
+    </div>
+  </div>
+</section>

@@ -51,7 +51,7 @@ export class CategoryComponent implements OnInit {
 
   getCampainsByCategory(category) {
     this.isLoading = true;
-    this.http.cancelCompaignByCategoryReg();
+    this.http.cancelCompaignByCategoryReq();
     this.campaignsList = [];
     this.http.getCompaignByCategory(category, this.page, this.pageSize).subscribe((result: any) => {
       this.isLoading = false;

@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { HttpService } from '../../services/http-service.service';
+import { AuthGuardService } from '../../services/auth-guard.service';
+import { MessageService } from '../../services/message.service';
 
 @Component({
   selector: 'app-home',
@@ -26,14 +29,19 @@ export class HomeComponent implements OnInit {
     nav: false
   };
 
+  isUserLoggedIn = false;
   isLoading = true;
   campaignsList: any = [];
 
   constructor(
-    private http: HttpService
+    private router: Router,
+    private http: HttpService,
+    private authGuardService: AuthGuardService,
+    private messageService: MessageService
   ) { }
 
   ngOnInit() {
+    this.isUserLoggedIn = this.authGuardService.isUserLoggedIn();
     this.initHomePageCampaigns();
   }
 
@@ -52,6 +60,14 @@ export class HomeComponent implements OnInit {
       this.isLoading = false;
       console.log(error.statusText);
     });
+  }
+
+  startCampaing() {
+    if (this.isUserLoggedIn) {
+      this.router.navigate(['/ce-campaign']);
+    } else {
+      this.messageService.sendCommonMessage({topic: 'showLogin', reason: 'CreateCampaign'});
+    }
   }
 
   toLocaleString(value) {

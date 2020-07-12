@@ -114,12 +114,38 @@
         <!-- Updates Tab -->
         <mat-card class="updates-section" *ngIf="campaign.Updates.length">
           <h3 class="sub-title">Campaign Updates ({{campaign.Updates.length}})</h3>
-          <div class="updates-itesm">
-            <mat-tab-group>  
+          <div class="updates-items">
+            <mat-tab-group (selectedTabChange)="updatesTabChange($event)">  
               <mat-tab *ngFor="let updates of campaign.Updates" label="{{formatDate(updates.updatedOn)}}">
-                <div class="desc" [innerHTML]="updates.UpdateDescription.StoryDescription"></div>
               </mat-tab>
             </mat-tab-group>
+            
+
+            <div *ngFor="let updates of campaign.Updates; let i=index" [hidden]="i!==selectedUpdatesTabIndex">
+              <div class="tab-update-content clearfix">
+                <div class="image-carousel">
+                  <owl-carousel-o [options]="OwlOptions" style="height: 400px;">
+                    <ng-template carouselSlide *ngFor="let image of updates.Files">
+                      <div
+                        *ngIf="image.ContentType.indexOf('image')>=0" 
+                        class="img-bg" 
+                        [ngStyle]="{'background-image': 'url(' + image.FilePath + ')'}">
+                      </div>
+                      <video
+                        *ngIf="image.ContentType.indexOf('video')>=0" 
+                        class="video-wrp" 
+                        controls 
+                        poster="">
+                        <source src="{{image.FilePath}}" type="video/mp4">
+                        Your browser does not support the video tag.
+                      </video>
+                    </ng-template>  
+                  </owl-carousel-o>
+                </div>                
+                <div class="desc" [innerHTML]="updates.UpdateDescription.StoryDescription"></div>
+              </div>
+            </div>
+
           </div>
         </mat-card>
         
@@ -265,7 +291,12 @@
                 </div>
               </div>
               <div class="center btn-wrapper">
-                <button mat-stroked-button class="gv-secondary-btn rounded">Donate Now</button>
+                <button 
+                  mat-stroked-button 
+                  class="gv-secondary-btn rounded" 
+                  routerLink="/donation" [queryParams]="{id: campaign.Id}">
+                  Donate Now
+                </button>
               </div>
             </div>
           </mat-card>

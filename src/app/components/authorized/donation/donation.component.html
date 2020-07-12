@@ -1,0 +1,136 @@
+<section class="common-page-slider">
+  <div class="slider-bg">
+    <div class="container">
+      <h2 class="title">A help from you is much needed right now</h2>
+    </div>
+  </div>
+</section>
+
+<section class="gv-page-body">
+  <div class="container">
+    <div class="row donation-wrapper">
+
+      <!-- Donation Form -->
+      <div class="col-xs-12 col-sm-4 col-md-8">
+        <mat-card class="no-padding">
+          <app-progress-bar class="page" [message]="'Loading Camapigns...'" *ngIf="isLoading" ></app-progress-bar>
+
+          <div class="support-box campaign">
+            <form [formGroup]="donationForm">
+              <div class="row">
+                <div class="col-xs-12 col-sm-4 col-md-4">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Currency</mat-label>
+                    <mat-select formControlName="DonationMoneyType">
+                      <mat-option value="INR">INR</mat-option>
+                      <mat-option value="EUR">EUR</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-xs-12 col-sm-8 col-md-8">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Amount</mat-label>
+                    <input matInput type="number" placeholder="Amount" formControlName="DonationAmnt" autocomplete="off"/>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <mat-form-field appearance="fill">
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="First name, Last name" formControlName="DonorName" autocomplete="off"/>
+              </mat-form-field>
+
+              <mat-checkbox class="mat-form-field" formControlName="isAnanymous" (change)="setAnanymous()">
+                Make your Donation as Ananymous
+              </mat-checkbox>
+
+              <mat-form-field appearance="fill">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Email" formControlName="EMail" autocomplete="off"/>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill">
+                <mat-label>Phone Number</mat-label>
+                <input matInput placeholder="Phone Number" formControlName="PhoneNumber" autocomplete="off"/>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill">
+                <mat-label>City</mat-label>
+                <input matInput placeholder="City" formControlName="PlaceName" autocomplete="off"/>
+              </mat-form-field>
+
+              <div class="cc-btn-wrapper">
+                <button mat-button routerLink="/campaigns/{{campaignId}}" class="gv-secondary-btn flat-btn btn-action">Cancel</button>
+                <button 
+                  class="gv-secondary-btn flat-btn btn-action btn-bg" 
+                  mat-button 
+                  (click)="donateClick()" 
+                  [disabled]="isLoading" 
+                  [class.loading]="isLoading">
+                  Donate
+                </button>
+                <mat-error *ngIf="donationForm.status === 'INVALID'" class="form-error">
+                  <mat-icon>info</mat-icon>
+                  Please fill all the required fields.
+                </mat-error>
+              </div>
+              
+            </form>
+          </div>
+        </mat-card>
+
+      </div>
+      <!-- End of Donation Form -->
+
+      <!-- Right Panel -->
+      <div class="col-xs-12 col-sm-4 col-md-4">
+        <div class="sticky-right-panel">
+          <app-progress-bar class="page" [message]="'Loading Camapigns...'" *ngIf="isLoading" ></app-progress-bar>
+
+          <section>
+            <div class="campaign-item">
+              <div class="campaign-thumbnail">
+                <div class="thumb">
+                  <div class="img" [ngStyle]="{'background-image': 'url(' + campaign.BDisplayPicPath + ')'}"></div>
+                </div>
+                <button mat-stroked-button class="gv-secondary-btn transparent rounded read-more">Preview</button>
+              </div>
+              <div class="info">
+                <h4 class="title"><a routerLink="/campaigns/{{campaign.Id}}" title={{campaign.CampaignTitle}}>{{campaign.CampaignTitle}}</a></h4>
+                <div class="desc" [innerHTML]="campaign.campaignDescription.StripedDescription"></div>
+                <div class="row category">
+                  <div class="col-xs-12 col-sm-6 col-md-6 campaign-address">
+                    <i class="fa fa-tag"></i>
+                    <span>{{campaign.CategoryName}}</span>
+                  </div>
+                  <div class="col-xs-12 col-sm-6 col-md-6 campaign-address" [title]="campaign.CampainOrganizer.placeNmae">
+                    <i class="fa fa-map-marker"></i>
+                    <span>{{campaign.CampainOrganizer.placeNmae}}</span>
+                  </div>
+                </div>
+
+                <div class="funded-chart">
+                  <div class="goals">
+                    <div class="funded" [ngStyle]="{'width': campaign.RaisedPercentage + '%'}"></div>
+                  </div>
+                </div>
+
+                <div class="row funded-info">
+                  <div class="col-xs-12 col-sm-4 col-md-6 funded">
+                    ₹{{toLocaleString(campaign.RaisedAmount)}}
+                    <span class="label">FUNDED</span>
+                  </div>
+                  <div class="col-xs-12 col-sm-4 col-md-6 funded goals">
+                    ₹{{toLocaleString(campaign.CampaignTargetMoney)}}
+                    <span class="label">GOAL</span>
+                  </div>
+                </div>
+              </div>
+            </div>            
+          </section>
+        </div>
+      </div>
+      <!-- End of Right panel -->
+    </div>
+  </div>
+</section>

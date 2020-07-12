@@ -1,8 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams,
-  HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse
- } from '@angular/common/http';
-// import { APP_CONFIG, AppConfig} from '@bli-shared/utils/app-config.module';
+import { HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { tap, catchError } from 'rxjs/operators';
 import { Observable, throwError, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -21,21 +18,7 @@ export class HttpService  {
 
   private cancelCompaignsListReq$ = new Subject<void>();
   private cancelCompaignDetailsReq$ = new Subject<void>();
-  private cancelCompaignByCategoryReg$ = new Subject<void>();
-
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('interceptor fired!');
-    return next.handle(request).pipe( tap(() => {},
-      (err: any) => {
-        console.log('intercept', err);
-      // if (err instanceof HttpErrorResponse) {
-      //   if (err.status !== 401) {
-      //    return;
-      //   }
-      //   this.router.navigate(['login']);
-      // }
-    }));
-  }
+  private cancelCompaignByCategoryReq$ = new Subject<void>();
 
   getCompaignsList(): Observable<any> {
     return this.http.get<any>(`${this.rootUrl}api/campaign/`).pipe(
@@ -84,21 +67,43 @@ export class HttpService  {
       catchError(err => {
         return throwError(err);
       }),
-      takeUntil(this.onCancelCompaignByCategoryReg())
+      takeUntil(this.onCancelCompaignByCategoryReq())
     );
   }
 
-  public cancelCompaignByCategoryReg() {
-    this.cancelCompaignByCategoryReg$.next();
+  public cancelCompaignByCategoryReq() {
+    this.cancelCompaignByCategoryReq$.next();
   }
 
-  public onCancelCompaignByCategoryReg() {
-    return this.cancelCompaignByCategoryReg$.asObservable();
+  public onCancelCompaignByCategoryReq() {
+    return this.cancelCompaignByCategoryReq$.asObservable();
   }
 
   // Get Categories
   getCategories(): Observable<any> {
     return this.http.get<any>(`${this.rootUrl}api/List/Category`).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  // Get NGO Types
+  getNGOTypes(): Observable<any> {
+    return this.http.get<any>(`${this.rootUrl}api/List/NGOTypes`).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  // Get NGO Sectors
+  getNGOSectors(): Observable<any> {
+    return this.http.get<any>(`${this.rootUrl}api/List/NGOSectors`).pipe(
       tap((res) => {
       }),
       catchError(err => {
@@ -204,7 +209,7 @@ export class HttpService  {
       })
     };
 
-    return this.http.put<any>(`${this.rootUrl}api/campaign/Phase3?campaignId=${campaignId}`, params, httpOptions).pipe(
+    return this.http.put<any>(`${this.rootUrl}api/campaign/Phase3/?campaignId=${campaignId}`, params, httpOptions).pipe(
       tap((res) => {
       }),
       catchError(err => {
@@ -223,6 +228,47 @@ export class HttpService  {
       }),
     );
   }
+
+  // Campaing Updates
+
+  updateCampaignUpdates(campaignId, payload): Observable<any> {
+    // x-www-form-urlencoded data
+    const params = new HttpParams({
+      fromObject: {
+        campaignId,
+        StoryDescription: payload.StoryDescription
+      }
+    });
+
+    const token = this.authGuardService.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Bearer ${token}`
+      })
+    };
+
+    return this.http.put<any>(`${this.rootUrl}api/campaign/Update?campaignId=${campaignId}`, params, httpOptions).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  uploadCampaignUpdatesImagesVideos(campaignId, updateId, formData): Observable<any> {
+    const header: any = this.getAuthHeaders();
+    return this.http.put<any>(
+      `${this.rootUrl}api/campaign/UpdateImage?campaignId=${campaignId}&updateId=${updateId}`, formData, header).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
 
   getUserCampaigns(page, pageSize): Observable<any> {
     const header: any = this.getAuthHeaders();
@@ -275,6 +321,29 @@ export class HttpService  {
   updateUserShares(payload): Observable<any> {
     const header: any = this.getAuthHeaders();
     return this.http.post<any>(`${this.rootUrl}api/share`, payload, header).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  // Get user details
+  getUserDetails(userId): Observable<any> {
+    const header: any = this.getAuthHeaders();
+    return this.http.get<any>(`${this.rootUrl}api/User/${userId}`, header).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  updateUserPersonalDetails(payload): Observable<any> {
+    const header: any = this.getAuthHeaders();
+    return this.http.put<any>(`${this.rootUrl}api/User`, payload, header).pipe(
       tap((res) => {
       }),
       catchError(err => {

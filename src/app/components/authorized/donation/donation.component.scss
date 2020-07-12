@@ -1,0 +1,94 @@
+// Home Page Slider
+.common-page-slider {
+  .slider-bg {
+    height: 320px;
+    background: url('./../../../../assets/images/bg3.jpg') no-repeat center center transparent;
+    background-color: rgba(0, 139, 110, 0.42);
+    background-size: cover;
+    .container {
+      position: relative;
+      height: 100%;
+    }
+    .title {
+      color: #f1f1f1;
+      line-height: 46px;
+      position: absolute;
+      bottom: 30px;
+      width: auto;
+      max-width: 800px;
+      padding: 0 5px;
+      background-color: rgba(0, 139, 110, 0.42);
+    }
+    .btn-wrapper {
+      position: absolute;
+      right: 0;
+      bottom: 30px;
+      .gv-secondary-btn {
+        margin: 0 10px;
+      }
+    }
+  }
+}
+
+.donation-wrapper {
+  .mat-card {
+    padding: 24px;
+    margin-top: 24px;
+  }
+  .mat-form-field {
+    font-size: 20px;
+    font-weight: 300;
+    margin-bottom: 24px;
+    width: 100%;
+  }
+  .sticky-right-panel {
+    position: sticky;
+    top: 50px;
+    section {
+      padding-bottom: 1px;
+      .campaign-thumbnail .thumb {
+        background-color: #f5f5f5;
+      }
+    }
+    .campaign-item {
+      margin-top: 24px;
+    }
+  }
+}
+
+.cc-btn-wrapper {
+  margin-top: 10px;
+  margin-bottom: 40px;
+  text-align: right;
+  .gv-secondary-btn {
+    margin-left: 10px;
+  }
+}
+
+.action-error-msg {
+  display: block;
+  border: none;
+  font-weight: 300;
+  text-align: right;
+  margin: 0;
+  padding: 10px;
+}
+
+.form-label {
+  font-size: 20px;
+  font-weight: 300;
+  margin-bottom: 24px;
+  display: block;
+}
+
+.form-error {
+  font-weight: 400;
+  font-size: 14px;
+  margin-top: 5px;
+  display: block;
+  .mat-icon {
+    position: relative;
+    top: 6px;
+  }
+}
+

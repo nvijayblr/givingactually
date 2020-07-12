@@ -117,6 +117,25 @@
     border-right: 1px solid #e2e2e2;
   }
 }
+.updates-items .mat-tab-body-content {
+  display: none;
+}
+.tab-update-content {
+  padding: 24px;
+  .owl-carousel {
+    float: left;
+    width: 370px;
+    margin-right: 20px;
+    .owl-item {
+      height: 220px !important;
+      max-height: 220px !important;
+    }
+    .video-wrp {
+      height: 220px;
+      max-height: 220px;
+    }
+  }
+}
 
 .image-carousel {
   .owl-carousel {

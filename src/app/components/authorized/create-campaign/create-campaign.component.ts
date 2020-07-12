@@ -79,6 +79,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
     }
 
   ngOnInit() {
+    this.user = this.authGuardService.getLoggedInUserDetails();
     this.route.queryParams.subscribe(queryParams => {
       if (queryParams.id) {
         this.campaignId = queryParams.id;
