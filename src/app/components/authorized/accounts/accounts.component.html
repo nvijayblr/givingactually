@@ -263,12 +263,14 @@
                   </mat-form-field>
   
                 </div>
-
                 <div class="cc-btn-wrapper right">
                   <button mat-button class="gv-secondary-btn flat-btn btn-action" (click)="savePersonalDetails()" [disabled]="isPersonalDetLoading" [class.loading]="isPersonalDetLoading">
                     Update
                   </button>
-                  <mat-error *ngIf="!personalDetailsForm.valid" class="form-error">
+                  <div class="success-msg" *ngIf="showPersonalSuccessMsg">
+                    <mat-icon>check_circle</mat-icon>Personal details updated successfully.
+                  </div>
+                  <mat-error *ngIf="showPersonalErrorMsg" class="form-error">
                     <mat-icon>info</mat-icon>
                     Please fill all the required fields.
                   </mat-error>

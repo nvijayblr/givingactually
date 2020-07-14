@@ -170,7 +170,8 @@
             .funded {
               position: absolute;
               height: 100%;
-              width: 50%;
+              width: 0;
+              max-width: 100%;
               background-color: rgba(23, 188, 156, 0.62);
             }
           }

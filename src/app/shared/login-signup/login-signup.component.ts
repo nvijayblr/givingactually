@@ -117,6 +117,7 @@ export class LoginSignupComponent implements OnInit {
       this.otpForm.controls.UserName.setValue(UserName);
       this.loginForm.controls.username.setValue(UserName);
       this.loginForm.controls.password.setValue(Password);
+      this.errorMessage = '';
       // this.doLogin();
     }, (error) => {
       this.isLoading = false;
@@ -171,6 +172,7 @@ export class LoginSignupComponent implements OnInit {
     this.isLoading = true;
     this.http.validateOTP(this.otpForm.value).subscribe((result: any) => {
       this.isLoading = false;
+      this.errorMessage = '';
       this.doLogin();
     }, (error) => {
       this.isLoading = false;
@@ -182,6 +184,7 @@ export class LoginSignupComponent implements OnInit {
     this.isLoading = true;
     this.http.resendOTP(this.otpForm.controls.UserName.value).subscribe((result: any) => {
       this.isLoading = false;
+      this.errorMessage = '';
     }, (error) => {
       this.isLoading = false;
       this.errorMessage = error.error.ResponseMsg;

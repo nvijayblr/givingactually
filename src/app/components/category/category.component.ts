@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { HttpService } from '../../services/http-service.service';
 import { CommonService } from '../../services/common.service';
 import { MatPaginatorIntl } from '@angular/material';
+import { AuthGuardService } from '../../services/auth-guard.service';
+import { MessageService } from '../../services/message.service';
 
 const customPaginatorIntl = new MatPaginatorIntl();
 customPaginatorIntl.itemsPerPageLabel = 'Campaigns per page:';
@@ -28,15 +30,25 @@ export class CategoryComponent implements OnInit {
   pageSize = 6;
   categories = [];
 
-  constructor(private route: ActivatedRoute, private http: HttpService, public common: CommonService) {
+  isUserLoggedIn = false;
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private http: HttpService,
+    public common: CommonService,
+    private authGuardService: AuthGuardService,
+    private messageService: MessageService) {
     this.categories = this.common.categories;
   }
 
   ngOnInit() {
+    this.isUserLoggedIn = this.authGuardService.isUserLoggedIn();
     this.route.queryParams.subscribe(queryParams => {
     });
 
     this.route.params.subscribe(params => {
+      this.page = 1;
       this.categoryName = params.categoryId;
       this.getCampainsByCategory(this.categoryName);
     });
@@ -69,6 +81,14 @@ export class CategoryComponent implements OnInit {
     this.pageSize = event.pageSize;
     this.getCampainsByCategory(this.categoryName);
     window.scrollTo(0, 0);
+  }
+
+  startCampaing() {
+    if (this.isUserLoggedIn) {
+      this.router.navigate(['/ce-campaign']);
+    } else {
+      this.messageService.sendCommonMessage({topic: 'showLogin', reason: 'CreateCampaign'});
+    }
   }
 
   toLocaleString(value) {

@@ -195,7 +195,8 @@ button {
     .funded {
       position: absolute;
       height: 100%;
-      width: 50%;
+      width: 0;
+      max-width: 100%;
       background-color: rgba(23, 188, 156, 0.62);
     }
   }
@@ -318,7 +319,8 @@ button {
       .funded {
         position: absolute;
         height: 100%;
-        width: 50%;
+        width: 0;
+        max-width: 100%;
         background-color: rgba(23, 188, 156, 0.62);
       }
     }
@@ -423,4 +425,24 @@ app-progress-bar.page {
 
 .no-margin {
   margin: 0 !important;
+}
+
+.title-desc {
+  height: 94px;
+  overflow: hidden;
+  .desc {
+    height: 100% !important;
+    max-height: 100%;
+  }
+}
+.success-msg {
+  text-align: right;
+  margin: 24px 0;
+  color: green;
+  .mat-icon {
+    position: relative;
+    top: 5px;
+    font-size: 20px;
+    margin-right: 4px;    
+  }
 }

@@ -35,6 +35,8 @@ export class AccountsComponent implements OnInit {
 
   personalDetailsForm: FormGroup;
   isPersonalDetLoading = false;
+  showPersonalSuccessMsg = false;
+  showPersonalErrorMsg = false;
   loaderMessage = '';
 
   ngoList: any = {
@@ -44,6 +46,7 @@ export class AccountsComponent implements OnInit {
 
   bankAccountDetailsForm: FormGroup;
   isbankAccountDetLoading = false;
+
 
   constructor(
     private fb: FormBuilder,
@@ -83,6 +86,9 @@ export class AccountsComponent implements OnInit {
 
   getUserPersonalDetails() {
     this.isPersonalDetLoading = true;
+    this.showPersonalSuccessMsg = false;
+    this.showPersonalErrorMsg = false;
+    this.loaderMessage = 'Loading Personal Details...';
     this.http.getUserDetails(this.userId).subscribe((result: any) => {
       this.isPersonalDetLoading = false;
       this.initPersonalDetails(result);
@@ -105,6 +111,7 @@ export class AccountsComponent implements OnInit {
       stateName: [user.stateName],
       countryName: [user.countryName],
     });
+    console.log(this.personalDetailsForm);
     this.setNGOValidators();
   }
 
@@ -145,13 +152,19 @@ export class AccountsComponent implements OnInit {
       this.personalDetailsForm.controls.NGOSector.setValue(null);
       this.personalDetailsForm.controls.NGOType.setValue(null);
     }
+    this.showPersonalErrorMsg = false;
+    this.showPersonalSuccessMsg = false;
     // this.personalDetailsForm.markAllAsTouched();
   }
 
   savePersonalDetails() {
     if (!this.personalDetailsForm.valid) {
+      this.showPersonalErrorMsg = true;
+      this.showPersonalSuccessMsg = false;
       return;
     }
+    this.showPersonalErrorMsg = false;
+    this.showPersonalSuccessMsg = false;
     this.loaderMessage = 'Saving...';
     this.isPersonalDetLoading = true;
     const psersonalDetails = {
@@ -160,6 +173,7 @@ export class AccountsComponent implements OnInit {
     };
     this.http.updateUserPersonalDetails(psersonalDetails).subscribe((result: any) => {
       this.isPersonalDetLoading = false;
+      this.showPersonalSuccessMsg = true;
     }, (error) => {
       this.isPersonalDetLoading = false;
     });

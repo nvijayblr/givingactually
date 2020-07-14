@@ -93,7 +93,7 @@ export class CampaignsComponent implements OnInit {
   ngOnInit() {
     console.log('init campaign...');
     this.commentsFormGroup = this.fb.group({
-      CommentText: ['', Validators.required]
+      CommentText: ['', [Validators.required, Validators.maxLength(1000)]]
     });
     this.campaignId = this.route.snapshot.params.campaignId;
     if (this.campaignId) {
@@ -185,6 +185,7 @@ export class CampaignsComponent implements OnInit {
     this.isCommentLoading = true;
     this.http.updateUserShares(payload).subscribe((result: any) => {
       this.isCommentLoading = false;
+      this.campaign.sharecount = this.campaign.sharecount + 1;
     }, (error) => {
       this.isCommentLoading = false;
       console.log(error.statusText);
@@ -231,6 +232,13 @@ export class CampaignsComponent implements OnInit {
   formatDate(date) {
     if (date) {
       return moment(date).format('DD, MMM YYYY');
+    }
+    return '';
+  }
+
+  formatTime(date) {
+    if (date) {
+      return moment(date).format('hh:mm A');
     }
     return '';
   }

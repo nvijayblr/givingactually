@@ -30,6 +30,7 @@ export class DonationComponent implements OnInit, AfterViewInit {
   campaignId = '';
   donationForm: FormGroup;
   razorPayments: any = {};
+  isDonationErr = false;
 
   constructor(
     private fb: FormBuilder,
@@ -59,6 +60,7 @@ export class DonationComponent implements OnInit, AfterViewInit {
   }
 
   initDonationDetails(user) {
+    this.isDonationErr = false;
     this.donationForm = this.fb.group({
       CampaignId: [this.campaignId],
       DonationMoneyType: ['INR', [Validators.required, Validators.min(1)]],
@@ -72,7 +74,9 @@ export class DonationComponent implements OnInit, AfterViewInit {
   }
 
   donateClick() {
+    this.isDonationErr = false;
     if (this.donationForm.invalid) {
+      this.isDonationErr = true;
       return;
     }
     this.isLoading = true;
@@ -91,7 +95,7 @@ export class DonationComponent implements OnInit, AfterViewInit {
     const aThis = this;
     const options = {
       key: payment.RazorPayKey,
-      amount: payment.Amount,
+      amount: payment.Amount * 100,
       name: 'MARKET',
       description: payment.orderId,
       handler(response) {
@@ -120,8 +124,10 @@ export class DonationComponent implements OnInit, AfterViewInit {
     this.isLoading = true;
     this.loaderMessage = 'Confirming your dontation...';
     this.http.confirmPaymentSuccess(paymentObj).subscribe((result: any) => {
-      this.isLoading = false;
-      this.showSuccessPayment();
+      setTimeout(() => {
+        this.isLoading = false;
+        this.showSuccessPayment();
+      }, 1000);
     }, (error) => {
       this.isLoading = false;
       this.errorMessage = error.error.ResponseMsg;
@@ -140,6 +146,7 @@ export class DonationComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(action => {
+      console.log(action);
       if (action === 'ok') {
         this.router.navigate([`/campaigns/${this.campaignId}`]);
       } else {
