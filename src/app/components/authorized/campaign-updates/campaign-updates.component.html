@@ -23,8 +23,14 @@
             <form [formGroup]="campaignDescriptionForm">
 
               <mat-label class="form-label">Description</mat-label>
-              <angular-editor [config]="editorConfig" formControlName="StoryDescription"></angular-editor>
-
+              <angular-editor 
+                [class.error]="isCampaignDescriptionErr"
+                [config]="editorConfig" 
+                formControlName="StoryDescription">
+              </angular-editor>
+              <div class="characters-count">
+                {{campaignDescriptionForm.controls.StoryDescription.value?.length}} / 5000 (includes the HTML string)
+              </div>
               <div class="row" *ngFor="let attachment of galleryImgVideos; let i = index">
                 <div class="col-xs-12 col-sm-8 col-md-8">
                   <div class="attachment-wrapper">
@@ -67,7 +73,7 @@
                   [disabled]="isLoading" 
                   [class.loading]="isLoading">
                   Save</button>
-                  <mat-error *ngIf="campaignDescriptionForm.status === 'INVALID'" class="form-error">
+                  <mat-error *ngIf="campaignDescriptionForm.status === 'INVALID' && isCampaignDescriptionErr" class="form-error">
                     <mat-icon>info</mat-icon>
                     Please fill all the required fields.
                   </mat-error>

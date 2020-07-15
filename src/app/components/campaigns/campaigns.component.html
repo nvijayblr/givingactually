@@ -42,7 +42,13 @@
                 <source src="{{image.FilePath}}" type="video/mp4">
                 Your browser does not support the video tag.
               </video>
-            </ng-template>  
+            </ng-template>
+            <ng-template carouselSlide *ngIf="!campaign.UploadedImages.length">
+              <div
+                class="img-bg" 
+                [ngStyle]="{'background-image': 'url(' + campaign.BDisplayPicPath + ')'}">
+              </div>
+            </ng-template>
           </owl-carousel-o>
         </div>
 

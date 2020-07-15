@@ -2,12 +2,14 @@ import { Component, OnInit, AfterViewInit, ViewEncapsulation, ViewChild, Element
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { MapsAPILoader, MouseEvent } from '@agm/core';
 import { MatStepper } from '@angular/material/stepper';
 import { HttpService } from '../../../services/http-service.service';
 import { AuthGuardService } from '../../../services/auth-guard.service';
 import { CommonService } from '../../../services/common.service';
+import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-create-campaign',
@@ -40,6 +42,10 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
   campaignLocationForm: FormGroup;
   campaignDescriptionForm: FormGroup;
 
+  isCampaignBasicErr = false;
+  isCampaignLocationErr = false;
+  isCampaignDescriptionErr = false;
+
   categories: any = [];
   user: any = {};
   isLoading = false;
@@ -62,7 +68,8 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
   croppedImage: any = '';
   galleryImgVideos = [{
     file: '',
-    type: 'image'
+    type: 'image',
+    isOpenFile: false
   }];
 
   constructor(
@@ -74,7 +81,8 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
     private router: Router,
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
-    private location: Location ) {
+    private location: Location,
+    public dialog: MatDialog ) {
       this.categories = this.common.categories;
     }
 
@@ -124,7 +132,9 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
   }
 
   basicNextClick(stepper: MatStepper) {
+    this.isCampaignBasicErr = false;
     if (!this.campaignBasicForm.valid) {
+      this.isCampaignBasicErr = true;
       return;
     }
     this.loaderMessage = 'Saving...';
@@ -173,7 +183,9 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
   }
 
   locationNextClick(stepper: MatStepper) {
+    this.isCampaignLocationErr = false;
     if (!this.campaignLocationForm.valid || !this.campaignId) {
+      this.isCampaignLocationErr = true;
       return;
     }
     this.loaderMessage = 'Saving...';
@@ -200,26 +212,30 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
   // Campaign Location - Phase 3
   initCampaignDescription(campaign) {
     this.campaignDescriptionForm = this.fb.group({
-      StoryDescription: [campaign.campaignDescription.StoryDescription, Validators.required]
+      StoryDescription: [campaign.campaignDescription.StoryDescription, [Validators.required, Validators.maxLength(5000)]]
     });
     this.galleryImgVideos = campaign.UploadedImages ? campaign.UploadedImages : [];
     if (!this.galleryImgVideos.length) {
       this.galleryImgVideos.push({
         file: '',
-        type: 'image'
+        type: 'image',
+        isOpenFile: false
       });
     }
   }
 
   descriptionNextClick() {
+    this.isCampaignDescriptionErr = false;
     if (!this.campaignDescriptionForm.valid || !this.campaignId) {
+      this.isCampaignDescriptionErr = true;
       return;
     }
     this.loaderMessage = 'Saving...';
     this.isLoading = true;
     this.http.updateCampaignDescription(this.campaignId, this.campaignDescriptionForm.value).subscribe((result: any) => {
       this.isLoading = false;
-      this.router.navigate([`/accounts/${this.user.UserId}`]);
+      this.showCreateComplete();
+      // this.router.navigate([`/accounts/${this.user.UserId}`]);
     }, (error) => {
       this.isLoading = false;
       this.errorMessage = error.error.ResponseMsg;
@@ -227,8 +243,6 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
   }
 
   uploadGalleryImgVideos() {
-    this.loaderMessage = 'Uploading Images and Videos...';
-    this.isLoading = true;
 
     let isUploadFound = false;
     const formData: any = new FormData();
@@ -244,6 +258,9 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
       return;
     }
 
+    this.loaderMessage = 'Uploading Images and Videos...';
+    this.isLoading = true;
+
     this.http.uploadGalleryImagesVideos(this.campaignId, formData).subscribe((result: any) => {
       this.isLoading = false;
       this.descriptionNextClick();
@@ -254,6 +271,27 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
     });
   }
 
+  showCreateComplete() {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '350px',
+      data: {
+        title: 'Completed',
+        message: 'Campaing has updated successfully.',
+        cancelLable: 'Go to Dashboard',
+        okLable: 'Go to Campaign'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(action => {
+      console.log(action);
+      if (action === 'ok') {
+        this.router.navigate([`/campaigns/${this.campaignId}`]);
+      } else {
+        this.router.navigate([`/accounts/${this.user.UserId}`]);
+      }
+    });
+  }
+
   galleryImageCroppedCompleted(cropped, index) {
     this.galleryImgVideos[index].file = cropped.file;
   }
@@ -261,7 +299,8 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
   addImageToAttachments() {
     this.galleryImgVideos.push({
       file: '',
-      type: 'image'
+      type: 'image',
+      isOpenFile: true
     });
   }
 

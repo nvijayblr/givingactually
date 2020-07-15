@@ -30,6 +30,7 @@ export class CampaignUpdatesComponent implements OnInit, AfterViewInit {
   };
 
   campaignDescriptionForm: FormGroup;
+  isCampaignDescriptionErr = false;
 
   user: any = {};
   isLoading = false;
@@ -80,7 +81,7 @@ export class CampaignUpdatesComponent implements OnInit, AfterViewInit {
   // Campaign Updates
   initCampaignDescription(campaign) {
     this.campaignDescriptionForm = this.fb.group({
-      StoryDescription: ['', Validators.required]
+      StoryDescription: ['', [Validators.required, Validators.maxLength(2000)]]
     });
     // this.galleryImgVideos.push({
     //   file: '',
@@ -89,7 +90,9 @@ export class CampaignUpdatesComponent implements OnInit, AfterViewInit {
   }
 
   campaignUpdatesSave() {
+    this.isCampaignDescriptionErr = false;
     if (!this.campaignDescriptionForm.valid || !this.campaignId) {
+      this.isCampaignDescriptionErr = true;
       return;
     }
     this.loaderMessage = 'Saving...';
@@ -104,8 +107,6 @@ export class CampaignUpdatesComponent implements OnInit, AfterViewInit {
   }
 
   uploadGalleryImgVideos(updateId) {
-    this.loaderMessage = 'Uploading Images and Videos...';
-    this.isLoading = true;
 
     let isUploadFound = false;
     const formData: any = new FormData();
@@ -115,9 +116,14 @@ export class CampaignUpdatesComponent implements OnInit, AfterViewInit {
         isUploadFound = true;
       }
     });
+
     if (!isUploadFound) {
+      this.router.navigate([`/accounts/${this.user.UserId}`]);
       return;
     }
+
+    this.loaderMessage = 'Uploading Images and Videos...';
+    this.isLoading = true;
 
     this.http.uploadCampaignUpdatesImagesVideos(this.campaignId, updateId, formData).subscribe((result: any) => {
       this.isLoading = false;

@@ -10,10 +10,28 @@
 <section class="gv-page-body">
   <div class="container">
     <div class="breadcrumb-wrapper">
-      <ul class="breadcrumb">
-        <li><a routerLink="/home" title="Home">Home <mat-icon>keyboard_arrow_right</mat-icon></a></li>
-        <li><span itemprop="name">{{categoryName}}</span></li>
-      </ul>
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <ul class="breadcrumb">
+              <li><a routerLink="/home" title="Home">Home <mat-icon>keyboard_arrow_right</mat-icon></a></li>
+              <li><span itemprop="name">{{categoryName}}</span></li>
+            </ul>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <div class="filter-wrp">
+            <button mat-icon-button class="filter-btn" [matMenuTriggerFor]="menuFilter"><mat-icon>sort</mat-icon></button>
+            <mat-menu #menuFilter="matMenu">
+              <button mat-menu-item>Title</button>
+              <button mat-menu-item>Category</button>
+              <button mat-menu-item>Campaing Organizer</button>
+              <button mat-menu-item>Near by</button>
+              <button mat-menu-item>Location</button>
+              <button mat-menu-item>Target Amount</button>
+              <button mat-menu-item>Goal Amount</button>
+            </mat-menu>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="row">

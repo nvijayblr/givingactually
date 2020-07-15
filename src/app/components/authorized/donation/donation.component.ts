@@ -31,6 +31,7 @@ export class DonationComponent implements OnInit, AfterViewInit {
   donationForm: FormGroup;
   razorPayments: any = {};
   isDonationErr = false;
+  remainDonationAmt = 0;
 
   constructor(
     private fb: FormBuilder,
@@ -146,7 +147,6 @@ export class DonationComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(action => {
-      console.log(action);
       if (action === 'ok') {
         this.router.navigate([`/campaigns/${this.campaignId}`]);
       } else {
@@ -163,6 +163,8 @@ export class DonationComponent implements OnInit, AfterViewInit {
     this.http.getCompaignDetails(campaignId).subscribe((result: any) => {
       this.campaign = result ? result : {};
       this.isLoading = false;
+      this.remainDonationAmt = this.campaign.CampaignTargetMoney - this.campaign.RaisedAmount;
+      this.donationForm.controls.DonationAmnt.setValidators([Validators.max(this.remainDonationAmt)]);
     }, (error) => {
       this.campaign = {};
       this.isLoading = false;

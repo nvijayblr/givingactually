@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { Dimensions, ImageCroppedEvent, ImageTransform } from 'ngx-image-cropper';
 import { base64ToFile } from 'ngx-image-cropper';
@@ -13,7 +13,9 @@ import { base64ToFile } from 'ngx-image-cropper';
   }]
 })
 export class ImageCropperComponent implements OnInit {
+  @ViewChild('fileInput', {static: true}) fileInput: ElementRef;
 
+  @Input() isOpenFile = false;
   @Input() label = 'Select Image';
   @Input() preview = '';
   @Output() imageCroppedCompleted = new EventEmitter<any>();
@@ -30,6 +32,11 @@ export class ImageCropperComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    if (this.isOpenFile) {
+      console.log(this.fileInput);
+      const fileElement: HTMLElement = this.fileInput.nativeElement;
+      fileElement.click();
+    }
   }
 
   deleteImage() {

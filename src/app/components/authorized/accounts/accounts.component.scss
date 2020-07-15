@@ -92,6 +92,18 @@
         text-align: left;
       }      
     }
+    .btn-wrapper {
+      position: relative;
+      text-align: left;
+      .gv-secondary-btn {
+        position: absolute;
+        top: -130px;
+        border-radius: 0px;
+        font-family: Roboto !important;
+        letter-spacing: 0.62px;
+        line-height: 42px;
+      }
+    }
   }
   .user-campaign-wrapper {
     margin-top: 40px;
@@ -241,4 +253,15 @@
 .sticky-right-panel {
   position: sticky;
   top: 0;
+}
+
+.create-btn-wrapper {
+  .gv-secondary-btn {
+    position: relative;
+    top: 10px;
+    border-radius: 0px;
+    font-family: Roboto !important;
+    letter-spacing: 0.62px;
+    line-height: 42px;
+  }
 }

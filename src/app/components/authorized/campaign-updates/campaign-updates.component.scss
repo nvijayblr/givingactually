@@ -93,7 +93,7 @@
 }
 
 angular-editor {
-  &.ng-invalid {
+  &.ng-invalid.error {
     .angular-editor {
       border: 1px solid #ff0303;
     }
@@ -108,4 +108,11 @@ angular-editor {
     position: relative;
     top: 6px;
   }
+}
+.characters-count {
+  text-align: right;
+  color: #525252;
+  font-weight: 300;
+  position: relative;
+  top: -16px;
 }

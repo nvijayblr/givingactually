@@ -1,9 +1,6 @@
 <section class="common-page-slider">
   <div class="slider-bg">
     <div class="container">
-      <div class="btn-wrapper">
-        <button mat-stroked-button class="gv-secondary-btn transparent rounded" routerLink="/ce-campaign">Create Campaign</button>
-      </div>
     </div>
   </div>
 </section>
@@ -14,6 +11,9 @@
     <div class="user-wrapper">
       <div class="user-profile-img">
         <h4 class="profile-pic-small">{{getFirstLetter(user.DisplayName)}}</h4>
+      </div>
+      <div class="btn-wrapper">
+        <button mat-stroked-button class="gv-secondary-btn" routerLink="/ce-campaign">Create Campaign</button>
       </div>
       <div class="user-stats">
         <div class="row">
@@ -340,10 +340,10 @@
       <!-- Right Panel -->
       <div class="col-xs-12 col-sm-4 col-md-4">
         <div class="sticky-right-panel">
-          User Profile / Social Connect
+          <div class="create-btn-wrapper">
+            <button mat-stroked-button class="gv-secondary-btn" routerLink="/ce-campaign">Create Campaign</button>
+          </div>
         </div>
-               
-
       </div>
     </div>
 
