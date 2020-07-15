@@ -4,7 +4,10 @@
     <div class="container">
       <h2 class="title">{{campaign.CampaignTitle}}</h2>
       <div class="btn-wrapper">
-        <button mat-stroked-button class="gv-secondary-btn transparent rounded">Donate Now</button>
+        <button 
+          mat-stroked-button 
+          class="gv-secondary-btn transparent rounded"
+          routerLink="/donation" [queryParams]="{id: campaign.Id}">Donate Now</button>
       </div>
     </div>
   </div>
@@ -251,6 +254,32 @@
       <!-- Right Panel -->
       <div class="col-xs-12 col-sm-4 col-md-4">
         <div class="sticky-right-panel">
+
+          <!-- Campainer Benificiary -->
+          <mat-card class="benificiary-section">
+            <h3 class="sub-title">Benificiary</h3>
+
+            <div class="support-box user">
+              <a href="" class="user-img">
+                {{getFirstLetter(campaign.BenificiaryName)}}
+              </a>
+              <div class="user-info">
+                <a href="" class="user-name">
+                  <h3 class="s-user">{{campaign.BenificiaryName ? campaign.BenificiaryName : '-'}}</h3>
+                </a>
+                <p class="s-loc">
+                  <i class="fa fa-map-marker"></i>
+                  <span>{{campaign.CampainOrganizer?.placeNmae}}</span>
+                </p>
+                <p class="s-email">
+                  <i class="fa fa-envelope"></i>
+                  <a href="mailto:{{campaign.CreatedBy}}" target="_blank">{{campaign.CreatedBy}}</a>
+                </p>
+              </div>
+            </div>
+          </mat-card>
+          
+          
           <!-- Campaign Info -->
           <mat-card class="no-padding">
             <div class="support-box campaign">
@@ -319,29 +348,7 @@
           </mat-card>
           <!-- User Info -->
 
-          <!-- Campainer Owner -->
-          <mat-card class="benificiary-section">
-            <h3 class="sub-title">Benificiary</h3>
 
-            <div class="support-box user">
-              <a href="" class="user-img">
-                {{getFirstLetter(campaign.BenificiaryName)}}
-              </a>
-              <div class="user-info">
-                <a href="" class="user-name">
-                  <h3 class="s-user">{{campaign.BenificiaryName ? campaign.BenificiaryName : '-'}}</h3>
-                </a>
-                <p class="s-loc">
-                  <i class="fa fa-map-marker"></i>
-                  <span>{{campaign.CampainOrganizer?.placeNmae}}</span>
-                </p>
-                <p class="s-email">
-                  <i class="fa fa-envelope"></i>
-                  <a href="mailto:{{campaign.CreatedBy}}" target="_blank">{{campaign.CreatedBy}}</a>
-                </p>
-              </div>
-            </div>
-          </mat-card>
 
           <!-- Top Donors -->
           <mat-card *ngIf="campaign.CampaignDonationList.length">

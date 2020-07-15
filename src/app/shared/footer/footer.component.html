@@ -18,7 +18,7 @@
         <h3 class="title">CATEGORIES</h3>
         <ul>
           <li *ngFor="let category of categoriesFirstFive">
-            <a href="/category/{{category}}">{{category}}</a>
+            <a routerLink="/category/{{category}}">{{category}}</a>
           </li>
         </ul>
       </div>
@@ -26,7 +26,7 @@
         <h3 class="title">CATEGORIES</h3>
         <ul>
           <li *ngFor="let category of categoriesSecondFive">
-            <a href="/category/{{category}}">{{category}}</a>
+            <a routerLink="/category/{{category}}">{{category}}</a>
           </li>
         </ul>
       </div>

@@ -129,6 +129,7 @@
         bottom: 0;
         left: 0;
         width: 100%;
+        z-index: 3;
         h4 {
           font-weight: 300;
           margin-bottom: 10px;
@@ -263,5 +264,16 @@
     font-family: Roboto !important;
     letter-spacing: 0.62px;
     line-height: 42px;
+  }
+}
+.campaign-item.light-bg .campaign-thumbnail:hover {
+  &:before {
+    z-index: 1;
+  }
+  .thumb.campaign-pic {
+    z-index: 0;
+  }
+  .read-more {
+    z-index: 4;
   }
 }
