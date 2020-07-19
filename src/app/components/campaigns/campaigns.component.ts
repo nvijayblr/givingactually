@@ -62,6 +62,7 @@ export class CampaignsComponent implements OnInit {
     //   Users: {}
     // }]
   };
+  isCampaignError = false;
   selectedUpdatesTabIndex = 0;
 
   curComment = 1;
@@ -73,7 +74,6 @@ export class CampaignsComponent implements OnInit {
   isViewAllEndorsements = false;
 
   commentsFormGroup: FormGroup;
-
   donationForm: FormGroup;
 
   constructor(
@@ -103,6 +103,7 @@ export class CampaignsComponent implements OnInit {
 
   getCampaignDetails(campaignId) {
     this.isLoading = true;
+    this.isCampaignError = false;
     this.http.cancelCompaignDetailsReq();
     this.http.getCompaignDetails(campaignId).subscribe((result: any) => {
       this.campaign = result ? result : {};
@@ -111,7 +112,8 @@ export class CampaignsComponent implements OnInit {
         this.router.navigate([`/home`]);
       }
     }, (error) => {
-      this.campaign = {};
+      // this.campaign = {};
+      this.isCampaignError = true;
       this.isLoading = false;
       console.log(error.statusText);
     });

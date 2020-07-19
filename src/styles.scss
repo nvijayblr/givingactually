@@ -444,6 +444,8 @@ app-progress-bar.page {
   height: 94px;
   overflow: hidden;
   .desc {
+    font-size: 14px !important;
+    line-height: inherit !important;
     height: 100% !important;
     max-height: 100%;
   }

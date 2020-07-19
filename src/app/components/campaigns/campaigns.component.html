@@ -25,7 +25,12 @@
 
     <app-progress-bar message="Loading Campaigns..." *ngIf="isLoading"></app-progress-bar>
 
-    <div class="row" *ngIf="!isLoading">
+    <div class="no-campaign" *ngIf="!isLoading && isCampaignError">
+      <h3>No campaings to show.</h3>
+    </div>
+
+
+    <div class="row" *ngIf="!isLoading && !isCampaignError">
 
       <!-- Campaign Panel -->
       <div class="col-xs-12 col-sm-4 col-md-8">
@@ -46,7 +51,7 @@
                 Your browser does not support the video tag.
               </video>
             </ng-template>
-            <ng-template carouselSlide *ngIf="!campaign.UploadedImages.length">
+            <ng-template carouselSlide *ngIf="!campaign.UploadedImages?.length">
               <div
                 class="img-bg" 
                 [ngStyle]="{'background-image': 'url(' + campaign.BDisplayPicPath + ')'}">
@@ -125,7 +130,7 @@
         </div>
 
         <!-- Updates Tab -->
-        <mat-card class="updates-section" *ngIf="campaign.Updates.length">
+        <mat-card class="updates-section" *ngIf="campaign.Updates?.length">
           <h3 class="sub-title">Campaign Updates ({{campaign.Updates.length}})</h3>
           <div class="updates-items">
             <mat-tab-group (selectedTabChange)="updatesTabChange($event)" class="updates-tab">  
@@ -190,8 +195,8 @@
             </form>
           </div>
 
-          <h3 class="sub-title">Comments ({{campaign.Comments.length}})</h3>
-          <div class="comments-wrapper" *ngIf="campaign.Comments.length">
+          <h3 class="sub-title">Comments ({{campaign.Comments?.length}})</h3>
+          <div class="comments-wrapper" *ngIf="campaign.Comments?.length">
             <div class="comment-item" *ngFor="let comment of campaign?.Comments">
               <div class="comment-item-wrapper clearfix">
                 <div class="comment-msg">
@@ -209,11 +214,11 @@
         </mat-card>
 
         <!-- Comments -->
-        <mat-card class="comments-section no-margin" *ngIf="campaign.Comments.length">
+        <mat-card class="comments-section no-margin" *ngIf="campaign.Comments?.length">
           <div class="row">
             <div class="col-xs-12 col-sm-4 col-md-6">
               <h3 class="sub-title">Comments 
-                <span *ngIf="campaign.Comments.length">({{curComment}} of {{campaign.Comments.length}})</span>
+                <span *ngIf="campaign.Comments.length">({{curComment}} of {{campaign.Comments?.length}})</span>
               </h3>
             </div>
             <div class="col-xs-12 col-sm-4 col-md-6 text-right">
@@ -308,7 +313,7 @@
                     <p class="label">Goal</p>
                   </div>
                   <div class="inner-box">
-                    <h4>{{campaign.EndorsementsList.EndorseList.length}}</h4>
+                    <h4>{{campaign.EndorsementsList.EndorseList?.length}}</h4>
                     <p class="label">Endorsements</p>
                   </div>
                 </div>
@@ -323,7 +328,7 @@
                 </div>
                 <div class="col-md-4 right-border">
                   <div class="inner-box-border">
-                    <h4>{{campaign.Comments.length}}</h4>
+                    <h4>{{campaign.Comments?.length}}</h4>
                     <p class="label">Comments</p>
                     <i class="fa fa-comments"></i>
                   </div>
@@ -351,7 +356,7 @@
 
 
           <!-- Top Donors -->
-          <mat-card *ngIf="campaign.CampaignDonationList.length">
+          <mat-card *ngIf="campaign.CampaignDonationList?.length">
             <div class="top-donors-section">
               <h3 class="sub-title">Top Donors</h3>
               <div class="donors-scroll-wrapper">
@@ -381,7 +386,7 @@
 
 
           <!-- Endorsements List -->
-          <mat-card *ngIf="campaign.EndorsementsList.EndorseList.length">
+          <mat-card *ngIf="campaign.EndorsementsList.EndorseList?.length">
             <div class="top-donors-section">
               <h3 class="sub-title">Endorsements</h3>
               <div class="endorse-scroll-wrapper">
