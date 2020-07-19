@@ -394,6 +394,10 @@ button {
   letter-spacing: 0.72px;
 }
 
+.owl-theme .owl-nav [class*=owl-] {
+  background: #54c8ad;
+}  
+
 // Spinner style
 @keyframes spinner {
   to {transform: rotate(360deg);}

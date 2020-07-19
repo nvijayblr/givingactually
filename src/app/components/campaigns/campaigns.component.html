@@ -35,8 +35,8 @@
       <!-- Campaign Panel -->
       <div class="col-xs-12 col-sm-4 col-md-8">
         <div class="image-carousel">
-          <owl-carousel-o [options]="OwlOptions" style="height: 400px;">
-            <ng-template carouselSlide *ngFor="let image of campaign.UploadedImages">
+          <owl-carousel-o [options]="OwlOptions" style="height: 400px;" #mainCarousel>
+            <ng-template carouselSlide *ngFor="let image of campaign.UploadedImages; let i = index;" [id]="i">
               <div
                 *ngIf="image.ContentType.indexOf('image')>=0" 
                 class="img-bg" 
@@ -55,6 +55,28 @@
               <div
                 class="img-bg" 
                 [ngStyle]="{'background-image': 'url(' + campaign.BDisplayPicPath + ')'}">
+              </div>
+            </ng-template>
+          </owl-carousel-o>
+        </div>
+
+        <!-- Carousel Thumbnail -->
+        <div class="image-thumbnail-carousel" *ngIf="campaign.UploadedImages?.length > 1">
+          <owl-carousel-o [options]="OwlThumbnailOptions" style="height: 60px;">
+            <ng-template carouselSlide *ngFor="let image of campaign.UploadedImages; let i = index;">
+              <div
+                *ngIf="image.ContentType.indexOf('image')>=0" 
+                (click)="thumbnailClicked(i);"
+                class="img-bg" 
+                [class.selected]="selectedSlide === i"
+                [ngStyle]="{'background-image': 'url(' + image.FilePath + ')'}">
+              </div>
+              <div
+                *ngIf="image.ContentType.indexOf('video')>=0" 
+                (click)="thumbnailClicked(i)"
+                [class.selected]="selectedSlide === i"
+                class="video-wrp">
+                <mat-icon>play_circle_outline</mat-icon>
               </div>
             </ng-template>
           </owl-carousel-o>

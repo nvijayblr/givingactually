@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { OwlOptions } from 'ngx-owl-carousel-o';
+import { OwlOptions, SlidesOutputData } from 'ngx-owl-carousel-o';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from '../../services/http-service.service';
 import { ShareService } from 'ngx-sharebuttons';
@@ -19,16 +19,33 @@ import * as moment from 'moment';
   providers: [ShareService]
 })
 export class CampaignsComponent implements OnInit {
+
+  @ViewChild('mainCarousel', {static: false}) mainCarousel;
+
   OwlOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,
     touchDrag: true,
     pullDrag: true,
+    dots: false,
+    navSpeed: 700,
+    items: 1,
+    nav: false,
+    navText: []
+  };
+
+  OwlThumbnailOptions: OwlOptions = {
+    loop: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
     dots: true,
+    nav: true,
+    center: true,
+    margin: 10,
     navSpeed: 700,
     navText: ['', ''],
-    items: 1,
-    nav: true
+    items: 5
   };
 
   OwlCommentsOptions: OwlOptions = {
@@ -43,7 +60,7 @@ export class CampaignsComponent implements OnInit {
     navText: ['', ''],
     items: 1,
   };
-
+  selectedSlide = 0;
 
   isLoading = true;
   isReadMore = false;
@@ -215,6 +232,11 @@ export class CampaignsComponent implements OnInit {
   updatesTabChange(tab) {
     console.log(tab.index);
     this.selectedUpdatesTabIndex = tab.index;
+  }
+
+  thumbnailClicked(index) {
+    this.mainCarousel.to(`${index}`);
+    this.selectedSlide = index;
   }
 
   toLocaleString(value) {
