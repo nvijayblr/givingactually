@@ -459,3 +459,139 @@ app-progress-bar.page {
     margin-right: 4px;    
   }
 }
+
+.no-campaign {
+  text-align: center;
+  h3 {
+    font-family: Roboto;
+    font-size: 18px;
+    color: #797979;
+    font-weight: 400;
+    margin: 150px 0 30px;
+  }
+}
+
+mat-sidenav.mat-drawer {
+  background: #008b6e;
+}
+.mobile-nav {
+  min-width: 260px;
+  .mat-nav-list {
+    padding-top: 40px;
+  }
+  .close-icon {
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    color: rgba(241, 241, 241, 0.72);
+  }
+  .mat-list-base .mat-list-item {
+    color: rgba(241, 241, 241, 0.72);
+  }
+  .mat-nav-list .mat-list-item {
+    height: 40px;
+    .mat-list-item-content {
+      padding-left: 26px;
+    }
+  }
+}
+
+
+// Media Query
+
+@media only screen and (max-width: 720px) { 
+  .hamburger-icon {
+    display: block !important;
+  }  
+  .header.masthead .header-top .sub-nav {
+    display: none;
+  }
+  .home-slider .slider-bg .title {
+    width: 400px !important;
+  }
+  .header.masthead .main-nav, .category-list-wrapper {
+    display: none;
+  }
+  .breadcrumb-wrapper .filter-wrp .filter-btn {
+    top: -34px;
+  }
+  .login-singup {
+    max-width: calc(100% - 20px) !important;
+  }
+  .custom-login-wrapper {
+    border-left: 0 !important;
+    padding-left: 0 !important;
+  }
+  .social-btn-wrapper {
+    margin-top: 34px !important;
+  }
+  .signup-wrapper .social-btn-wrapper .mat-primary {
+    width: 230px;
+    margin-bottom: 10px !important;
+  }
+  .login-wrapper .mat-form-field {
+    width: 100%;
+  }
+  .user-stats {
+    .col-xs-12 {
+      width: 50%;
+    }
+  }
+  .campaign-social-info {
+    .col-md-4 {
+      width: 33.33%;
+    }
+  }
+  .campaign-item {
+    .inner-box {
+      width: calc(50% - 10px) !important;
+      float: left;
+      margin: 0 5px !important;
+    }
+  }
+  .gv-page-body .user-wrapper .btn-wrapper {
+    text-align: center !important;
+    .gv-secondary-btn {
+      position: relative !important;
+      top: -18px !important;
+    }
+  }
+  .gv-page-body .user-wrapper .user-stats .count {
+    float: right !important;
+  }
+  .create-btn-wrapper {
+    text-align: center;
+  }
+  .user-personal-details {
+    padding: 20px 0 0 !important;
+  }
+  .mat-step-header {
+    .mat-step-label {
+      display: none;
+    }
+  }
+  .stepper.mat-card {
+    padding: 0;
+  }
+  .terms {
+    margin-top: 24px;
+  }
+  .footer {
+    padding: 20px 0 20px 0 !important;
+    .footer-nav {
+      width: 33.33%;
+    }
+    .title {
+      margin-bottom: 6px;
+      margin-top: 15px;
+    }
+    .logo {
+      img {
+        height: 32px !important;
+      }
+    }
+  }
+  .common-page-slider .slider-bg .title {
+    margin-right: 20px;
+  }
+}

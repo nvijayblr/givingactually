@@ -45,7 +45,13 @@
             <div class="user-campaigns">
 
               <app-progress-bar class="page" [message]="'Loading Camapigns...'" *ngIf="isLoading" ></app-progress-bar>
-
+              
+              <div class="no-campaign" *ngIf="!isLoading && campaignsList.length === 0">
+                <h3>No campaings to show.</h3>
+                <button mat-stroked-button class="gv-secondary-btn rounded" (click)="startCampaing()">Start Campaign</button>
+              </div>
+    
+    
               <!-- Campaing Item -->
               <mat-card class="light-bg campaign-item" *ngFor="let campaign of campaignsList">
                 <div class="row">

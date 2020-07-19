@@ -14,7 +14,7 @@ export class HttpService  {
     private authGuardService: AuthGuardService
   ) { }
 
-  private rootUrl = 'https://givingactuallyapi.azurewebsites.net/';
+  private rootUrl = 'https://developement.givingactually.com/';
 
   private cancelCompaignsListReq$ = new Subject<void>();
   private cancelCompaignDetailsReq$ = new Subject<void>();

@@ -46,10 +46,14 @@
             </button>
           </div>
         </div>
-
         <!-- Campaing Items -->
-        <div class="campaigns-wrapper">
+        <div class="campaigns-wrapper home-campaigns-wrapper">
           <app-progress-bar message="Loading Campaigns..." *ngIf="isLoading"></app-progress-bar>
+
+          <div class="no-campaign" *ngIf="!isLoading && campaignsList.length === 0">
+            <h3>No campaings to show.</h3>
+            <button mat-stroked-button class="gv-secondary-btn rounded" (click)="startCampaing()">Start Campaign</button>
+          </div>
 
           <!-- Carousel -->
           <owl-carousel-o [options]="OwlOptions" #owlCar>

@@ -11,13 +11,13 @@
   <div class="container">
     <div class="breadcrumb-wrapper">
       <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-6">
+        <div class="col-xs-8 col-sm-6 col-md-6">
             <ul class="breadcrumb">
               <li><a routerLink="/home" title="Home">Home <mat-icon>keyboard_arrow_right</mat-icon></a></li>
               <li><span itemprop="name">{{categoryName}}</span></li>
             </ul>
         </div>
-        <div class="col-xs-12 col-sm-6 col-md-6">
+        <div class="col-xs-4 col-sm-6 col-md-6">
           <div class="filter-wrp">
             <button mat-icon-button class="filter-btn" [matMenuTriggerFor]="menuFilter"><mat-icon>sort</mat-icon></button>
             <mat-menu #menuFilter="matMenu">
@@ -36,7 +36,7 @@
 
     <div class="row">
       <!-- Left Panel -->
-      <div class="col-xs-12 col-sm-4 col-md-2">
+      <div class="col-xs-12 col-sm-4 col-md-2 category-list-wrapper">
         <mat-card class="category-nav-list">
           <mat-nav-list>
             <mat-list-item 

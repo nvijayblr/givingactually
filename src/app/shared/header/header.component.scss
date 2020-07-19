@@ -36,7 +36,15 @@
     transition: all .5s ease-in-out;
     .logo {
       img {
-        height: 40px;
+        height: 50px;
+        &.bg-header {
+          display: block;
+          transition: all .10s ease-in-out;
+        }
+        &.white-header {
+          display: none;
+          transition: all .10s ease-in-out;
+        }
       }
       .logo-label {
         font-weight: 500;
@@ -80,6 +88,17 @@
       background-color: #fff;
       transition: all .5s ease-in-out;
       .logo {
+        img {
+          &.bg-header {
+            display: none;
+            transition: all .10s ease-in-out;
+          }
+          &.white-header {
+            display: block;
+            height: 40px;
+            transition: all .10s ease-in-out;
+          }
+        }
         .logo-label {
           color: #000;
           transition: all .25s ease-in-out;
@@ -119,4 +138,11 @@
     color: #008b6e;
     font-weight: 500;
   }
+}
+.hamburger-icon {
+  display: none;
+  float: left;
+  top: 5px;
+  left: -5px;
+  color: #f1f1f1;  
 }

@@ -59,7 +59,7 @@ import { DonationComponent } from './components/authorized/donation/donation.com
       debug: false
     }),
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyBhcjuEadBRT5gygiNPVewKXxrnw88Eus0',
+      apiKey: 'AIzaSyBnjQKvKIxr3UUoGCQ2EBSFvQrTEoz7gW8',
       libraries: ['places']
     }),
     SharedModule
@@ -76,12 +76,12 @@ import { DonationComponent } from './components/authorized/donation/donation.com
         providers: [{
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              '604426761950-4p91h2avv8q5aj72r0um6poiv4a29m14.apps.googleusercontent.com'
+              '843617944994-lh919mbd5u8p0htc45bv1oucbrb5a9oq.apps.googleusercontent.com'
             ),
           },
           {
             id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider('894504637650396'),
+            provider: new FacebookLoginProvider('309241957147893'),
           }
         ],
       } as SocialAuthServiceConfig,

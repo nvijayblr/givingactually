@@ -1,10 +1,3 @@
-.title {
-  font-size: 20px;
-  margin-bottom: 10px;
-}
-.mat-form-field {
-  margin-bottom: 10px;
-}
 .custom-login-wrapper {
   border-left: 1px solid rgba(177, 177, 177, 0.42);
   padding-left: 30px;
@@ -12,17 +5,24 @@
 }
 .login-wrapper {
   position: relative !important;
+  .close-btn {
+    position: absolute;
+    right: -10px;
+    top: -13px;
+  }
+  .title {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  .mat-form-field {
+    margin-bottom: 10px;
+  }
+  .btn-wrpper {
+    text-align: right;
+    margin-bottom: 20px;
+  }
 }
 
-.close-btn {
-  position: absolute;
-  right: -10px;
-  top: -13px;
-}
-.btn-wrpper {
-  text-align: right;
-  margin-bottom: 20px;
-}
 .social-btn-wrapper {
   max-width: 250px;
   text-align: center;

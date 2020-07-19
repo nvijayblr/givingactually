@@ -90,6 +90,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router.navigate([`/home`]);
   }
 
+  slideMobileNav() {
+    this.messageService.sendCommonMessage({topic: 'toggleMobileNav', reason: 'iconClicked'});
+  }
+
   ngOnDestroy() {
     this.subscription.unsubscribe();
     this.commonSub.unsubscribe();

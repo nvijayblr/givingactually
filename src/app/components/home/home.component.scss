@@ -11,6 +11,7 @@
       position: absolute;
       bottom: 30%;
       width: 620px;
+      max-width: 100%;
     }
     .btn-wrapper {
       position: absolute;
@@ -227,4 +228,7 @@ button {
     position: relative;
     top: -75px;
   }  
+}
+.home-campaigns-wrapper .campaign-item {
+  max-width: 380px;
 }

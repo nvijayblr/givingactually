@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { HttpService } from '../../../services/http-service.service';
@@ -8,6 +8,7 @@ import { forkJoin, Subscriber } from 'rxjs';
 import * as moment from 'moment';
 import { MatPaginatorIntl } from '@angular/material';
 import { AuthGuardService } from '../../../services/auth-guard.service';
+import { MessageService } from '../../../services/message.service';
 
 const customPaginatorIntl = new MatPaginatorIntl();
 customPaginatorIntl.itemsPerPageLabel = 'Campaigns per page:';
@@ -47,14 +48,18 @@ export class AccountsComponent implements OnInit {
   bankAccountDetailsForm: FormGroup;
   isbankAccountDetLoading = false;
 
+  isUserLoggedIn = false;
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private http: HttpService,
-    private authGuardService: AuthGuardService, ) { }
+    private router: Router,
+    private authGuardService: AuthGuardService,
+    private messageService: MessageService) { }
 
   ngOnInit() {
+    this.isUserLoggedIn = this.authGuardService.isUserLoggedIn();
     this.user = this.authGuardService.getLoggedInUserDetails();
     this.userId = this.route.snapshot.params.userId;
     if (this.userId) {
@@ -216,6 +221,14 @@ export class AccountsComponent implements OnInit {
     // Load bank account details.
     if (tab.index === 2) {
       this.initBankAccountDetails();
+    }
+  }
+
+  startCampaing() {
+    if (this.isUserLoggedIn) {
+      this.router.navigate(['/ce-campaign']);
+    } else {
+      this.messageService.sendCommonMessage({topic: 'showLogin', reason: 'CreateCampaign'});
     }
   }
 

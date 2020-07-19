@@ -1,9 +1,34 @@
-<app-progress-bar class="page" [message]="'Loading Giving Actually...'" *ngIf="isLoading" ></app-progress-bar>
+<mat-sidenav-container fxFlexFill>
+  <mat-sidenav #hamburgerNav class="mobile-nav">
+    <button mat-icon-button (click)="hamburgerNav.toggle()" fxShow="true" class="close-icon">
+      <mat-icon>close</mat-icon>
+    </button>
+    <mat-nav-list>
+      <a (click)="hamburgerNav.close()" routerLink="/category/All" mat-list-item>All Campaigns</a>
+      <a (click)="hamburgerNav.close()" href="#" mat-list-item>Campaigns Near Me</a>
+      <a (click)="hamburgerNav.close()" href="#" mat-list-item>How it Works</a>
+      <a 
+        *ngFor="let category of categories" 
+        mat-list-item
+        (click)="hamburgerNav.close()"
+        routerLink="/category/{{category}}"
+      >{{category}}
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content fxFlexFill>
 
-<div class="giving-actually-app" *ngIf="!isLoading">
-  <app-header></app-header>
-  <main>
-    <router-outlet></router-outlet>
-  </main>
-  <app-footer></app-footer>
-</div>
+    <app-progress-bar class="page" [message]="'Loading Giving Actually...'" *ngIf="isLoading" ></app-progress-bar>
+
+    <div class="giving-actually-app" *ngIf="!isLoading">
+      <app-header></app-header>
+      <main>
+        <router-outlet></router-outlet>
+      </main>
+      <app-footer></app-footer>
+    </div>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
