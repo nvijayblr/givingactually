@@ -171,11 +171,17 @@ export class HttpService  {
 
   getAuthHeaders(): any {
     const token = this.authGuardService.getToken();
-    const header = {
-      headers: new HttpHeaders()
-        .set('Authorization',  `Bearer ${token}`)
-      };
-    return header;
+    // const header = {
+    //   headers: new HttpHeaders()
+    //     .set('Authorization',  `Bearer ${token}`)
+    //   };
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        Authorization: `Bearer ${token}`
+      })
+    };
+    return httpOptions;
   }
 
   createCampaignBasic(payload): Observable<any> {
@@ -375,7 +381,7 @@ export class HttpService  {
   // Payment (Donation)
   registerDonation(payload): Observable<any> {
     const header: any = this.getAuthHeaders();
-    return this.http.post<any>(`${this.rootUrl}api/Donation`, payload, header).pipe(
+    return this.http.post<any>(`${this.rootUrl}api/Donation`, payload).pipe(
       tap((res) => {
       }),
       catchError(err => {

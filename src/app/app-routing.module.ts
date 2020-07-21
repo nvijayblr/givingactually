@@ -33,7 +33,7 @@ const routes: Routes = [{
   }, {
     path: 'ce-campaign',
     component: CreateCampaignComponent,
-    // canActivate: [AuthGaurd]
+    canActivate: [AuthGaurd]
   }, {
     path: 'campaign-updates',
     component: CampaignUpdatesComponent,

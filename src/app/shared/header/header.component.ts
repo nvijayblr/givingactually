@@ -82,7 +82,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   doLogout() {
     const userSession = this.authGuardService.getLoggedUser();
-    if (userSession.isisSocial) {
+    console.log(userSession);
+    if (userSession.isSocial) {
       this.socialAuthService.signOut();
     }
     this.user.isLoggedIn = false;

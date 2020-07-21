@@ -113,7 +113,6 @@ export class LoginSignupComponent implements OnInit {
       this.isLoading = false;
       this.isOtpScreen = true;
       const { UserName, Password } = this.signupForm.value;
-      // this.setLoginSessionAndRouting(result);
       this.otpForm.controls.UserName.setValue(UserName);
       this.loginForm.controls.username.setValue(UserName);
       this.loginForm.controls.password.setValue(Password);
