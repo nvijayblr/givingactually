@@ -171,17 +171,17 @@ export class HttpService  {
 
   getAuthHeaders(): any {
     const token = this.authGuardService.getToken();
-    // const header = {
-    //   headers: new HttpHeaders()
-    //     .set('Authorization',  `Bearer ${token}`)
-    //   };
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-        Authorization: `Bearer ${token}`
-      })
+    const header = {
+      headers: new HttpHeaders()
+        .set('Authorization',  `Bearer ${token}`)
     };
-    return httpOptions;
+    // const httpOptions = {
+    //   headers: new HttpHeaders({
+    //     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+    //     Authorization: `Bearer ${token}`
+    //   })
+    // };
+    return header;
   }
 
   createCampaignBasic(payload): Observable<any> {

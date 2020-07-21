@@ -12,9 +12,9 @@ export class HttpInterceptorService implements HttpInterceptor {
       return next.handle(request).pipe( tap(() => {},
         (err: any) => {
           if (err instanceof HttpErrorResponse) {
-            // if (err.status === 401) {
-            //   this.messageService.sendCommonMessage({topic: 'logout', reason: 'Unauthorized'});
-            // }
+            if (err.status === 401) {
+              this.messageService.sendCommonMessage({topic: 'logout', reason: 'Unauthorized'});
+            }
             return;
           }
         })
