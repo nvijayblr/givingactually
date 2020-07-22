@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { forkJoin } from 'rxjs';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { MapsAPILoader, MouseEvent } from '@agm/core';
 import { MatStepper } from '@angular/material/stepper';
@@ -46,6 +47,8 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
   isCampaignLocationErr = false;
   isCampaignDescriptionErr = false;
 
+  beneficiaryList = [];
+  currencyList = [];
   categories: any = [];
   user: any = {};
   isLoading = false;
@@ -88,13 +91,12 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.user = this.authGuardService.getLoggedInUserDetails();
+    // this.initDropdownData();
     this.route.queryParams.subscribe(queryParams => {
       if (queryParams.id) {
         this.campaignId = queryParams.id;
         this.stepperIndex = queryParams.step - 1;
-        if (!this.campaign.Id) {
-          this.getCampaignDetails(queryParams.id);
-        }
+        this.initEditCampaignDetails();
       }
     });
 
@@ -110,6 +112,30 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       this.stepper.selectedIndex = this.stepperIndex;
     }, 100);
+  }
+
+  initEditCampaignDetails() {
+    if (!this.campaign.Id) {
+      this.getCampaignDetails(this.campaignId);
+    }
+  }
+
+  initDropdownData() {
+    this.isLoading = true;
+    this.loaderMessage = 'Loding details...';
+    if (!this.beneficiaryList.length || !this.currencyList.length) {
+      forkJoin([this.http.getBeneficiaryType(), this.http.getMoneyType()]).subscribe(responses => {
+        this.beneficiaryList = responses[0];
+        this.currencyList = responses[0];
+        this.initEditCampaignDetails();
+      }, err => {
+        this.beneficiaryList = [];
+        this.currencyList = [];
+        this.initEditCampaignDetails();
+      });
+    } else {
+      this.initEditCampaignDetails();
+    }
   }
 
 
@@ -248,7 +274,6 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
     const formData: any = new FormData();
     this.galleryImgVideos.map((imageVideo) => {
       if (imageVideo.file) {
-        console.log(imageVideo.file);
         formData.append('file', imageVideo.file);
         isUploadFound = true;
       }

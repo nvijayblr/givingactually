@@ -113,6 +113,28 @@ export class HttpService  {
   }
 
 
+  // Get Beneficiary Type
+  getBeneficiaryType(): Observable<any> {
+    return this.http.get<any>(`${this.rootUrl}api/List/BeneficiaryType`).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  // Get Money Type
+  getMoneyType(): Observable<any> {
+    return this.http.get<any>(`${this.rootUrl}api/List/MoneyType`).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
 
   // Authorized API
   signupRequest(payload): Observable<any> {

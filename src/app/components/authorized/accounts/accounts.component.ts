@@ -116,7 +116,6 @@ export class AccountsComponent implements OnInit {
       stateName: [user.stateName],
       countryName: [user.countryName],
     });
-    console.log(this.personalDetailsForm);
     this.setNGOValidators();
   }
 
@@ -209,7 +208,6 @@ export class AccountsComponent implements OnInit {
             ngoSectors: responses[0],
             ngoTypes: responses[1]
           };
-          console.log(this.ngoList);
         }, err => {
           this.ngoList = {
             ngoSectors: [],

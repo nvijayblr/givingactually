@@ -1,3 +1,5 @@
+<app-progress-bar class="page" [message]="'Loading Giving Actually...'" *ngIf="isLoading" ></app-progress-bar>
+
 <mat-sidenav-container fxFlexFill>
   <mat-sidenav #hamburgerNav class="mobile-nav">
     <button mat-icon-button (click)="hamburgerNav.toggle()" fxShow="true" class="close-icon">
@@ -18,7 +20,6 @@
   </mat-sidenav>
   <mat-sidenav-content fxFlexFill>
 
-    <app-progress-bar class="page" [message]="'Loading Giving Actually...'" *ngIf="isLoading" ></app-progress-bar>
 
     <div class="giving-actually-app" *ngIf="!isLoading">
       <app-header></app-header>
