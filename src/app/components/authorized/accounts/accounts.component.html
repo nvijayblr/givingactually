@@ -230,7 +230,7 @@
                       <mat-form-field appearance="fill">
                         <mat-label>NGO Secotor</mat-label>
                         <mat-select formControlName="NGOSector">
-                          <mat-option *ngFor="let sector of ngoList.ngoSectors" value="{{sector.Value}}">{{sector.Text}}</mat-option>
+                          <mat-option *ngFor="let sector of ngoList.ngoSectors" value="{{sector.Text}}">{{sector.Text}}</mat-option>
                         </mat-select>
                       </mat-form-field>
                     </div>
@@ -238,7 +238,7 @@
                       <mat-form-field appearance="fill">
                         <mat-label>NGO Type</mat-label>
                         <mat-select formControlName="NGOType">
-                          <mat-option *ngFor="let type of ngoList.ngoTypes" value="{{type.Value}}">{{type.Text}}</mat-option>
+                          <mat-option *ngFor="let type of ngoList.ngoTypes" value="{{type.Text}}">{{type.Text}}</mat-option>
                         </mat-select>
                       </mat-form-field>
                     </div>

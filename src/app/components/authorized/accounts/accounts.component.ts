@@ -173,7 +173,7 @@ export class AccountsComponent implements OnInit {
     this.isPersonalDetLoading = true;
     const psersonalDetails = {
       ...this.personalDetailsForm.value,
-      UserId: 28
+      UserId: this.userId
     };
     this.http.updateUserPersonalDetails(psersonalDetails).subscribe((result: any) => {
       this.isPersonalDetLoading = false;
