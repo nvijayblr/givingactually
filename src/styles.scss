@@ -453,6 +453,7 @@ button {
     }
   }
 }
+
 // Spinner style
 @keyframes spinner {
   to {transform: rotate(360deg);}
@@ -557,10 +558,28 @@ mat-sidenav.mat-drawer {
   }
 }
 
+body {
+  .mat-drawer-container {
+    overflow: inherit;
+    .mat-drawer-content {
+      overflow: inherit;
+    }
+  }
+}
+
 
 // Media Query
 
 @media only screen and (max-width: 720px) { 
+  body {
+    .mat-drawer-container {
+      overflow: hidden;
+      .mat-drawer-content {
+        overflow: hidden;
+      }
+    }
+  }
+  
   .hamburger-icon {
     display: block !important;
   }  

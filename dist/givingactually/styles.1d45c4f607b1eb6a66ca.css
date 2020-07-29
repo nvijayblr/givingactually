@@ -9470,7 +9470,18 @@ a.text-dark:hover, a.text-dark:focus {
   height: 40px;
 }.mobile-nav .mat-nav-list .mat-list-item .mat-list-item-content {
   padding-left: 26px;
+}body .mat-drawer-container {
+  overflow: inherit;
+}body .mat-drawer-container .mat-drawer-content {
+  overflow: inherit;
 }@media only screen and (max-width: 720px) {
+  body .mat-drawer-container {
+    overflow: hidden;
+  }
+  body .mat-drawer-container .mat-drawer-content {
+    overflow: hidden;
+  }
+
   .hamburger-icon {
     display: block !important;
   }
