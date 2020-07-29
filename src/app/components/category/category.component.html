@@ -11,23 +11,30 @@
   <div class="container">
     <div class="breadcrumb-wrapper">
       <div class="row">
-        <div class="col-xs-8 col-sm-6 col-md-6">
+        <div class="col-8 col-sm-6 col-md-6">
             <ul class="breadcrumb">
               <li><a routerLink="/home" title="Home">Home <mat-icon>keyboard_arrow_right</mat-icon></a></li>
               <li><span itemprop="name">{{categoryName}}</span></li>
             </ul>
         </div>
-        <div class="col-xs-4 col-sm-6 col-md-6">
+        <div class="col-4 col-sm-6 col-md-6">
           <div class="filter-wrp">
+            <div class="sort-by">
+              <strong>
+                {{sorting.label}}
+                <i class="fa fa-arrow-{{sorting.order === 'Asc' ? 'down' : 'up'}}" aria-hidden="true"></i>
+              </strong>
+            </div>
             <button mat-icon-button class="filter-btn" [matMenuTriggerFor]="menuFilter"><mat-icon>sort</mat-icon></button>
             <mat-menu #menuFilter="matMenu">
-              <button mat-menu-item>Title</button>
-              <button mat-menu-item>Category</button>
-              <button mat-menu-item>Campaing Organizer</button>
-              <button mat-menu-item>Near by</button>
-              <button mat-menu-item>Location</button>
-              <button mat-menu-item>Target Amount</button>
-              <button mat-menu-item>Goal Amount</button>
+              <button 
+                mat-menu-item 
+                *ngFor="let sorting of sortingsList" 
+                [value]="sorting.value"
+                (click)="applySorting(sorting)"
+              >
+                {{sorting.label}}
+              </button>
             </mat-menu>
           </div>
         </div>
@@ -36,13 +43,13 @@
 
     <div class="row">
       <!-- Left Panel -->
-      <div class="col-xs-12 col-sm-4 col-md-2 category-list-wrapper">
+      <div class="col-12 col-sm-4 col-md-2 category-list-wrapper">
         <mat-card class="category-nav-list">
           <mat-nav-list>
             <mat-list-item 
               routerLink="/category/All"
               [ngClass]="{'active': categoryName === 'All'}"
-            >All Campaigns</mat-list-item>            
+            >All</mat-list-item>            
             <mat-list-item 
               *ngFor="let category of categories" 
               routerLink="/category/{{category}}"
@@ -54,14 +61,14 @@
       <!-- End of Left Panel -->
 
         <!-- Category Panel -->
-        <div class="col-xs-12 col-sm-4 col-md-10 campaigns-container">
+        <div class="col-12 col-sm-4 col-md-10 campaigns-container">
 
           <div class="row campaigns-wrapper">
 
             <app-progress-bar class="loader" message="Loading Campaigns..." *ngIf="isLoading"></app-progress-bar>
 
             <!-- Items -->
-            <div class="col-xs-12 col-sm-6 col-md-4 campaign-item" *ngFor="let campaign of campaignsList">
+            <div class="col-12 col-sm-6 col-md-4 campaign-item" *ngFor="let campaign of campaignsList">
               <div class="campaign-thumbnail">
                 <div class="thumb">
                   <div class="img" [ngStyle]="{'background-image': 'url(' + campaign.BDisplayPicPath + ')'}"></div>
@@ -74,11 +81,11 @@
                   <p class="desc">{{campaign.CampaignDescription}}</p>
                 </div>
                 <div class="row category">
-                  <div class="col-xs-12 col-sm-6 col-md-6 campaign-address">
+                  <div class="col-6 col-sm-6 col-md-6 campaign-address">
                     <i class="fa fa-tag"></i>
                     <span>{{campaign.CategoryName}}</span>
                   </div>
-                  <div class="col-xs-12 col-sm-6 col-md-6 campaign-address right" [title]="campaign.placeName">
+                  <div class="col-6 col-sm-6 col-md-6 campaign-address right" [title]="campaign.placeName">
                     <i class="fa fa-map-marker"></i>
                     <span>{{campaign.placeName}}</span>
                   </div>
@@ -91,11 +98,11 @@
                 </div>
     
                 <div class="row funded-info">
-                  <div class="col-xs-12 col-sm-4 col-md-6 funded">
+                  <div class="col-6 col-sm-4 col-md-6 funded">
                     ₹{{toLocaleString(campaign.RaisedAmount)}}
                     <span class="label">FUNDED</span>
                   </div>
-                  <div class="col-xs-12 col-sm-4 col-md-6 funded goals">
+                  <div class="col-6 col-sm-4 col-md-6 funded goals">
                     ₹{{toLocaleString(campaign.CampaignTargetMoney)}}
                     <span class="label">GOAL</span>
                   </div>
@@ -107,7 +114,7 @@
           </div>
           <div class="no-campaign" *ngIf="!isLoading && total === 0">
             <h3>No campaings to show.</h3>
-            <button mat-stroked-button class="gv-secondary-btn rounded" (click)="startCampaing()">Start Campaign</button>
+            <button mat-stroked-button class="gv-secondary-btn rounded" (click)="startCampaign()">Start Campaign</button>
           </div>
           <!-- Pagination -->
           <div class="pagination-wrapper" [hidden]="isLoading">

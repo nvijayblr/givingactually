@@ -26,8 +26,9 @@
                 <ng-template matStepLabel>Campaign Details</ng-template>
                 <mat-form-field appearance="standard">
                   <mat-label>Campaign Title</mat-label>
-                  <input matInput placeholder="Campaign Title" formControlName="CampaignTitle" autocomplete="off"/>
+                  <input matInput placeholder="Campaign Title" formControlName="CampaignTitle" maxlength="50" autocomplete="off"/>
                 </mat-form-field>
+                <div class="characters-count campaign-title">{{campaignBasicForm.controls.CampaignTitle.value?.length}} / 50</div>
 
                 <!-- <mat-form-field appearance="standard">
                   <mat-label>Short Description</mat-label>
@@ -169,8 +170,15 @@
                   [config]="editorConfig" 
                   formControlName="StoryDescription">
                 </angular-editor>
+                <mat-error 
+                  *ngIf="
+                    campaignDescriptionForm.controls.StoryDescription.value?.length < 500 ||
+                    campaignDescriptionForm.controls.StoryDescription.value?.length > 5000" 
+                  class="form-error description-error">
+                  Description should be minimum 500 characters and maximum 5000 characters.
+                </mat-error>
                 <div class="characters-count">
-                  {{campaignDescriptionForm.controls.StoryDescription.value?.length}} / 5000 (includes the HTML string)
+                  {{campaignDescriptionForm.controls.StoryDescription.value?.length}} / 5000 (includes the HTML characters)
                 </div>
   
                 <div class="row" *ngFor="let attachment of galleryImgVideos; let i = index">
@@ -244,11 +252,11 @@
                   <div class="desc" [innerHTML]="campaign.campaignDescription.StripedDescription"></div>
                 </div>
                 <div class="row category">
-                  <div class="col-xs-12 col-sm-6 col-md-6 campaign-address">
+                  <div class="col-6 col-sm-6 col-md-6 campaign-address">
                     <i class="fa fa-tag"></i>
                     <span>{{campaign.CategoryName}}</span>
                   </div>
-                  <div class="col-xs-12 col-sm-6 col-md-6 campaign-address right" [title]="campaign.CampainOrganizer.placeNmae">
+                  <div class="col-6 col-sm-6 col-md-6 campaign-address right" [title]="campaign.CampainOrganizer.placeNmae">
                     <i class="fa fa-map-marker"></i>
                     <span>{{campaign.CampainOrganizer.placeNmae}}</span>
                   </div>
@@ -261,11 +269,11 @@
                 </div>
     
                 <div class="row funded-info">
-                  <div class="col-xs-12 col-sm-4 col-md-6 funded">
+                  <div class="col-6 col-sm-4 col-md-6 funded">
                     ₹{{toLocaleString(campaign.RaisedAmount)}}
                     <span class="label">FUNDED</span>
                   </div>
-                  <div class="col-xs-12 col-sm-4 col-md-6 funded goals">
+                  <div class="col-6 col-sm-4 col-md-6 funded goals">
                     ₹{{toLocaleString(campaign.CampaignTargetMoney)}}
                     <span class="label">GOAL</span>
                   </div>

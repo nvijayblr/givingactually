@@ -1,0 +1,93 @@
+<section class="common-page-slider">
+  <div class="slider-bg" >
+    <div class="container">
+      <div class="search-wrapper">
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>search</mat-icon>
+          <input type="text" placeholder="Search" matInput autocomplete="off" [(ngModel)]="query" />
+          <button matSuffix mat-stroked-button class="gv-secondary-btn transparent rounded" (click)="initSerach()">Search</button>
+       </mat-form-field>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gv-page-body">
+  <div class="container">
+    <div class="row">
+
+        <!-- Category Panel -->
+        <div class="col-12 col-sm-12 col-md-12 campaigns-container">
+
+          <div class="row campaigns-wrapper">
+
+            <app-progress-bar class="loader" message="Loading Campaigns..." *ngIf="isLoading"></app-progress-bar>
+
+            <!-- Items -->
+            <div class="col-12 col-sm-6 col-md-4 campaign-item" *ngFor="let campaign of campaignsList">
+              <div class="campaign-thumbnail">
+                <div class="thumb">
+                  <div class="img" [ngStyle]="{'background-image': 'url(' + campaign.BDisplayPicPath + ')'}"></div>
+                </div>
+                <button mat-stroked-button class="gv-secondary-btn transparent rounded read-more" routerLink="/campaigns/{{campaign.Id}}">View More</button>
+              </div>
+              <div class="info">
+                <div class="title-desc">
+                  <h4 class="title"><a routerLink="/campaigns/{{campaign.Id}}" title={{campaign.CampaignTitle}}>{{campaign.CampaignTitle}}</a></h4>
+                  <p class="desc">{{campaign.CampaignDescription}}</p>
+                </div>
+                <div class="row category">
+                  <div class="col-6 col-sm-6 col-md-6 campaign-address">
+                    <i class="fa fa-tag"></i>
+                    <span>{{campaign.CategoryName}}</span>
+                  </div>
+                  <div class="col-6 col-sm-6 col-md-6 campaign-address right" [title]="campaign.placeName">
+                    <i class="fa fa-map-marker"></i>
+                    <span>{{campaign.placeName}}</span>
+                  </div>
+                </div>
+    
+                <div class="funded-chart">
+                  <div class="goals">
+                    <div class="funded" [ngStyle]="{'width': campaign.RaisedPercentage + '%'}"></div>
+                  </div>
+                </div>
+    
+                <div class="row funded-info">
+                  <div class="col-6 col-sm-4 col-md-6 funded">
+                    ₹{{toLocaleString(campaign.RaisedAmount)}}
+                    <span class="label">FUNDED</span>
+                  </div>
+                  <div class="col-6 col-sm-4 col-md-6 funded goals">
+                    ₹{{toLocaleString(campaign.CampaignTargetMoney)}}
+                    <span class="label">GOAL</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- End of the item -->
+
+          </div>
+          <div class="no-campaign" *ngIf="!isLoading && total === 0">
+            <h3>No campaings to show.</h3>
+            <button mat-stroked-button class="gv-secondary-btn rounded" (click)="startCampaign()">Start Campaign</button>
+          </div>
+          <!-- Pagination -->
+          <!-- <div class="pagination-wrapper" [hidden]="isLoading">
+            <mat-paginator 
+              [hidden]="total < pageSize"
+              *ngIf="total"
+              [length]="total"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="[6, 9, 12]"
+              [showFirstLastButtons]="true"
+              (page)="pageEvent = onPaginationChange($event)">
+            </mat-paginator>
+          </div> -->
+
+      </div>
+      <!-- End of Category Panel -->
+    </div>
+
+  </div>
+</section>

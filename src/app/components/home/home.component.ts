@@ -43,6 +43,7 @@ export class HomeComponent implements OnInit {
   isUserLoggedIn = false;
   isLoading = true;
   campaignsList: any = [];
+  query = '';
 
   constructor(
     private router: Router,
@@ -73,12 +74,17 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  startCampaing() {
+  startCampaign() {
     if (this.isUserLoggedIn) {
       this.router.navigate(['/ce-campaign']);
     } else {
       this.messageService.sendCommonMessage({topic: 'showLogin', reason: 'CreateCampaign'});
     }
+  }
+
+  doSearch() {
+    console.log(this.query);
+    this.router.navigate([`/search`], {queryParams: { q: this.query }});
   }
 
   toLocaleString(value) {

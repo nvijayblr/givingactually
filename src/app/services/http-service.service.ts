@@ -19,6 +19,7 @@ export class HttpService  {
   private cancelCompaignsListReq$ = new Subject<void>();
   private cancelCompaignDetailsReq$ = new Subject<void>();
   private cancelCompaignByCategoryReq$ = new Subject<void>();
+  private cancelSearchReq$ = new Subject<void>();
 
   getTopCompaignsList(): Observable<any> {
     return this.http.get<any>(`${this.rootUrl}api/Campaign/TopCampaigns/`).pipe(
@@ -60,9 +61,10 @@ export class HttpService  {
   }
 
 
-  getCompaignByCategory(category, page, pageSize): Observable<any> {
-    return this.http.get<any>(`${this.rootUrl}api/campaign/?Category=${category}&page=${page}&page_size=${pageSize}`).pipe(
-      tap((res) => {
+  getCompaignByCategory(category, page, pageSize, sortBy, order): Observable<any> {
+    return this.http.get<any>(
+      `${this.rootUrl}api/campaign/?Category=${category}&page=${page}&page_size=${pageSize}&SortBy=${sortBy}&order=${order}`
+      ).pipe(tap((res) => {
       }),
       catchError(err => {
         return throwError(err);
@@ -78,6 +80,26 @@ export class HttpService  {
   public onCancelCompaignByCategoryReq() {
     return this.cancelCompaignByCategoryReq$.asObservable();
   }
+
+  getSearchCampaigns(query): Observable<any> {
+    return this.http.get<any>(`${this.rootUrl}api/Campaign/SearchCampaigns/?SearchText=${query}`).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+      takeUntil(this.onCancelSearchReq())
+    );
+  }
+
+  public cancelSearchReq() {
+    this.cancelSearchReq$.next();
+  }
+
+  public onCancelSearchReq() {
+    return this.cancelSearchReq$.asObservable();
+  }
+
 
   // Get Categories
   getCategories(): Observable<any> {

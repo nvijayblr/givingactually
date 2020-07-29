@@ -39,7 +39,7 @@
   }
   .sub-title {
     font-size: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
   }
   .desc {
     font-size: 16px;
@@ -56,14 +56,14 @@
       background-color: transparent;
       padding: 0;
       .user-img {
-        font-size: 30px;
-        font-family: 'Roboto Slab';
+        font-size: 20px;
+        font-family: 'Roboto';
         font-weight: 400;
         color: rgba(0, 0, 0, 0.62);        
-        width: 60px;
-        height: 60px;
+        width: 50px;
+        height: 50px;
         text-align: center;
-        line-height: 60px;
+        line-height: 50px;
         border-radius: 50%;
         border: 1px solid #ccc;
         background: rgba(255, 255, 255, 0.62);
@@ -321,10 +321,10 @@
       font-family: "Roboto";
       font-weight: 400;
       color: rgba(0, 0, 0, 0.62);        
-      width: 60px;
-      height: 60px;
+      width: 50px;
+      height: 50px;
       text-align: center;
-      line-height: 60px;
+      line-height: 50px;
       border-radius: 50%;
       border: 1px solid #ccc;
       background: rgba(255, 255, 255, 0.62);
@@ -380,7 +380,7 @@
   }
   .donor-img {
     font-size: 20px;
-    font-family: "Roboto Slab";
+    font-family: "Roboto";
     font-weight: 400;
     color: rgba(0, 0, 0, 0.62);
     width: 50px;

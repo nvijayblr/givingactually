@@ -10,6 +10,7 @@ import { FaqComponent } from './components/faq/faq.component';
 import { HighlightsComponent } from './components/highlights/highlights.component';
 import { CampaignsComponent } from './components/campaigns/campaigns.component';
 import { CategoryComponent } from './components/category/category.component';
+import { SearchComponent } from './components/search/search.component';
 
 // Authorized components
 import { AccountsComponent } from './components/authorized/accounts/accounts.component';
@@ -26,6 +27,9 @@ const routes: Routes = [{
   }, {
     path: 'category/:categoryId',
     component: CategoryComponent
+  }, {
+    path: 'search',
+    component: SearchComponent
   }, {
     path: 'accounts/:userId',
     component: AccountsComponent,

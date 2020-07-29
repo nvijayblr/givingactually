@@ -87,7 +87,7 @@
           <div class="col-xs-12 col-sm-4 col-md-4 user-email">
             <h4 class="org-title">Campaign Organizer:</h4>
             <i class="fa fa-envelope"></i>
-            <a href="mailto:{{campaign.CreatedBy}}" target="_blank">{{campaign.CreatedBy}}</a>
+            <a href="mailto:{{campaign.CreatedBy}}" target="_blank">{{campaign.BGroupName}}</a>
           </div>
           <div class="col-xs-12 col-sm-4 col-md-8 cagegory">
             <!-- Social Share -->
@@ -236,7 +236,7 @@
         </mat-card>
 
         <!-- Comments -->
-        <mat-card class="comments-section no-margin" *ngIf="campaign.Comments?.length">
+        <!-- <mat-card class="comments-section no-margin" *ngIf="campaign.Comments?.length">
           <div class="row">
             <div class="col-xs-12 col-sm-4 col-md-6">
               <h3 class="sub-title">Comments 
@@ -271,7 +271,7 @@
               </ng-template>
             </owl-carousel-o>
           </div>
-        </mat-card>
+        </mat-card> -->
 
 
       </div>
@@ -298,10 +298,10 @@
                   <i class="fa fa-map-marker"></i>
                   <span>{{campaign.CampainOrganizer?.placeNmae}}</span>
                 </p>
-                <p class="s-email">
+                <!-- <p class="s-email">
                   <i class="fa fa-envelope"></i>
                   <a href="mailto:{{campaign.CreatedBy}}" target="_blank">{{campaign.CreatedBy}}</a>
-                </p>
+                </p> -->
               </div>
             </div>
           </mat-card>
@@ -318,22 +318,28 @@
                     </div>
                     <p class="label">{{campaign.RaisedPercentage}}% AMOUNT ACHIEVED OF ₹{{toLocaleString(campaign.CampaignTargetMoney)}}</p>
                   </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="inner-box-left">
-                    <h4>₹ {{toLocaleString(campaign.RaisedAmount)}}</h4>
-                    <p class="label">Money Raised</p>
+                  <div class="row">
+                    <div class="col-6 col-xs-6 col-sm-6 col-md-6">
+                      <div class="inner-box-left">
+                        <h4>₹{{toLocaleString(campaign.RaisedAmount)}}</h4>
+                        <p class="label">Money Raised</p>
+                      </div>
+                    </div>
+                    <div class="col-6 col-xs-6 col-sm-6 col-md-6">
+                      <div class="inner-box-right">
+                        <h4>₹{{toLocaleString(campaign.CampaignTargetMoney)}}</h4>
+                        <p class="label">Goal</p>
+                      </div>
+                    </div>
                   </div>
+                </div>
+                <div class="col-6 col-md-6">
                   <div class="inner-box">
                     <h4>{{campaign.CampaignDonationList.length}}</h4>
                     <p class="label">Donors</p>
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <div class="inner-box-right">
-                    <h4>₹ {{toLocaleString(campaign.CampaignTargetMoney)}}</h4>
-                    <p class="label">Goal</p>
-                  </div>
+                <div class="col-6 col-md-6">
                   <div class="inner-box">
                     <h4>{{campaign.EndorsementsList.EndorseList?.length}}</h4>
                     <p class="label">Endorsements</p>
@@ -341,21 +347,21 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-4 right-border">
+                <div class="col-4 col-md-4 right-border">
                   <div class="inner-box-border">
                     <h4>{{campaign.LikeCount}}</h4>
                     <p class="label">Likes</p>
                     <i class="fa fa-thumbs-up"></i>
                   </div>
                 </div>
-                <div class="col-md-4 right-border">
+                <div class="col-4 col-md-4 right-border">
                   <div class="inner-box-border">
                     <h4>{{campaign.Comments?.length}}</h4>
                     <p class="label">Comments</p>
                     <i class="fa fa-comments"></i>
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-4 col-md-4">
                   <div class="inner-box-border">
                     <h4>{{campaign.sharecount}}</h4>
                     <p class="label">Shares</p>

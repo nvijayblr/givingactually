@@ -29,6 +29,47 @@ export class CategoryComponent implements OnInit {
   page = 1;
   pageSize = 6;
   categories = [];
+  sortingsList = [{
+    label: 'Latest',
+    value: 'CreatedOn',
+    order: 'Asc'
+  }, {
+    label: 'Title',
+    value: 'CampaignTitle'
+  }, {
+    label: 'Category',
+    value: 'CategoryName'
+  }, {
+    label: 'Location',
+    value: 'placeName'
+  }, {
+    label: 'Goal Amount',
+    value: 'CampaignTargetMoney'
+  }, {
+    label: 'Funded Amount',
+    value: 'RaisedAmount'
+  }, {
+    label: 'Donors',
+    value: 'Donors'
+  }, {
+    label: 'Likes',
+    value: 'Likes'
+  }, {
+    label: 'Comments',
+    value: 'Comments'
+  }, {
+    label: 'Endorsements',
+    value: 'Endorsements'
+  }, {
+    label: 'Distance',
+    value: 'Distance'
+  }];
+
+  sorting = {
+    label: 'Latest',
+    value: 'CreatedOn',
+    order: 'Asc'
+  };
 
   isUserLoggedIn = false;
 
@@ -65,7 +106,7 @@ export class CategoryComponent implements OnInit {
     this.isLoading = true;
     this.http.cancelCompaignByCategoryReq();
     this.campaignsList = [];
-    this.http.getCompaignByCategory(category, this.page, this.pageSize).subscribe((result: any) => {
+    this.http.getCompaignByCategory(category, this.page, this.pageSize, this.sorting.value, this.sorting.order).subscribe((result: any) => {
       this.isLoading = false;
       this.campaignsList = result.CampaignLists;
       this.total = result.TotalCampaigns;
@@ -83,7 +124,15 @@ export class CategoryComponent implements OnInit {
     window.scrollTo(0, 0);
   }
 
-  startCampaing() {
+  applySorting(sorting) {
+    console.log(sorting);
+    sorting.order = sorting.order === 'Asc' ? 'Desc' : 'Asc';
+    this.page = 1;
+    this.sorting = sorting;
+    this.getCampainsByCategory(this.categoryName);
+  }
+
+  startCampaign() {
     if (this.isUserLoggedIn) {
       this.router.navigate(['/ce-campaign']);
     } else {

@@ -222,7 +222,7 @@ export class AccountsComponent implements OnInit {
     }
   }
 
-  startCampaing() {
+  startCampaign() {
     if (this.isUserLoggedIn) {
       this.router.navigate(['/ce-campaign']);
     } else {

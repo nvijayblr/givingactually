@@ -25,6 +25,7 @@ import { ContactusComponent } from './components/contactus/contactus.component';
 import { FaqComponent } from './components/faq/faq.component';
 import { HighlightsComponent } from './components/highlights/highlights.component';
 import { CategoryComponent } from './components/category/category.component';
+import { SearchComponent } from './components/search/search.component';
 
 // Authorized components
 import { AccountsComponent } from './components/authorized/accounts/accounts.component';
@@ -47,6 +48,7 @@ import { DonationComponent } from './components/authorized/donation/donation.com
     CreateCampaignComponent,
     CampaignUpdatesComponent,
     DonationComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,

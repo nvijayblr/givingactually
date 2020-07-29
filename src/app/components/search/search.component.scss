@@ -1,0 +1,94 @@
+// Home Page Slider
+.common-page-slider {
+  .slider-bg {
+    height: 320px;
+    background: url('./../../../assets/images/bg3.jpg') no-repeat center center transparent;
+    background-color: rgba(0, 139, 110, 0.42);
+    background-size: cover;
+    .container {
+      position: relative;
+      height: 100%;
+    }
+    .title {
+      color: #f1f1f1;
+      line-height: 46px;
+      position: absolute;
+      bottom: 30px;
+      width: auto;
+      max-width: 800px;
+    }
+    .btn-wrapper {
+      position: absolute;
+      right: 0;
+      bottom: 30px;
+      .gv-secondary-btn {
+        margin: 0 10px;
+      }
+    }
+  }
+}
+.filter-wrp {
+  text-align: right;
+  .sort-by {
+    position: relative;
+    right: 40px;
+    top: -2px;
+  }
+}
+
+.gv-page-body {
+  min-height: 800px;
+  padding: 30px 0;
+  .title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  .campaigns-container {
+    margin-bottom: 20px;
+    .capaigns-wrapper {
+      margin-top: 50px;
+    }
+    .heading {
+      font-size: 22px;
+      margin-bottom: 30px;
+    }
+    .campaigns-wrapper {
+      
+    }
+  }
+}
+
+.mat-card {
+  margin-bottom: 24px;
+  &.no-padding {
+    padding: 0;
+  }
+}
+
+.gv-page-body {
+  .category-nav-list {
+    padding: 0 0 16px 0;
+    position: sticky;
+    top: 50px;
+    .mat-list-base .mat-list-item .mat-list-item-content, .mat-list-base .mat-list-option .mat-list-item-content {
+      font-size: 12px;
+    }
+    .mat-list-base .mat-list-item, .mat-list-base .mat-list-option {
+      color: #008b6e;
+      height: 28px;
+      cursor: pointer;
+      font-weight: 400;
+      letter-spacing: 0.32px;
+      cursor: pointer;
+      &:focus {
+        outline: none;
+      }
+      &.active {
+        background-color: #008b6e;
+        color: #f1f1f1;
+        font-weight: 500;
+        transition: ease 0.25s;
+      }
+    }
+  }
+}

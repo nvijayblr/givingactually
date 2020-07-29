@@ -2,10 +2,17 @@
 <section class="home-slider">
   <div class="slider-bg">
     <div class="container">
+      <div class="search-wrapper">
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>search</mat-icon>
+          <input type="text" placeholder="Search" matInput autocomplete="off" [(ngModel)]="query" />
+          <button matSuffix mat-stroked-button class="gv-secondary-btn transparent rounded" (click)="doSearch()">Search</button>
+       </mat-form-field>
+      </div>
       <h2 class="title">Giving is not just about making a donation. It is about making a difference.</h2>
       <div class="btn-wrapper">
         <!-- <button mat-stroked-button class="gv-secondary-btn transparent rounded">Donate Now</button> -->
-        <button mat-stroked-button class="gv-secondary-btn transparent rounded" (click)="startCampaing()">Start Campaign</button>
+        <button mat-stroked-button class="gv-secondary-btn transparent rounded" (click)="startCampaign()">Start Campaign</button>
       </div>
     </div>
   </div>
@@ -14,16 +21,16 @@
 <section class="gv-page-body">
   <div class="container">
     <div class="row info-wrapper">
-      <div class="col-xs-12 col-sm-4 col-md-4 info-box box1">
+      <div class="col-12 col-sm-4 col-md-4 info-box box1">
         <h3>Campaigning</h3>
         <p>Spend less than 5 minutes to Fill in a few details about yourself, and who you are fundraising for - 
           <a href="/">here.</a></p>
       </div>
-      <div class="col-xs-12 col-sm-4 col-md-4 info-box box2">
+      <div class="col-12 col-sm-4 col-md-4 info-box box2">
         <h3>Sharing</h3>
         <p>Receive donations from people across the world, by sharing the newly created campaign to the social media Sites</p>
       </div>
-      <div class="col-xs-12 col-sm-4 col-md-4 info-box box3">
+      <div class="col-12 col-sm-4 col-md-4 info-box box3">
         <h3>Crowdfunding</h3>
         <p>Transfer funds to the hospital or to your bank account, whenever you need.</p>
       </div>
@@ -34,10 +41,10 @@
       <div class="capaigns-wrapper">
         <!-- Campain Category Title -->
         <div class="row">
-          <div class="col-xs-9 col-sm-8 col-md-6">
+          <div class="col-8 col-sm-8 col-md-6">
             <h2 class="heading">Top Campaigns Today!</h2>
           </div>
-          <div class="col-xs-3 col-sm-4 col-md-6 text-right">
+          <div class="col-4 col-sm-4 col-md-6 text-right">
             <button mat-stroked-button class="gv-secondary-btn prev-next-btn" (click)="owlCar.prev()">
               <mat-icon>keyboard_arrow_left</mat-icon>
             </button>
@@ -52,7 +59,7 @@
 
           <div class="no-campaign" *ngIf="!isLoading && campaignsList.length === 0">
             <h3>No campaings to show.</h3>
-            <button mat-stroked-button class="gv-secondary-btn rounded" (click)="startCampaing()">Start Campaign</button>
+            <button mat-stroked-button class="gv-secondary-btn rounded" (click)="startCampaign()">Start Campaign</button>
           </div>
 
           <!-- Carousel -->
@@ -72,11 +79,11 @@
                     <p class="desc">{{campaign.CampaignDescription}}</p>
                   </div>
                   <div class="row category">
-                    <div class="col-xs-12 col-sm-6 col-md-6 campaign-address">
+                    <div class="col-6 col-sm-6 col-md-6 campaign-address">
                       <i class="fa fa-tag"></i>
                       <span>{{campaign.CategoryName}}</span>
                     </div>
-                    <div class="col-xs-12 col-sm-6 col-md-6 campaign-address right" [title]="campaign.placeName">
+                    <div class="col-6 col-sm-6 col-md-6 campaign-address right" [title]="campaign.placeName">
                       <i class="fa fa-map-marker"></i>
                       <span>{{campaign.placeName}}</span>
                     </div>
@@ -89,11 +96,11 @@
                   </div>
       
                   <div class="row funded-info">
-                    <div class="col-xs-12 col-sm-4 col-md-6 funded">
+                    <div class="col-6 col-sm-4 col-md-6 funded">
                       ₹{{toLocaleString(campaign.RaisedAmount)}}
                       <span class="label">FUNDED</span>
                     </div>
-                    <div class="col-xs-12 col-sm-4 col-md-6 funded goals">
+                    <div class="col-6 col-sm-4 col-md-6 funded goals">
                       ₹{{toLocaleString(campaign.CampaignTargetMoney)}}
                       <span class="label">GOAL</span>
                     </div>

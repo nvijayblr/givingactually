@@ -27,6 +27,14 @@
     }
   }
 }
+.filter-wrp {
+  text-align: right;
+  .sort-by {
+    position: relative;
+    right: 40px;
+    top: -2px;
+  }
+}
 
 .gv-page-body {
   min-height: 800px;
