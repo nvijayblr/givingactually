@@ -4,7 +4,7 @@
       <div class="search-wrapper">
         <mat-form-field appearance="outline">
           <mat-icon matPrefix>search</mat-icon>
-          <input type="text" placeholder="Search" matInput autocomplete="off" [(ngModel)]="query" />
+          <input type="text" placeholder="Search" matInput autocomplete="off" [(ngModel)]="query" (keyup.enter)="initSerach()" />
           <button matSuffix mat-stroked-button class="gv-secondary-btn transparent rounded" (click)="initSerach()">Search</button>
        </mat-form-field>
       </div>

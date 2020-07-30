@@ -100,6 +100,19 @@ export class HttpService  {
     return this.cancelSearchReq$.asObservable();
   }
 
+  getCampaignByLatLng(Lat, Lon): Observable<any> {
+    // tslint:disable-next-line: max-line-length
+    return this.http.get<any>(`${this.rootUrl}api/campaign?Category=All&page=1&page_size=6&SortBy=Distance&order=Asc&Lat=${Lat}&Lon=${Lon}`).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+      takeUntil(this.onCancelSearchReq())
+    );
+  }
+
+
 
   // Get Categories
   getCategories(): Observable<any> {
@@ -443,6 +456,17 @@ export class HttpService  {
         return throwError(err);
       }),
     );
+  }
+
+  getGeoLocation(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resp => {
+        resolve({lng: resp.coords.longitude, lat: resp.coords.latitude});
+      },
+      err => {
+        reject(err);
+      });
+    });
   }
 
 }

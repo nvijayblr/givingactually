@@ -7,6 +7,7 @@ import { CommonService } from '../../services/common.service';
 import { Subscription } from 'rxjs';
 import { MessageService } from '../../services/message.service';
 import { AuthGuardService } from '../../services/auth-guard.service';
+import { HttpService } from '../../services/http-service.service';
 
 @Component({
   selector: 'app-header',
@@ -41,6 +42,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     public common: CommonService,
     private router: Router,
+    private http: HttpService,
     private activatedRoute: ActivatedRoute,
     private messageService: MessageService,
     private authGuardService: AuthGuardService,
@@ -93,6 +95,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   slideMobileNav() {
     this.messageService.sendCommonMessage({topic: 'toggleMobileNav', reason: 'iconClicked'});
+  }
+
+  gotoCampaignsNearMe() {
+    this.http.getGeoLocation().then(pos => {
+      this.router.navigate([`/search`], {queryParams: { lat: pos.lat, lng: pos.lng }});
+    });
   }
 
   ngOnDestroy() {

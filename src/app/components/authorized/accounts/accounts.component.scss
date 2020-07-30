@@ -19,14 +19,16 @@
       padding: 0 5px;
       background-color: rgba(0, 139, 110, 0.42);
     }
-    .btn-wrapper {
-      position: absolute;
-      right: 0;
-      bottom: 30px;
-      .gv-secondary-btn {
-        margin: 0 10px;
-      }
-    }
+  }
+}
+.create-btn-wrapper {
+  position: relative;
+  top: -130px;
+  .gv-secondary-btn {
+    border-radius: 0px;
+    font-family: Roboto !important;
+    letter-spacing: 0.62px;
+    line-height: 42px;
   }
 }
 
@@ -254,18 +256,18 @@
 .sticky-right-panel {
   position: sticky;
   top: 0;
-}
-
-.create-btn-wrapper {
-  .gv-secondary-btn {
-    position: relative;
-    top: 10px;
-    border-radius: 0px;
-    font-family: Roboto !important;
-    letter-spacing: 0.62px;
-    line-height: 42px;
+  .btn-wrapper {
+    .gv-secondary-btn {
+      position: relative;
+      top: 10px;
+      border-radius: 0px;
+      font-family: Roboto !important;
+      letter-spacing: 0.62px;
+      line-height: 42px;
+    }
   }
 }
+
 .campaign-item.light-bg .campaign-thumbnail:hover {
   &:before {
     z-index: 1;

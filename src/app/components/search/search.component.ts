@@ -29,7 +29,6 @@ export class SearchComponent implements OnInit {
   page = 1;
   pageSize = 6;
   categories = [];
-
   isUserLoggedIn = false;
 
   constructor(
@@ -47,7 +46,11 @@ export class SearchComponent implements OnInit {
     this.route.queryParams.subscribe(queryParams => {
       this.page = 1;
       this.query = queryParams.q;
-      this.initSerach();
+      if (queryParams.lat && queryParams.lng) {
+        this.initLocationSearch(queryParams.lat, queryParams.lng);
+      } else {
+        this.initSerach();
+      }
     });
   }
 
@@ -56,6 +59,21 @@ export class SearchComponent implements OnInit {
     this.http.cancelCompaignByCategoryReq();
     this.campaignsList = [];
     this.http.getSearchCampaigns(this.query).subscribe((result: any) => {
+      this.isLoading = false;
+      this.campaignsList = result.CampaignLists;
+      this.total = result.TotalCampaigns;
+    }, (error) => {
+      this.campaignsList = [];
+      this.isLoading = false;
+      console.log(error.statusText);
+    });
+  }
+
+  initLocationSearch(lat, lng) {
+    this.isLoading = true;
+    this.http.cancelCompaignByCategoryReq();
+    this.campaignsList = [];
+    this.http.getCampaignByLatLng(lat, lng).subscribe((result: any) => {
       this.isLoading = false;
       this.campaignsList = result.CampaignLists;
       this.total = result.TotalCampaigns;

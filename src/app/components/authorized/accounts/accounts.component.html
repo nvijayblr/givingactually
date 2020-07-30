@@ -9,11 +9,11 @@
   <div class="container">
     <!-- <app-progress-bar message="Loading Account..." *ngIf="isLoading"></app-progress-bar> -->
     <div class="user-wrapper">
+      <div class="create-btn-wrapper">
+        <button mat-stroked-button class="gv-secondary-btn transparent" routerLink="/ce-campaign">Create Campaign</button>
+      </div>
       <div class="user-profile-img">
         <h4 class="profile-pic-small">{{getFirstLetter(user.DisplayName)}}</h4>
-      </div>
-      <div class="btn-wrapper">
-        <button mat-stroked-button class="gv-secondary-btn" routerLink="/ce-campaign">Create Campaign</button>
       </div>
       <div class="user-stats">
         <div class="row">
@@ -353,7 +353,7 @@
       <!-- Right Panel -->
       <div class="col-xs-12 col-sm-4 col-md-4">
         <div class="sticky-right-panel">
-          <div class="create-btn-wrapper">
+          <div class="btn-wrapper">
             <button mat-stroked-button class="gv-secondary-btn" routerLink="/ce-campaign">Create Campaign</button>
           </div>
         </div>

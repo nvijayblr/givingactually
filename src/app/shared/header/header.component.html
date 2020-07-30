@@ -57,7 +57,7 @@
                 >{{category}}</button>
             </mat-menu>
             <button mat-button routerLink="/category/All">All Campaigns</button>
-            <button mat-button>Campaigns Near Me</button>
+            <button mat-button (click)="gotoCampaignsNearMe()">Campaigns Near Me</button>
             <button mat-button>How it Works</button>
           </mat-toolbar>
         </div>

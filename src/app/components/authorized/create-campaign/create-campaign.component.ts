@@ -46,6 +46,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
   isCampaignBasicErr = false;
   isCampaignLocationErr = false;
   isCampaignDescriptionErr = false;
+  locationErrMsg = '';
 
   beneficiaryList = [];
   currencyList = [];
@@ -210,7 +211,13 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
 
   locationNextClick(stepper: MatStepper) {
     this.isCampaignLocationErr = false;
+    this.locationErrMsg = '';
     if (!this.campaignLocationForm.valid || !this.campaignId) {
+      this.isCampaignLocationErr = true;
+      return;
+    }
+    if (!this.displayImageFile) {
+      this.locationErrMsg = 'Campaign display picture is mandatory.';
       this.isCampaignLocationErr = true;
       return;
     }
@@ -363,6 +370,20 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
 
   setStepperIndex(event) {
     console.log(event);
+  }
+
+  updatePreview() {
+    this.campaign = {
+      ...this.campaign,
+      ...this.campaignBasicForm.value,
+      CategoryName: this.campaignBasicForm.value.CategoryType,
+      CampainOrganizer: {
+        placeNmae: this.campaignLocationForm.value.placeName
+      },
+      campaignDescription: {
+        StripedDescription: this.campaignDescriptionForm.value.StoryDescription
+      }
+    };
   }
 
   // Map related functions

@@ -83,7 +83,6 @@ export class HomeComponent implements OnInit {
   }
 
   doSearch() {
-    console.log(this.query);
     this.router.navigate([`/search`], {queryParams: { q: this.query }});
   }
 

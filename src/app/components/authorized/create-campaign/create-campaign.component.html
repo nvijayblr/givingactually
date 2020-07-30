@@ -26,7 +26,7 @@
                 <ng-template matStepLabel>Campaign Details</ng-template>
                 <mat-form-field appearance="standard">
                   <mat-label>Campaign Title</mat-label>
-                  <input matInput placeholder="Campaign Title" formControlName="CampaignTitle" maxlength="50" autocomplete="off"/>
+                  <input matInput placeholder="Campaign Title" formControlName="CampaignTitle" maxlength="50" (change)="updatePreview()" autocomplete="off"/>
                 </mat-form-field>
                 <div class="characters-count campaign-title">{{campaignBasicForm.controls.CampaignTitle.value?.length}} / 50</div>
 
@@ -37,7 +37,7 @@
 
                 <mat-form-field appearance="fill">
                   <mat-label>Category</mat-label>
-                  <mat-select formControlName="CategoryType">
+                  <mat-select formControlName="CategoryType" (selectionChange)="updatePreview()">
                     <mat-option *ngFor="let category of categories" [value]="category">{{category}}</mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -46,7 +46,7 @@
                   <div class="col-xs-12 col-sm-4 col-md-4">
                     <mat-form-field appearance="fill">
                       <mat-label>Currency</mat-label>
-                      <mat-select formControlName="CampaignTargetMoneyType">
+                      <mat-select formControlName="CampaignTargetMoneyType" (selectionChange)="updatePreview()">
                         <mat-option value="INR">INR</mat-option>
                         <mat-option value="EUR">EUR</mat-option>
                       </mat-select>
@@ -55,7 +55,7 @@
                   <div class="col-xs-12 col-sm-8 col-md-8">
                     <mat-form-field appearance="fill">
                       <mat-label>Goal Amount (Minimum ₹2000)</mat-label>
-                      <input matInput type="number" placeholder="Minimum 2000" formControlName="CampaignTargetMoney" autocomplete="off"/>
+                      <input matInput type="number" placeholder="Minimum 2000" formControlName="CampaignTargetMoney" (change)="updatePreview()" autocomplete="off"/>
                     </mat-form-field>
                   </div>
                 </div>
@@ -64,7 +64,7 @@
                   <div class="col-xs-12 col-sm-4 col-md-4">
                     <mat-form-field appearance="fill">
                       <mat-label>Campaign For</mat-label>
-                      <mat-select formControlName="BeneficiaryType">
+                      <mat-select formControlName="BeneficiaryType" (selectionChange)="updatePreview()">
                         <mat-option value="Myself">Myself</mat-option>
                         <mat-option value="FamilyIndividual">Family Individual</mat-option>
                         <mat-option value="FamilyGroup">Family Group</mat-option>
@@ -79,7 +79,7 @@
                   <div class="col-xs-12 col-sm-8 col-md-8">
                     <mat-form-field appearance="fill">
                       <mat-label>Beneficiary Name</mat-label>
-                      <input matInput placeholder="Beneficiary Name" formControlName="BGroupName" autocomplete="off"/>
+                      <input matInput placeholder="Beneficiary Name" formControlName="BGroupName" (change)="updatePreview()" autocomplete="off"/>
                     </mat-form-field>
                   </div>
                 </div>
@@ -108,7 +108,7 @@
 
                 <mat-form-field>
                   <mat-label>Beneficiary Location, Country</mat-label>
-                  <input matInput placeholder="Bangalore, IN" formControlName="placeName" autocomplete="off">
+                  <input matInput placeholder="Bangalore, IN" formControlName="placeName" (change)="updatePreview()" autocomplete="off">
                 </mat-form-field>
 
                 <div class="row">
@@ -152,6 +152,10 @@
                     <mat-icon>info</mat-icon>
                     Please fill all the required fields.
                   </mat-error>
+                  <mat-error *ngIf="locationErrMsg && isCampaignLocationErr" class="form-error">
+                    <mat-icon>info</mat-icon>
+                    {{locationErrMsg}}
+                  </mat-error>
                 </div>
               </form>
             </mat-step>
@@ -168,17 +172,19 @@
                 <angular-editor 
                   [class.error]="isCampaignDescriptionErr"
                   [config]="editorConfig" 
+                  (blur)="updatePreview()"
                   formControlName="StoryDescription">
                 </angular-editor>
                 <mat-error 
                   *ngIf="
-                    campaignDescriptionForm.controls.StoryDescription.value?.length < 500 ||
-                    campaignDescriptionForm.controls.StoryDescription.value?.length > 5000" 
+                    (campaignDescriptionForm.controls.StoryDescription.value?.length < 500 ||
+                    campaignDescriptionForm.controls.StoryDescription.value?.length > 5000) && isCampaignDescriptionErr" 
                   class="form-error description-error">
                   Description should be minimum 500 characters and maximum 5000 characters.
                 </mat-error>
                 <div class="characters-count">
-                  {{campaignDescriptionForm.controls.StoryDescription.value?.length}} / 5000 (includes the HTML characters)
+                  {{campaignDescriptionForm.controls.StoryDescription.value ? campaignDescriptionForm.controls.StoryDescription.value?.length : 0}} 
+                  / 5000 (includes the HTML characters)
                 </div>
   
                 <div class="row" *ngFor="let attachment of galleryImgVideos; let i = index">
