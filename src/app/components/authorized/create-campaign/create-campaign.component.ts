@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewEncapsulation, ViewChild, ElementRef, NgZone } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewEncapsulation, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -11,6 +11,8 @@ import { HttpService } from '../../../services/http-service.service';
 import { AuthGuardService } from '../../../services/auth-guard.service';
 import { CommonService } from '../../../services/common.service';
 import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
+import { MessageService } from '../../../services/message.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-create-campaign',
@@ -19,7 +21,7 @@ import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-d
   encapsulation: ViewEncapsulation.None
 })
 
-export class CreateCampaignComponent implements OnInit, AfterViewInit {
+export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('search', {static: false})
   public searchElementRef: ElementRef;
 
@@ -75,6 +77,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
     type: 'image',
     isOpenFile: false
   }];
+  commonSub: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -86,6 +89,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
     private location: Location,
+    private messageService: MessageService,
     public dialog: MatDialog ) {
       this.categories = this.common.categories;
     }
@@ -98,6 +102,12 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
         this.campaignId = queryParams.id;
         this.stepperIndex = queryParams.step - 1;
         this.initEditCampaignDetails();
+      }
+    });
+
+    this.commonSub = this.messageService.getCommonMessage().subscribe(message => {
+      if (message.topic === 'categoryLoaded') {
+        this.categories = this.common.categories;
       }
     });
 
@@ -216,7 +226,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
       this.isCampaignLocationErr = true;
       return;
     }
-    if (!this.displayImageFile) {
+    if (!this.displayImageFile && !this.campaign.BDisplayPicPath) {
       this.locationErrMsg = 'Campaign display picture is mandatory.';
       this.isCampaignLocationErr = true;
       return;
@@ -446,6 +456,10 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
     const { lat, lng } = event.coords;
     this.campaignLocationForm.controls.Latitude.setValue(lat);
     this.campaignLocationForm.controls.Longitude.setValue(lng);
+  }
+
+  ngOnDestroy() {
+    this.commonSub.unsubscribe();
   }
 
 }

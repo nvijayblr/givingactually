@@ -40,6 +40,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.common.setCategories(result ? result : []);
       this.categories = result ? result : [];
       this.isLoading = false;
+      this.messageService.sendCommonMessage({topic: 'categoryLoaded', reason: 'categoryLoadedCompleted'});
     }, (error) => {
       this.common.categories = [];
       this.isLoading = false;

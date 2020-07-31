@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { HttpService } from '../../services/http-service.service';
@@ -6,6 +6,7 @@ import { CommonService } from '../../services/common.service';
 import { MatPaginatorIntl } from '@angular/material';
 import { AuthGuardService } from '../../services/auth-guard.service';
 import { MessageService } from '../../services/message.service';
+import { Subscription } from 'rxjs';
 
 const customPaginatorIntl = new MatPaginatorIntl();
 customPaginatorIntl.itemsPerPageLabel = 'Campaigns per page:';
@@ -19,7 +20,7 @@ customPaginatorIntl.itemsPerPageLabel = 'Campaigns per page:';
     { provide: MatPaginatorIntl, useValue: customPaginatorIntl }
   ]
 })
-export class CategoryComponent implements OnInit {
+export class CategoryComponent implements OnInit, OnDestroy {
 
   pageEvent: any = {};
   categoryName: any = '';
@@ -72,6 +73,7 @@ export class CategoryComponent implements OnInit {
   };
 
   isUserLoggedIn = false;
+  commonSub: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -100,7 +102,11 @@ export class CategoryComponent implements OnInit {
     } else {
       this.getCampainsByCategory('All');
     }
-  }
+    this.commonSub = this.messageService.getCommonMessage().subscribe(message => {
+      if (message.topic === 'categoryLoaded') {
+        this.categories = this.common.categories;
+      }
+    });  }
 
   getCampainsByCategory(category) {
     this.isLoading = true;
@@ -145,6 +151,10 @@ export class CategoryComponent implements OnInit {
       return value.toLocaleString();
     }
     return '0';
+  }
+
+  ngOnDestroy() {
+    this.commonSub.unsubscribe();
   }
 
 }

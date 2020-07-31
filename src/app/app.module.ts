@@ -5,66 +5,27 @@ import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
-import { CarouselModule } from 'ngx-owl-carousel-o';
-import { AgmCoreModule } from '@agm/core';
-import { ShareModule } from 'ngx-sharebuttons';
+import { SharedModule } from './shared/shared.module';
 
 import { HttpService } from './services/http-service.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import { MessageService } from './services/message.service';
 import { HttpInterceptorService } from './services/http-interceptor.service';
 
-import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
-import { CampaignsComponent } from './components/campaigns/campaigns.component';
-import { AboutusComponent } from './components/aboutus/aboutus.component';
-import { ServicesComponent } from './components/services/services.component';
-import { ContactusComponent } from './components/contactus/contactus.component';
-import { FaqComponent } from './components/faq/faq.component';
-import { HighlightsComponent } from './components/highlights/highlights.component';
-import { CategoryComponent } from './components/category/category.component';
-import { SearchComponent } from './components/search/search.component';
-
-// Authorized components
-import { AccountsComponent } from './components/authorized/accounts/accounts.component';
-import { CreateCampaignComponent } from './components/authorized/create-campaign/create-campaign.component';
-import { CampaignUpdatesComponent } from './components/authorized/campaign-updates/campaign-updates.component';
-import { DonationComponent } from './components/authorized/donation/donation.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomeComponent,
-    CampaignsComponent,
-    AboutusComponent,
-    ServicesComponent,
-    ContactusComponent,
-    FaqComponent,
-    HighlightsComponent,
-    CategoryComponent,
-    AccountsComponent,
-    CreateCampaignComponent,
-    CampaignUpdatesComponent,
-    DonationComponent,
-    SearchComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
+    SharedModule,
     SocialLoginModule,
-    CarouselModule,
-    ShareModule.withConfig({
-      debug: false
-    }),
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyBnjQKvKIxr3UUoGCQ2EBSFvQrTEoz7gW8',
-      libraries: ['places']
-    }),
-    SharedModule
   ],
   providers: [
     HttpService,
@@ -88,7 +49,7 @@ import { DonationComponent } from './components/authorized/donation/donation.com
         ],
       } as SocialAuthServiceConfig,
     }
-],
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

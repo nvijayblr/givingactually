@@ -47,8 +47,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private messageService: MessageService,
     private authGuardService: AuthGuardService,
     private socialAuthService: SocialAuthService) {
-    this.categories = this.common.categories;
-  }
+      this.categories = this.common.categories;
+    }
 
   ngOnInit() {
     // console.log(this.categoryName, this.authGuardService.getLoggedInUserDetails());
@@ -66,6 +66,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
       if (message.topic === 'showLogin') {
         this.doLogin();
+      }
+      if (message.topic === 'categoryLoaded') {
+        this.categories = this.common.categories;
       }
     });
   }

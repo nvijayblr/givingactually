@@ -28,7 +28,6 @@ export class SearchComponent implements OnInit {
   total = 0;
   page = 1;
   pageSize = 6;
-  categories = [];
   isUserLoggedIn = false;
 
   constructor(
@@ -38,7 +37,6 @@ export class SearchComponent implements OnInit {
     public common: CommonService,
     private authGuardService: AuthGuardService,
     private messageService: MessageService) {
-    this.categories = this.common.categories;
   }
 
   ngOnInit() {

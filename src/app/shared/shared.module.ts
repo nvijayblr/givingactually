@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MaterialModule } from './modules/material.module';
 import { ImageCropperModule } from 'ngx-image-cropper';
-import { AngularEditorModule } from '@kolkov/angular-editor';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
@@ -18,10 +18,10 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     CommonModule,
     MaterialModule,
     ImageCropperModule,
-    AngularEditorModule,
     FormsModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CarouselModule
   ],
   declarations: [
     HeaderComponent,
@@ -36,13 +36,13 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     ReactiveFormsModule,
     MaterialModule,
     ImageCropperModule,
-    AngularEditorModule,
     HeaderComponent,
     FooterComponent,
     LoginSignupComponent,
     ProgressBarComponent,
     ImageCropperComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    CarouselModule
   ],
   providers: [DatePipe],
   entryComponents: [

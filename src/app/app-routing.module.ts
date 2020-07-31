@@ -2,69 +2,41 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { AuthGuardService as AuthGaurd } from './services/auth-guard.service';
 
-import { HomeComponent } from './components/home/home.component';
-import { AboutusComponent } from './components/aboutus/aboutus.component';
-import { ServicesComponent } from './components/services/services.component';
-import { ContactusComponent } from './components/contactus/contactus.component';
-import { FaqComponent } from './components/faq/faq.component';
-import { HighlightsComponent } from './components/highlights/highlights.component';
-import { CampaignsComponent } from './components/campaigns/campaigns.component';
-import { CategoryComponent } from './components/category/category.component';
-import { SearchComponent } from './components/search/search.component';
-
-// Authorized components
-import { AccountsComponent } from './components/authorized/accounts/accounts.component';
-import { CreateCampaignComponent } from './components/authorized/create-campaign/create-campaign.component';
-import { CampaignUpdatesComponent } from './components/authorized/campaign-updates/campaign-updates.component';
-import { DonationComponent } from './components/authorized/donation/donation.component';
-
 const routes: Routes = [{
     path: 'home',
-    component: HomeComponent
+    loadChildren: () => import('./components/home/home.module').then(m => m.HomeModule),
   }, {
     path: 'campaigns/:campaignId',
-    component: CampaignsComponent
+    loadChildren: () => import('./components/campaigns/campaigns.module').then(m => m.CampaignsModule),
   }, {
     path: 'category/:categoryId',
-    component: CategoryComponent
+    loadChildren: () => import('./components/category/category.module').then(m => m.CategoryModule),
   }, {
     path: 'search',
-    component: SearchComponent
+    loadChildren: () => import('./components/search/search.module').then(m => m.SearchModule),
   }, {
     path: 'accounts/:userId',
-    component: AccountsComponent,
+    loadChildren: () => import('./components/authorized/accounts/accounts.module').then(m => m.AccountsModule),
     canActivate: [AuthGaurd]
   }, {
     path: 'ce-campaign',
-    component: CreateCampaignComponent,
+    loadChildren: () => import('./components/authorized/create-campaign/create-campaign.module').then(m => m.CreateCampaignModule),
     canActivate: [AuthGaurd]
   }, {
     path: 'campaign-updates',
-    component: CampaignUpdatesComponent,
+    loadChildren: () => import('./components/authorized/campaign-updates/campaign-updates.module').then(m => m.CampaignUpdatesModule),
     canActivate: [AuthGaurd]
   }, {
     path: 'donation',
-    component: DonationComponent,
+    loadChildren: () => import('./components/authorized/donation/dontaion.module').then(m => m.DonationModule),
   }, {
-    path: 'about-us',
-    component: AboutusComponent
-  }, {
-    path: 'services',
-    component: ServicesComponent
-  }, {
-    path: 'contact-us',
-    component: ContactusComponent
-  }, {
-    path: 'faq',
-    component: FaqComponent
-  }, {
-    path: 'highlights',
-    component: HighlightsComponent
+    path: 'ga',
+    loadChildren: () => import('./components/static/static.module').then(m => m.StaticModule)
   }, {
     path: '', redirectTo: '/home', pathMatch: 'full'
   }, {
     path: '**', redirectTo: '/home', pathMatch: 'full'
-  }
+  },
 ];
 
 @NgModule({
