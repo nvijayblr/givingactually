@@ -320,14 +320,13 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
       width: '350px',
       data: {
         title: 'Completed',
-        message: 'Campaing has updated successfully.',
-        cancelLable: 'Go to Dashboard',
-        okLable: 'Go to Campaign'
+        message: 'The update has been successful.',
+        cancelLable: 'Go to My Campaigns',
+        okLable: 'Go to this Campaign'
       }
     });
 
     dialogRef.afterClosed().subscribe(action => {
-      console.log(action);
       if (action === 'ok') {
         this.router.navigate([`/campaigns/${this.campaignId}`]);
       } else {

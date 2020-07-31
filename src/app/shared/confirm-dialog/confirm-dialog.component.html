@@ -4,7 +4,7 @@
     <p>{{data.message}}</p>
   </div>
   <div class="footer">
-    <button mat-stroked-button class="gv-secondary-btn" (click)="onCloseDialog('cancel')">{{data.cancelLable}}</button>
-    <button mat-stroked-button class="gv-secondary-btn btn-bg" (click)="onCloseDialog('ok')" cdkFocusInitial>{{data.okLable}}</button>
+    <button mat-stroked-button class="gv-secondary-btn" matDialogClose (click)="onCloseDialog('cancel')">{{data.cancelLable}}</button>
+    <button mat-stroked-button class="gv-secondary-btn btn-bg" matDialogClose (click)="onCloseDialog('ok'); " cdkFocusInitial>{{data.okLable}}</button>
   </div>
 </div>

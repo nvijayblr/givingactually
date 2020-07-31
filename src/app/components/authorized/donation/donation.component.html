@@ -31,7 +31,10 @@
                   <mat-form-field appearance="fill">
                     <mat-label>Amount</mat-label>
                     <input matInput type="number" placeholder="Amount" formControlName="DonationAmnt" autocomplete="off"/>
-                    <mat-error>
+                    <mat-error *ngIf="donationForm.controls.DonationAmnt.errors?.min">
+                      The donation amount should be minimum ₹50. 
+                    </mat-error>
+                    <mat-error *ngIf="donationForm.controls.DonationAmnt.errors?.max">
                       The donation amount should be exceeded the target amount. Max ({{remainDonationAmt}})
                     </mat-error>
                   </mat-form-field>

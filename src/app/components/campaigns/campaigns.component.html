@@ -224,7 +224,7 @@
                 <div class="comment-msg">
                   <div class="user-name" *ngIf="comment.Users">
                     {{comment.Users.DisplayName ? comment.Users.DisplayName : comment.Users.UserName}},
-                    <span class="date">{{comment.Users.NGOAddress}}.</span>
+                    <!-- <span class="date">{{comment.Users.NGOAddress}}.</span> -->
                     <span class="date">{{formatDate(comment.CommentedDate)}}</span>
                   </div>
                   <div class="comment">{{comment.CommentMsg}}</div>

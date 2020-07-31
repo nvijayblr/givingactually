@@ -8,7 +8,6 @@ import { HttpService } from '../../../services/http-service.service';
 import { AuthGuardService } from '../../../services/auth-guard.service';
 import { CommonService } from '../../../services/common.service';
 import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
-
 declare var Razorpay: any;
 
 @Component({
@@ -64,8 +63,8 @@ export class DonationComponent implements OnInit, AfterViewInit {
     this.isDonationErr = false;
     this.donationForm = this.fb.group({
       CampaignId: [this.campaignId],
-      DonationMoneyType: ['INR', [Validators.required, Validators.min(1)]],
-      DonationAmnt: ['', [Validators.required]],
+      DonationMoneyType: ['INR', [Validators.required]],
+      DonationAmnt: ['', [, Validators.min(50), Validators.required]],
       DonorName: [user.DisplayName, [Validators.required]],
       isAnanymous: [''],
       EMail: [user.userName, [Validators.required, Validators.email]],
@@ -125,10 +124,8 @@ export class DonationComponent implements OnInit, AfterViewInit {
     this.isLoading = true;
     this.loaderMessage = 'Confirming your dontation...';
     this.http.confirmPaymentSuccess(paymentObj).subscribe((result: any) => {
-      setTimeout(() => {
-        this.isLoading = false;
-        this.showSuccessPayment();
-      }, 1000);
+      this.isLoading = false;
+      this.showSuccessPayment();
     }, (error) => {
       this.isLoading = false;
       this.errorMessage = error.error.ResponseMsg;
@@ -142,7 +139,7 @@ export class DonationComponent implements OnInit, AfterViewInit {
         title: 'Donation',
         message: 'Thank you. We have received your donation.',
         cancelLable: 'Go to Home',
-        okLable: 'Go to Campaign'
+        okLable: 'Go to this Campaign'
       }
     });
 
@@ -164,7 +161,7 @@ export class DonationComponent implements OnInit, AfterViewInit {
       this.campaign = result ? result : {};
       this.isLoading = false;
       this.remainDonationAmt = this.campaign.CampaignTargetMoney - this.campaign.RaisedAmount;
-      this.donationForm.controls.DonationAmnt.setValidators([Validators.max(this.remainDonationAmt)]);
+      this.donationForm.controls.DonationAmnt.setValidators([Validators.min(50), Validators.max(this.remainDonationAmt)]);
     }, (error) => {
       this.campaign = {};
       this.isLoading = false;
