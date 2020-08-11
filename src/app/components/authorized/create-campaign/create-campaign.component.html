@@ -106,11 +106,13 @@
                   (imageCroppedCompleted)="displayImageCroppedCompleted($event)"
                 ></app-image-cropper>
 
+                <!-- <app-google-places (setAddress)="getAddressGoogle($event)" adressType="geocode"></app-google-places> -->
                 <mat-form-field>
                   <mat-label>Beneficiary Location, Country</mat-label>
-                  <input matInput placeholder="Bangalore, IN" formControlName="placeName" (change)="updatePreview()" autocomplete="off">
+                  <input matInput placeholder="Bangalore, IN" formControlName="placeName" #addresstext (change)="updatePreview()" autocomplete="off">
                 </mat-form-field>
 
+                
                 <div class="row">
                   <div class="col-xs-12 col-sm-6 col-md-6">
                     <mat-form-field>
@@ -125,25 +127,6 @@
                     </mat-form-field>
                   </div>
                 </div>
-
-                <label>To get the latitute and logitude, drag and drop the marker in the map.</label>
-                <div class="form-group no-margin">
-                  <label>Enter address</label>
-                  <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()" placeholder="Search Nearest Location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search>
-                </div>
-              
-                <agm-map 
-                    [latitude]="latitude" 
-                    [longitude]="longitude" 
-                    [zoom]="zoom" >
-                    <agm-marker 
-                      [latitude]="latitude" 
-                      [longitude]="longitude"
-                      [markerDraggable]="true"
-                      (dragEnd)="markerDragEnd($event)"
-                    >
-                    </agm-marker>
-                </agm-map>
 
                 <div class="cc-btn-wrapper">
                   <button mat-button matStepperPrevious class="gv-secondary-btn flat-btn btn-action">Prev</button>

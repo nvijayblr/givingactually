@@ -29,7 +29,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     LoginSignupComponent,
     ProgressBarComponent,
     ImageCropperComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
   ],
   exports: [
     FormsModule,

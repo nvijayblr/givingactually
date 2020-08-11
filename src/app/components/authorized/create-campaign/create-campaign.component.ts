@@ -5,7 +5,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { forkJoin } from 'rxjs';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
-import { MapsAPILoader, MouseEvent } from '@agm/core';
 import { MatStepper } from '@angular/material/stepper';
 import { HttpService } from '../../../services/http-service.service';
 import { AuthGuardService } from '../../../services/auth-guard.service';
@@ -26,6 +25,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
   public searchElementRef: ElementRef;
 
   @ViewChild('stepper', {static: false}) stepper: MatStepper;
+  @ViewChild('addresstext', {static: true}) addresstext: any;
 
 
   editorConfig: AngularEditorConfig = {
@@ -86,7 +86,6 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
     private authGuardService: AuthGuardService,
     private route: ActivatedRoute,
     private router: Router,
-    private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
     private location: Location,
     private messageService: MessageService,
@@ -115,14 +114,13 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
     this.initBasicDetails(this.campaign);
     this.initLocationDetails(this.campaign);
     this.initCampaignDescription(this.campaign);
-
-    this.initGoogleMap();
   }
 
   ngAfterViewInit() {
     setTimeout(() => {
       this.stepper.selectedIndex = this.stepperIndex;
     }, 100);
+    this.getPlaceAutocomplete();
   }
 
   initEditCampaignDetails() {
@@ -222,6 +220,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
   locationNextClick(stepper: MatStepper) {
     this.isCampaignLocationErr = false;
     this.locationErrMsg = '';
+    console.log(this.campaignLocationForm.value);
     if (!this.campaignLocationForm.valid || !this.campaignId) {
       this.isCampaignLocationErr = true;
       return;
@@ -317,7 +316,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
 
   showCreateComplete() {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '350px',
+      width: '400px',
       data: {
         title: 'Completed',
         message: 'The update has been successful.',
@@ -396,63 +395,20 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   // Map related functions
-
-  initGoogleMap() {
-    // load Places Autocomplete
-    this.mapsAPILoader.load().then(() => {
-      this.setCurrentLocation();
-      this.geoCoder = new google.maps.Geocoder();
-
-      const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement);
-      autocomplete.addListener('place_changed', () => {
-        this.ngZone.run(() => {
-          // get the place result
-          const place: google.maps.places.PlaceResult = autocomplete.getPlace();
-
-          // verify result
-          if (place.geometry === undefined || place.geometry === null) {
-            return;
-          }
-
-          // set latitude, longitude and zoom
-          this.latitude = place.geometry.location.lat();
-          this.longitude = place.geometry.location.lng();
-          this.zoom = 12;
-        });
-      });
+  private getPlaceAutocomplete() {
+    console.log(google);
+    const autocomplete = new google.maps.places.Autocomplete(this.addresstext.nativeElement, {
+        types: ['geocode']  // 'establishment' / 'address' / 'geocode'
+    });
+    google.maps.event.addListener(autocomplete, 'place_changed', () => {
+      const place = autocomplete.getPlace();
+      this.setAddressAndLatLng(place);
     });
   }
 
-  setCurrentLocation() {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.latitude = position.coords.latitude;
-        this.longitude = position.coords.longitude;
-        this.campaignLocationForm.controls.Latitude.setValue(this.latitude);
-        this.campaignLocationForm.controls.Longitude.setValue(this.longitude);
-        this.zoom = 15;
-        this.getAddress(this.latitude, this.longitude);
-      });
-    }
-  }
-
-  getAddress(latitude, longitude) {
-    this.geoCoder.geocode({ location: { lat: latitude, lng: longitude } }, (results, status) => {
-      if (status === 'OK') {
-        if (results[0]) {
-          this.zoom = 12;
-          this.address = results[0].formatted_address;
-        } else {
-          console.log('No results found');
-        }
-      } else {
-        console.log('Geocoder failed due to: ' + status);
-      }
-    });
-  }
-
-  markerDragEnd(event) {
-    const { lat, lng } = event.coords;
+  setAddressAndLatLng(place: any) {
+    const lat = place.geometry.location.lat();
+    const lng = place.geometry.location.lng();
     this.campaignLocationForm.controls.Latitude.setValue(lat);
     this.campaignLocationForm.controls.Longitude.setValue(lng);
   }
