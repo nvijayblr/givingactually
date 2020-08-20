@@ -289,9 +289,17 @@
   padding: 20px;
   border: 1px solid #d6cfcf;
   margin-top: 5px;
+  position: relative;
+  min-height: 140px;
   .hide-wrapper {
     text-align: right;
-    margin-top: 20px;
+    position: absolute;
+    bottom: 14px;
+    right: 20px;
     font-weight: 500;
+  }
+  .no-data {
+    text-align: center;
+    margin-top: 35px;
   }
 }

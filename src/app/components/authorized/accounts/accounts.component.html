@@ -207,7 +207,13 @@
                   </div>
 
                   <div class="withdraw-history" *ngIf="campaign.isShowWithdrawHistory">
-                    Table
+                    <app-progress-bar class="page" [message]="'Loading...'" *ngIf="campaign.isWithdrawLoading"></app-progress-bar>
+                    <table width="100%" class="table" *ngIf="!campaign.isWithdrawLoading && campaign?.withdrawList.length">
+                      <th>Date</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                    </table>
+                    <div class="no-data" *ngIf="!campaign.isWithdrawLoading && !campaign?.withdrawList.length">No data found.</div>
                     <div class="hide-wrapper">
                       <a [routerLink]="" (click)="hideWithdrawHistory(campaign)">Hide</a>
                     </div>

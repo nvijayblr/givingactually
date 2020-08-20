@@ -526,7 +526,7 @@ export class HttpService  {
 
   getWithdrawHistory(campaignId): Observable<any> {
     const header: any = this.getAuthHeaders();
-    return this.http.get<any>(`${this.rootUrl}WithdrawHistory?CampaignId=${campaignId}`, header).pipe(
+    return this.http.get<any>(`${this.rootUrl}api/WithdrawHistory?CampaignId=${campaignId}`, header).pipe(
       tap((res) => {
       }),
       catchError(err => {
