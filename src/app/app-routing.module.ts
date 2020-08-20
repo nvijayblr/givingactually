@@ -6,7 +6,7 @@ const routes: Routes = [{
     path: 'home',
     loadChildren: () => import('./components/home/home.module').then(m => m.HomeModule),
   }, {
-    path: 'campaigns/:campaignId',
+    path: 'fundraiser/:campaignId',
     loadChildren: () => import('./components/campaigns/campaigns.module').then(m => m.CampaignsModule),
   }, {
     path: 'category/:categoryId',
@@ -17,6 +17,14 @@ const routes: Routes = [{
   }, {
     path: 'accounts/:userId',
     loadChildren: () => import('./components/authorized/accounts/accounts.module').then(m => m.AccountsModule),
+    canActivate: [AuthGaurd]
+  }, {
+    path: 'bank-account',
+    loadChildren: () => import('./components/authorized/bank-account/bank-account.module').then(m => m.BankAccountModule),
+    canActivate: [AuthGaurd]
+  }, {
+    path: 'amount-withdrawal',
+    loadChildren: () => import('./components/authorized/bank-account/bank-account.module').then(m => m.BankAccountModule),
     canActivate: [AuthGaurd]
   }, {
     path: 'ce-campaign',

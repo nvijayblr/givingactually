@@ -153,6 +153,13 @@ export class CategoryComponent implements OnInit, OnDestroy {
     return '0';
   }
 
+  getFirstLetter(name) {
+    if (name) {
+      return name.substr(0, 1);
+    }
+    return '';
+  }
+
   ngOnDestroy() {
     this.commonSub.unsubscribe();
   }

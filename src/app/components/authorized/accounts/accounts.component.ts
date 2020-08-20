@@ -194,8 +194,19 @@ export class AccountsComponent implements OnInit {
     });
   }
 
-  saveBankAccountDetails() {
+  showWithdrawHistory(campaign) {
+    campaign.isShowWithdrawHistory = true;
+    campaign.isWithdrawLoading = true;
+    this.loaderMessage = 'Loading...';
+    this.http.getWithdrawHistory(campaign.Id).subscribe((result: any) => {
+      campaign.isWithdrawLoading = false;
+    }, (error) => {
+      campaign.isWithdrawLoading = false;
+    });
+  }
 
+  hideWithdrawHistory(campaign) {
+    campaign.isShowWithdrawHistory = false;
   }
 
   tabChange(tab) {

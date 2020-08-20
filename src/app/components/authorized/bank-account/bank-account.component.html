@@ -1,0 +1,184 @@
+<section class="common-page-slider">
+  <div class="slider-bg">
+    <div class="container">
+      <h2 class="title">{{isWithdrawal ? 'Withdrawal' : 'Bank Account details'}}</h2>
+      <div class="btn-wrapper">
+        <button mat-stroked-button class="gv-secondary-btn transparent rounded" routerLink="/accounts/{{user.UserId}}">My Account</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gv-page-body">
+  <div class="container">
+    <div class="row donation-wrapper">
+
+      <!-- Bank details Form -->
+      <div class="col-xs-12 col-sm-4 col-md-8" *ngIf="!isWithdrawal">
+        <mat-card class="no-padding">
+          <app-progress-bar class="page" [message]="loaderMessage ? loaderMessage : 'Loading details...'" *ngIf="isAccountLoading" ></app-progress-bar>
+
+          <div class="support-box campaign">
+            <form [formGroup]="bankAccountForm">
+              <div class="user-personal-details">
+
+                  <mat-form-field appearance="fill">
+                    <mat-label>Account Name</mat-label>
+                    <input matInput placeholder="Account Name" formControlName="BenName" autocomplete="off"/>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="fill">
+                    <mat-label>Account Number</mat-label>
+                    <input matInput placeholder="Account Number" formControlName="AccountNumber" autocomplete="off"/>
+                  </mat-form-field>
+
+
+                  <mat-form-field appearance="fill">
+                    <mat-label>Bank Name</mat-label>
+                    <input matInput placeholder="Bank Name" formControlName="BankName" autocomplete="off"/>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="fill">
+                    <mat-label>IFSC Code</mat-label>
+                    <input matInput placeholder="IFSC Code" formControlName="IFSC" autocomplete="off"/>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="fill">
+                    <mat-label>Branch and Address</mat-label>
+                    <input matInput placeholder="Address" formControlName="BankBranch" autocomplete="off"/>
+                  </mat-form-field>
+
+
+                  <div class="cc-btn-wrapper right">
+                    <button mat-button class="gv-secondary-btn flat-btn btn-action" (click)="gotoAccounts()" [disabled]="isLoading">
+                      Cancel
+                    </button>
+                        <button mat-button class="gv-secondary-btn flat-btn btn-action" (click)="saveBankAccountDetails()" [disabled]="isAccountLoading" [class.loading]="isAccountLoading">
+                      Update
+                    </button>
+                    <mat-error *ngIf="bankAccountForm.status === 'INVALID' && isBankAccountErr" class="form-error">
+                        <mat-icon>info</mat-icon>
+                      Please fill all the required fields.
+                    </mat-error>
+                  </div>
+              </div>
+              
+            </form>
+          </div>
+        </mat-card>
+
+      </div>
+      <!-- End of Bank details Form -->
+
+      <!-- Withdrawal Form -->
+      <div class="col-xs-12 col-sm-4 col-md-8" *ngIf="isWithdrawal">
+        <mat-card class="no-padding">
+          <app-progress-bar class="page" [message]="loaderMessage ? loaderMessage : 'Loading details...'" *ngIf="isLoading" ></app-progress-bar>
+
+          <div class="support-box campaign">
+            <form [formGroup]="withdrawalForm">
+
+              <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Amount (Max ₹{{toLocaleString(campaign.RaisedAmount)}})</mat-label>
+                    <input matInput type="number" placeholder="Amount" formControlName="WithdrawalAmount" autocomplete="off"/>
+                  </mat-form-field>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Reason</mat-label>
+                    <input matInput type="text" placeholder="Reason" formControlName="WithDrawalReason" autocomplete="off"/>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="cc-btn-wrapper right">
+                <button mat-button class="gv-secondary-btn flat-btn btn-action" (click)="gotoAccounts()" [disabled]="isLoading">
+                  Cancel
+                </button>
+                <button mat-button class="gv-secondary-btn flat-btn btn-action" (click)="submitWithdraw()" [disabled]="isLoading" [class.loading]="isLoading">
+                  Withdraw
+                </button>
+                <mat-error *ngIf="withdrawalForm.status === 'INVALID' && isWithdrawalErr" class="form-error">
+                    <mat-icon>info</mat-icon>
+                  Please fill all the required fields.
+                </mat-error>
+              </div>
+
+            </form>
+          </div>
+        </mat-card>
+
+      </div>
+      <!-- End of Withdrawal Form -->
+
+      <!-- Right Panel -->
+      <div class="col-xs-12 col-sm-4 col-md-4">
+        <div class="sticky-right-panel">
+          <app-progress-bar class="page" [message]="loaderMessage ? loaderMessage : 'Loading details...'" *ngIf="isLoading" ></app-progress-bar>
+
+          <section>
+            <div class="campaign-item">
+              <div class="campaign-thumbnail">
+                <div class="thumb">
+                  <div class="img" [ngStyle]="{'background-image': 'url(' + campaign.BDisplayPicPath + ')'}"></div>
+                </div>
+                <button mat-stroked-button class="gv-secondary-btn transparent rounded read-more">Preview</button>
+              </div>
+              <div class="info">
+                <div class="title-desc">
+                  <h4 class="title"><a routerLink="/fundraiser/{{campaign.Id}}" title={{campaign.CampaignTitle}}>{{campaign.CampaignTitle}}</a></h4>
+                  <div class="user-box clearfix">
+                    <div class="user-img">
+                      {{getFirstLetter(campaign.OrganizerName)}}
+                    </div>
+                    <div class="user-name">{{campaign.OrganizerName}}</div>
+                  </div>
+                  <div class="desc" [innerHTML]="campaign.campaignDescription.StripedDescription"></div>
+                </div>
+                <div class="row category">
+                  <div class="col-xs-12 col-sm-6 col-md-6 campaign-address">
+                    <i class="fa fa-tag"></i>
+                    <span>{{campaign.CategoryName}}</span>
+                  </div>
+                  <div class="col-xs-12 col-sm-6 col-md-6 campaign-address right" [title]="campaign.CampainOrganizer.placeNmae">
+                    <i class="fa fa-map-marker"></i>
+                    <span>{{campaign.CampainOrganizer.placeNmae}}</span>
+                  </div>
+                </div>
+
+                <div class="funded-chart">
+                  <div class="goals">
+                    <div class="funded" [ngStyle]="{'width': campaign.RaisedPercentage + '%'}"></div>
+                  </div>
+                </div>
+
+                <div class="row funded-info">
+                  <div class="col-xs-12 col-sm-4 col-md-6 funded">
+                    ₹{{toLocaleString(campaign.RaisedAmount)}}
+                    <!-- <span class="label">FUNDED</span> -->
+                  </div>
+                  <div class="col-xs-12 col-sm-4 col-md-6 funded goals">
+                    ₹{{toLocaleString(campaign.CampaignTargetMoney)}}
+                    <!-- <span class="label">GOAL</span> -->
+                  </div>
+                </div>
+                <div class="row supporters-info">
+                  <div class="col-6 col-sm-4 col-md-6 days">
+                    {{campaign.DaysLeft}} days left
+                  </div>
+                  <div class="col-6 col-sm-4 col-md-6 supporters">
+                    {{campaign.Totalsupporters}} supporters
+                  </div>
+                </div>
+
+              </div>
+            </div>            
+          </section>
+        </div>
+      </div>
+      <!-- End of Right panel -->
+    </div>
+  </div>
+</section>

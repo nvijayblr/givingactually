@@ -23,7 +23,6 @@
                     <mat-label>Currency</mat-label>
                     <mat-select formControlName="DonationMoneyType">
                       <mat-option value="INR">INR</mat-option>
-                      <mat-option value="EUR">EUR</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
@@ -66,7 +65,7 @@
               </mat-form-field>
 
               <div class="cc-btn-wrapper">
-                <button mat-button routerLink="/campaigns/{{campaignId}}" class="gv-secondary-btn flat-btn btn-action">Cancel</button>
+                <button mat-button routerLink="/fundraiser/{{campaignId}}" class="gv-secondary-btn flat-btn btn-action">Cancel</button>
                 <button 
                   class="gv-secondary-btn flat-btn btn-action btn-bg" 
                   mat-button 
@@ -103,7 +102,13 @@
               </div>
               <div class="info">
                 <div class="title-desc">
-                  <h4 class="title"><a routerLink="/campaigns/{{campaign.Id}}" title={{campaign.CampaignTitle}}>{{campaign.CampaignTitle}}</a></h4>
+                  <h4 class="title"><a routerLink="/fundraiser/{{campaign.Id}}" title={{campaign.CampaignTitle}}>{{campaign.CampaignTitle}}</a></h4>
+                  <div class="user-box clearfix">
+                    <div class="user-img">
+                      {{getFirstLetter(campaign.OrganizerName)}}
+                    </div>
+                    <div class="user-name">{{campaign.OrganizerName}}</div>
+                  </div>
                   <div class="desc" [innerHTML]="campaign.campaignDescription.StripedDescription"></div>
                 </div>
                 <div class="row category">
@@ -126,13 +131,22 @@
                 <div class="row funded-info">
                   <div class="col-xs-12 col-sm-4 col-md-6 funded">
                     ₹{{toLocaleString(campaign.RaisedAmount)}}
-                    <span class="label">FUNDED</span>
+                    <!-- <span class="label">FUNDED</span> -->
                   </div>
                   <div class="col-xs-12 col-sm-4 col-md-6 funded goals">
                     ₹{{toLocaleString(campaign.CampaignTargetMoney)}}
-                    <span class="label">GOAL</span>
+                    <!-- <span class="label">GOAL</span> -->
                   </div>
                 </div>
+                <div class="row supporters-info">
+                  <div class="col-6 col-sm-4 col-md-6 days">
+                    {{campaign.DaysLeft}} days left
+                  </div>
+                  <div class="col-6 col-sm-4 col-md-6 supporters">
+                    {{campaign.Totalsupporters}} supporters
+                  </div>
+                </div>
+
               </div>
             </div>            
           </section>

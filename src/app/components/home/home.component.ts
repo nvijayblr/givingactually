@@ -86,6 +86,13 @@ export class HomeComponent implements OnInit {
     this.router.navigate([`/search`], {queryParams: { q: this.query }});
   }
 
+  getFirstLetter(name) {
+    if (name) {
+      return name.substr(0, 1);
+    }
+    return '';
+  }
+
   toLocaleString(value) {
     if (value) {
       return value.toLocaleString();

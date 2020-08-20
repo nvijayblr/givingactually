@@ -44,7 +44,7 @@
         <div class="col-xs-12 col-sm-4 col-md-9 main-nav">
           <mat-toolbar>  
             <button mat-button [matMenuTriggerFor]="menu">
-              Category
+              Fundraise For
               <mat-icon>keyboard_arrow_down</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
@@ -56,8 +56,8 @@
                 [ngClass]="{'active': categoryName === category}"
                 >{{category}}</button>
             </mat-menu>
-            <button mat-button routerLink="/category/All">All Campaigns</button>
-            <button mat-button (click)="gotoCampaignsNearMe()">Campaigns Near Me</button>
+            <button mat-button routerLink="/category/All">Browse Fundraisers</button>
+            <button mat-button (click)="gotoCampaignsNearMe()">Near by Fundraisers</button>
             <button mat-button>How it Works</button>
           </mat-toolbar>
         </div>

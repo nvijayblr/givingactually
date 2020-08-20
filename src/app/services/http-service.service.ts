@@ -469,4 +469,72 @@ export class HttpService  {
     });
   }
 
+  getBankAccountDetails(campaignId): Observable<any> {
+    const header: any = this.getAuthHeaders();
+    return this.http.get<any>(`${this.rootUrl}api/campaign/BankDetail?campaignId=${campaignId}`, header).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  createBankAccount(payload): Observable<any> {
+    const header: any = this.getAuthHeaders();
+    return this.http.post<any>(`${this.rootUrl}api/Campaign/CampaignBank`, payload, header).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  updateBankAccount(payload): Observable<any> {
+    const header: any = this.getAuthHeaders();
+    return this.http.put<any>(`${this.rootUrl}api/Campaign/CampaignBank`, payload, header).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  createWithdraw(payload): Observable<any> {
+    const params = new HttpParams({
+      fromObject: payload
+    });
+
+    const token = this.authGuardService.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Bearer ${token}`
+      })
+    };
+
+    return this.http.post<any>(`${this.rootUrl}api/Campaign/Withdraw`, params, httpOptions).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  getWithdrawHistory(campaignId): Observable<any> {
+    const header: any = this.getAuthHeaders();
+    return this.http.get<any>(`${this.rootUrl}WithdrawHistory?CampaignId=${campaignId}`, header).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
+
+
 }

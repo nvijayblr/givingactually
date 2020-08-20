@@ -104,4 +104,11 @@ export class SearchComponent implements OnInit {
     return '0';
   }
 
+  getFirstLetter(name) {
+    if (name) {
+      return name.substr(0, 1);
+    }
+    return '';
+  }
+
 }

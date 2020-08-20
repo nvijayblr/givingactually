@@ -21,7 +21,7 @@
 
           <div class="row campaigns-wrapper">
 
-            <app-progress-bar class="loader" message="Loading Campaigns..." *ngIf="isLoading"></app-progress-bar>
+            <app-progress-bar class="loader" message="Loading Fundraisers..." *ngIf="isLoading"></app-progress-bar>
 
             <!-- Items -->
             <div class="col-12 col-sm-6 col-md-4 campaign-item" *ngFor="let campaign of campaignsList">
@@ -29,11 +29,17 @@
                 <div class="thumb">
                   <div class="img" [ngStyle]="{'background-image': 'url(' + campaign.BDisplayPicPath + ')'}"></div>
                 </div>
-                <button mat-stroked-button class="gv-secondary-btn transparent rounded read-more" routerLink="/campaigns/{{campaign.Id}}">View More</button>
+                <button mat-stroked-button class="gv-secondary-btn transparent rounded read-more" routerLink="/fundraiser/{{campaign.Id}}">View More</button>
               </div>
               <div class="info">
                 <div class="title-desc">
-                  <h4 class="title"><a routerLink="/campaigns/{{campaign.Id}}" title={{campaign.CampaignTitle}}>{{campaign.CampaignTitle}}</a></h4>
+                  <h4 class="title"><a routerLink="/fundraiser/{{campaign.Id}}" title={{campaign.CampaignTitle}}>{{campaign.CampaignTitle}}</a></h4>
+                  <div class="user-box clearfix">
+                    <div class="user-img">
+                      {{getFirstLetter(campaign.OrganizerName)}}
+                    </div>
+                    <div class="user-name">{{campaign.OrganizerName}}</div>
+                  </div>
                   <p class="desc">{{campaign.CampaignDescription}}</p>
                 </div>
                 <div class="row category">
@@ -56,21 +62,30 @@
                 <div class="row funded-info">
                   <div class="col-6 col-sm-4 col-md-6 funded">
                     ₹{{toLocaleString(campaign.RaisedAmount)}}
-                    <span class="label">FUNDED</span>
+                    <!-- <span class="label">FUNDED</span> -->
                   </div>
                   <div class="col-6 col-sm-4 col-md-6 funded goals">
                     ₹{{toLocaleString(campaign.CampaignTargetMoney)}}
-                    <span class="label">GOAL</span>
+                    <!-- <span class="label">GOAL</span> -->
                   </div>
                 </div>
+                <div class="row supporters-info">
+                  <div class="col-6 col-sm-4 col-md-6 days">
+                    {{campaign.DaysLeft}} days left
+                  </div>
+                  <div class="col-6 col-sm-4 col-md-6 supporters">
+                    {{campaign.Totalsupporters}} supporters
+                  </div>
+                </div>
+
               </div>
             </div>
             <!-- End of the item -->
 
           </div>
           <div class="no-campaign" *ngIf="!isLoading && total === 0">
-            <h3>No campaings to show.</h3>
-            <button mat-stroked-button class="gv-secondary-btn rounded" (click)="startCampaign()">Start Campaign</button>
+            <h3>No fundraisers to show.</h3>
+            <button mat-stroked-button class="gv-secondary-btn rounded" (click)="startCampaign()">Start a Fundraiser</button>
           </div>
           <!-- Pagination -->
           <!-- <div class="pagination-wrapper" [hidden]="isLoading">

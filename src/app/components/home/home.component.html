@@ -12,7 +12,7 @@
       <h2 class="title">Giving is not just about making a donation. It is about making a difference.</h2>
       <div class="btn-wrapper">
         <!-- <button mat-stroked-button class="gv-secondary-btn transparent rounded">Donate Now</button> -->
-        <button mat-stroked-button class="gv-secondary-btn transparent rounded" (click)="startCampaign()">Start Campaign</button>
+        <button mat-stroked-button class="gv-secondary-btn transparent rounded" (click)="startCampaign()">START A FUNDRAISER</button>
       </div>
     </div>
   </div>
@@ -20,7 +20,7 @@
 
 <section class="gv-page-body">
   <div class="container">
-    <div class="row info-wrapper">
+    <!-- <div class="row info-wrapper">
       <div class="col-12 col-sm-4 col-md-4 info-box box1">
         <h3>Campaigning</h3>
         <p>Spend less than 5 minutes to Fill in a few details about yourself, and who you are fundraising for - 
@@ -34,7 +34,7 @@
         <h3>Crowdfunding</h3>
         <p>Transfer funds to the hospital or to your bank account, whenever you need.</p>
       </div>
-    </div>
+    </div> -->
 
     <div class="campaigns-container">
 
@@ -42,7 +42,7 @@
         <!-- Campain Category Title -->
         <div class="row">
           <div class="col-8 col-sm-8 col-md-6">
-            <h2 class="heading">Top Campaigns Today!</h2>
+            <h2 class="heading">Top Fundraisers Today!</h2>
           </div>
           <div class="col-4 col-sm-4 col-md-6 text-right">
             <button mat-stroked-button class="gv-secondary-btn prev-next-btn" (click)="owlCar.prev()">
@@ -55,11 +55,11 @@
         </div>
         <!-- Campaing Items -->
         <div class="campaigns-wrapper home-campaigns-wrapper">
-          <app-progress-bar message="Loading Campaigns..." *ngIf="isLoading"></app-progress-bar>
+          <app-progress-bar message="Loading Fundraisers..." *ngIf="isLoading"></app-progress-bar>
 
           <div class="no-campaign" *ngIf="!isLoading && campaignsList.length === 0">
-            <h3>No campaings to show.</h3>
-            <button mat-stroked-button class="gv-secondary-btn rounded" (click)="startCampaign()">Start Campaign</button>
+            <h3>No fundraisers to show.</h3>
+            <button mat-stroked-button class="gv-secondary-btn rounded" (click)="startCampaign()">Start a Fundraiser</button>
           </div>
 
           <!-- Carousel -->
@@ -71,11 +71,19 @@
                   <div class="thumb">
                     <div class="img" [ngStyle]="{'background-image': 'url(' + campaign.BDisplayPicPath + ')'}"></div>
                   </div>
-                  <button mat-stroked-button class="gv-secondary-btn transparent rounded read-more" routerLink="/campaigns/{{campaign.Id}}">View More</button>
+                  <button mat-stroked-button class="gv-secondary-btn transparent rounded read-more" routerLink="/fundraiser/{{campaign.Id}}">View More</button>
                 </div>
                 <div class="info">
                   <div class="title-desc">
-                    <h4 class="title"><a routerLink="/campaigns/{{campaign.Id}}">{{campaign.CampaignTitle}}</a></h4>
+                    <h4 class="title"><a routerLink="/fundraiser/{{campaign.Id}}">{{campaign.CampaignTitle}}</a></h4>
+
+                    <div class="user-box clearfix">
+                      <div class="user-img">
+                        {{getFirstLetter(campaign.OrganizerName)}}
+                      </div>
+                      <div class="user-name">{{campaign.OrganizerName}}</div>
+                    </div>
+        
                     <p class="desc">{{campaign.CampaignDescription}}</p>
                   </div>
                   <div class="row category">
@@ -98,11 +106,20 @@
                   <div class="row funded-info">
                     <div class="col-6 col-sm-4 col-md-6 funded">
                       ₹{{toLocaleString(campaign.RaisedAmount)}}
-                      <span class="label">FUNDED</span>
+                      <!-- <span class="label">FUNDED</span> -->
                     </div>
                     <div class="col-6 col-sm-4 col-md-6 funded goals">
                       ₹{{toLocaleString(campaign.CampaignTargetMoney)}}
-                      <span class="label">GOAL</span>
+                      <!-- <span class="label">GOAL</span> -->
+                    </div>
+                  </div>
+
+                  <div class="row supporters-info">
+                    <div class="col-6 col-sm-4 col-md-6 days">
+                      {{campaign.DaysLeft}} days left
+                    </div>
+                    <div class="col-6 col-sm-4 col-md-6 supporters">
+                      {{campaign.Totalsupporters}} supporters
                     </div>
                   </div>
                 </div>

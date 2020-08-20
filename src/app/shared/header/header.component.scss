@@ -65,7 +65,9 @@
       button {
         transition: all .25s ease-in-out;
         font-family: Roboto !important;
-        &:hover {
+        font-size: 16px;
+        font-weight: 400;
+          &:hover {
           color: rgba(255, 255, 255, 0.52);
           transition: all .25s ease-in-out;
         }

@@ -12,6 +12,8 @@ import { CommonService } from '../../../services/common.service';
 import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
 import { MessageService } from '../../../services/message.service';
 import { Subscription } from 'rxjs';
+import * as moment from 'moment';
+import { fakeAsync } from '@angular/core/testing';
 
 @Component({
   selector: 'app-create-campaign',
@@ -71,6 +73,8 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
   address: string;
   zoom: number;
 
+  isCreateMode = false;
+
   croppedImage: any = '';
   galleryImgVideos = [{
     file: '',
@@ -97,6 +101,9 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
     this.user = this.authGuardService.getLoggedInUserDetails();
     // this.initDropdownData();
     this.route.queryParams.subscribe(queryParams => {
+      if (queryParams.c === 't') {
+        this.isCreateMode = true;
+      }
       if (queryParams.id) {
         this.campaignId = queryParams.id;
         this.stepperIndex = queryParams.step - 1;
@@ -150,6 +157,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
 
   // Basic details - Phase 1
   initBasicDetails(campaign) {
+    const targetDate = moment().add(60, 'days').toISOString();
     this.campaignBasicForm = this.fb.group({
       CampaignTitle: [campaign.CampaignTitle, [Validators.required, Validators.maxLength(50)]],
       CategoryType: [campaign.CategoryName, [Validators.required]],
@@ -162,24 +170,31 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
         campaign.BeneficiaryType ? campaign.BeneficiaryType : 'Myself',
         [Validators.required]
       ],
-      BGroupName: [campaign.BGroupName, [Validators.required]]
+      BGroupName: [campaign.BGroupName, [Validators.required]],
+      CampaignTargetDate: [campaign.CampaignTargetDate ? campaign.CampaignTargetDate : targetDate, [Validators.required]]
     });
   }
 
   basicNextClick(stepper: MatStepper) {
+    const { CampaignTargetDate } = this.campaignBasicForm.value;
     this.isCampaignBasicErr = false;
     if (!this.campaignBasicForm.valid) {
       this.isCampaignBasicErr = true;
       return;
     }
+    const payload = {
+      ...this.campaignBasicForm.value,
+      CampaignTargetDate: moment(CampaignTargetDate).format('YYYY-MM-DD')
+    };
+
     this.loaderMessage = 'Saving...';
     // Update campaign
     if (this.campaignId) {
       this.isLoading = true;
       this.isLoading = true;
-      this.http.updateCampaignBasic(this.campaignId, this.campaignBasicForm.value).subscribe((result: any) => {
+      this.http.updateCampaignBasic(this.campaignId, payload).subscribe((result: any) => {
         this.isLoading = false;
-        this.location.go(`/ce-campaign?id=${this.campaignId}&step=2`);
+        this.location.go(`/ce-campaign?id=${this.campaignId}&step=2&c=${this.isCreateMode ? 't' : 'f'}`);
         stepper.next();
       }, (error) => {
         this.isLoading = false;
@@ -193,7 +208,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
     this.http.createCampaignBasic(this.campaignBasicForm.value).subscribe((result: any) => {
       this.isLoading = false;
       this.campaignId = result.campaignId;
-      this.location.go(`/ce-campaign?id=${this.campaignId}&step=2`);
+      this.location.go(`/ce-campaign?id=${this.campaignId}&step=2&c=${this.isCreateMode ? 't' : 'f'}`);
       this.stepper.next();
     }, (error) => {
       this.isLoading = false;
@@ -220,7 +235,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
   locationNextClick(stepper: MatStepper) {
     this.isCampaignLocationErr = false;
     this.locationErrMsg = '';
-    console.log(this.campaignLocationForm.value);
+
     if (!this.campaignLocationForm.valid || !this.campaignId) {
       this.isCampaignLocationErr = true;
       return;
@@ -242,7 +257,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
     this.http.updateCampaignLocation(this.campaignId, this.campaignLocationForm.value, formData).subscribe((result: any) => {
       this.isLoading = false;
       this.displayImageFile = '';
-      this.location.go(`/ce-campaign?id=${this.campaignId}&step=3`);
+      this.location.go(`/ce-campaign?id=${this.campaignId}&step=3&c=${this.isCreateMode ? 't' : 'f'}`);
       stepper.next();
     }, (error) => {
       this.isLoading = false;
@@ -315,19 +330,45 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   showCreateComplete() {
+    // Create campaing - show the register bank modal
+    if (this.isCreateMode) {
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        width: '400px',
+        data: {
+          title: 'Completed',
+          message: 'The story has been created successfully. Do you want to register your bank account?',
+          cancelLable: 'Not now',
+          okLable: 'Yes'
+        }
+      });
+
+      dialogRef.afterClosed().subscribe(action => {
+        if (action === 'ok') {
+          this.router.navigate([`/bank-account`], {queryParams: {id: this.campaignId}});
+        } else {
+          // tslint:disable-next-line: max-line-length
+          this.showCampaignCompleteMsg('Please register your bank account before withdrawal of the amount. This might take two days for the account verification.');
+        }
+      });
+    } else {
+      this.showCampaignCompleteMsg('The story has been updated successfully.');
+    }
+  }
+
+  showCampaignCompleteMsg(msg) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: {
         title: 'Completed',
-        message: 'The update has been successful.',
-        cancelLable: 'Go to My Campaigns',
-        okLable: 'Go to this Campaign'
+        message: msg,
+        cancelLable: 'Go to Dashboard',
+        okLable: 'Go to this Fundraiser'
       }
     });
 
     dialogRef.afterClosed().subscribe(action => {
       if (action === 'ok') {
-        this.router.navigate([`/campaigns/${this.campaignId}`]);
+        this.router.navigate([`/fundraiser/${this.campaignId}`]);
       } else {
         this.router.navigate([`/accounts/${this.user.UserId}`]);
       }
@@ -411,6 +452,14 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
     const lng = place.geometry.location.lng();
     this.campaignLocationForm.controls.Latitude.setValue(lat);
     this.campaignLocationForm.controls.Longitude.setValue(lng);
+    this.campaignLocationForm.controls.placeName.setValue(place.name);
+  }
+
+  getFirstLetter(name) {
+    if (name) {
+      return name.substr(0, 1);
+    }
+    return '';
   }
 
   ngOnDestroy() {

@@ -145,7 +145,7 @@ export class DonationComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(action => {
       if (action === 'ok') {
-        this.router.navigate([`/campaigns/${this.campaignId}`]);
+        this.router.navigate([`/fundraiser/${this.campaignId}`]);
       } else {
         this.router.navigate([`/home`]);
       }
@@ -174,6 +174,13 @@ export class DonationComponent implements OnInit, AfterViewInit {
       return value.toLocaleString();
     }
     return '0';
+  }
+
+  getFirstLetter(name) {
+    if (name) {
+      return name.substr(0, 1);
+    }
+    return '';
   }
 
 
