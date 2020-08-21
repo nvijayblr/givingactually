@@ -25,6 +25,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   user: any = {};
   subscription: Subscription;
   commonSub: Subscription;
+  isUserLoggedIn = false;
 
   @HostListener('window:scroll')
   checkScroll() {
@@ -52,6 +53,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // console.log(this.categoryName, this.authGuardService.getLoggedInUserDetails());
+    this.isUserLoggedIn = this.authGuardService.isUserLoggedIn();
     this.user = this.authGuardService.getLoggedInUserDetails();
     this.router.events.subscribe(params => {
       // console.log(this.router.routerState.root);
@@ -64,8 +66,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
       if (message.topic === 'logout') {
         this.doLogout();
       }
-      if (message.topic === 'showLogin') {
-        this.doLogin();
+      if (message.topic === 'showLogin' ) {
+        this.doLogin('create');
       }
       if (message.topic === 'categoryLoaded') {
         this.categories = this.common.categories;
@@ -73,25 +75,27 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
   }
 
-  doLogin() {
+  doLogin(option) {
     const dialogRef = this.dialog.open(LoginSignupComponent, {
       width: '700px',
       panelClass: ['login-singup'],
       disableClose: true,
-      data: {mode: 'login'}
+      data: {mode: 'login', option}
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.isUserLoggedIn = this.authGuardService.isUserLoggedIn();
+      this.user = this.authGuardService.getLoggedInUserDetails();
     });
   }
 
   doLogout() {
     const userSession = this.authGuardService.getLoggedUser();
-    console.log(userSession);
     if (userSession.isSocial) {
       this.socialAuthService.signOut();
     }
     this.user.isLoggedIn = false;
+    this.isUserLoggedIn = false;
     localStorage.removeItem('ga_token');
     this.router.navigate([`/home`]);
   }
@@ -104,6 +108,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.http.getGeoLocation().then(pos => {
       this.router.navigate([`/search`], {queryParams: { lat: pos.lat, lng: pos.lng }});
     });
+  }
+
+  startCampaign() {
+    if (this.isUserLoggedIn) {
+      this.router.navigate(['/ce-campaign'], {queryParams: {c: 't'}});
+    } else {
+      this.messageService.sendCommonMessage({topic: 'showLogin', reason: 'CreateCampaign'});
+    }
   }
 
   ngOnDestroy() {

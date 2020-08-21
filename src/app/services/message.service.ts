@@ -17,7 +17,6 @@ export class MessageService {
     }
 
     sendCommonMessage(message: any) {
-        console.log(message);
         this.message.next(message);
     }
 

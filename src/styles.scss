@@ -89,6 +89,7 @@ button {
     background: rgba(23, 188, 156, 0.82);
     color: #f1f1f1;
     border-radius: 7px;
+    box-shadow: 0 4px 8px rgba(1,191,189,.3);    
     .fa {
       margin-right: 5px;
       top: 0px;
@@ -181,6 +182,9 @@ button {
       bottom: 30px;
       width: 800px;
     }
+    .btn-wrapper {
+      right: 10px;
+    } 
   }
 }
 
@@ -386,8 +390,11 @@ button {
     margin-top: 15px;
     padding-top: 12px;
     font-weight: 400;
+    color: rgba(0, 0, 0, 0.42);
+    font-size: 13px;
     .supporters {
       text-align: right;
+      border-left: 1px solid #ccc;
     }
   }
   .campaign-address {
@@ -439,13 +446,16 @@ button {
 
 .search-wrapper {
   position: absolute;
-  top: 190px;
+  top: 260px;
   left: 0;
   right: 0;
   width: 500px;
   height: 60px;
   z-index: 2;
   margin: auto;
+  &.small {
+    top: 180px;
+  }
   .mat-form-field {
     color: #000;
     width: 100%;
@@ -527,7 +537,7 @@ app-progress-bar.page {
 }
 
 .title-desc {
-  height: 144px;
+  height: 98px;
   overflow: hidden;
   .desc {
     font-size: 14px !important;
@@ -593,6 +603,31 @@ body {
   }
 }
 
+
+.user-box {
+  margin-bottom: 14px;
+  .user-img {
+    font-size: 22px;
+    font-family: "Roboto";
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.62);
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    line-height: 32px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    background: rgba(0, 0, 0, 0.04);
+    margin-right: 10px;
+    display: block;
+    float: left;
+  }
+  .user-name {
+    color: rgba(0, 0, 0, 0.52);
+    position: relative;
+    top: 7px;
+  }
+}
 
 // Media Query
 
@@ -704,28 +739,10 @@ body {
       overflow: hidden;
     }
   }
-}
-.user-box {
-  margin-bottom: 14px;
-  .user-img {
-    font-size: 22px;
-    font-family: "Roboto";
-    font-weight: 400;
-    color: rgba(0, 0, 0, 0.62);
-    width: 35px;
-    height: 35px;
-    text-align: center;
-    line-height: 32px;
-    border-radius: 50%;
-    border: 1px solid #ccc;
-    background: rgba(0, 0, 0, 0.04);
-    margin-right: 10px;
-    display: block;
-    float: left;
-  }
-  .user-name {
-    color: rgba(0, 0, 0, 0.52);
-    position: relative;
-    top: 7px;
+  .search-wrapper {
+    max-width: 100%;
+    width: 100%;
+    padding: 0 10px;
   }
 }
+// End of the responsiveness

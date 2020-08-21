@@ -137,9 +137,9 @@ export class DonationComponent implements OnInit, AfterViewInit {
       width: '300px',
       data: {
         title: 'Donation',
-        message: 'Thank you. We have received your donation.',
-        cancelLable: 'Go to Home',
-        okLable: 'Go to this Campaign'
+        message: 'Thank you for your donation. You have just made a difference today!!',
+        cancelLable: '',
+        okLable: 'OK'
       }
     });
 

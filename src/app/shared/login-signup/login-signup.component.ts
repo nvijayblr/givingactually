@@ -227,7 +227,11 @@ export class LoginSignupComponent implements OnInit {
     localStorage.setItem('ga_token', JSON.stringify(session));
     this.messageService.sendLoginMessage(session);
     this.dialogRef.close();
-    this.router.navigate([`/accounts/${result.UserId}`]);
+    if (this.data.option === 'create') {
+      this.router.navigate(['/ce-campaign'], {queryParams: {c: 't'}});
+    } else {
+      this.router.navigate([`/accounts/${result.UserId}`]);
+    }
   }
 
   signInWithGoogle(): void {

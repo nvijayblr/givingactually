@@ -34,6 +34,24 @@
     padding: 20px 0;
     background-color: transparent;
     transition: all .5s ease-in-out;
+    .logo-wrapper {
+      max-width: 200px;
+      float: left;
+    }
+    .main-nav {
+      float: right;
+      margin-top: 8px;
+      .mat-toolbar {
+        padding: 0;
+      }
+      .mat-button {
+        text-shadow: 2px 0px 2px rgba(0,0,0,0.6);
+      }
+    }
+    .fund-btn {
+      font-size: 14px !important;
+      margin-left: 90px;
+    }
     .logo {
       img {
         height: 50px;
@@ -106,6 +124,10 @@
           transition: all .25s ease-in-out;
         }
       }
+      .fund-btn {
+        font-size: 14px !important;
+        background: rgba(23, 188, 156, 0.82);
+      }
       .mat-toolbar-row, .mat-toolbar-single-row {
         color: #000;
         button {
@@ -115,7 +137,13 @@
             transition: all .25s ease-in-out;
           }
         }
-      }    
+      }
+      .main-nav {
+        .mat-button {
+          text-shadow: none;
+        }
+      }
+  
     }
     box-shadow: 0 1px 5px -2px rgba(42,42,42,.4);
   }

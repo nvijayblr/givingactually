@@ -10,7 +10,7 @@
           class="gv-secondary-btn transparent rounded"
           routerLink="/donation" [queryParams]="{id: campaign.Id}">
             <i class="fa fa-heart"></i>
-            Contribute Now
+            Donate Now
           </button>
       </div>
     </div>
@@ -89,14 +89,14 @@
         <!-- User Info -->
         <div class="row campaign-user-info">
           <div class="col-xs-12 col-sm-4 col-md-4 user-email">
-            <h4 class="org-title">Campaign Organizer:</h4>
+            <h4 class="org-title">Fundraiser Organizer:</h4>
             <i class="fa fa-envelope"></i>
             <a href="mailto:{{campaign.CreatedBy}}" target="_blank">{{campaign.BGroupName}}</a>
           </div>
           <div class="col-xs-12 col-sm-4 col-md-8 cagegory">
             <!-- Social Share -->
             <div class="social-share-wrapper">
-              <h4 class="org-title shares">Shares this campaign:</h4>
+              <h4 class="org-title shares">Share this Fundraiser:</h4>
               <div class="social-secion">
                 <!-- Like -->
                 <button mat-stroked-button 
@@ -316,7 +316,7 @@
               class="gv-secondary-btn donate-bnt" 
               routerLink="/donation" [queryParams]="{id: campaign.Id}">
               <i class="fa fa-heart"></i>
-              Contribute Now
+              Donate Now
             </button>
           </div>
 

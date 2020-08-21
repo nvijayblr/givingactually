@@ -9,10 +9,10 @@
           <button matSuffix mat-stroked-button class="gv-secondary-btn transparent rounded" (click)="doSearch()">Search</button>
        </mat-form-field>
       </div>
-      <h2 class="title">Giving is not just about making a donation. It is about making a difference.</h2>
+      <h2 class="title">Giving is not just about making a donation. It is about making a difference in someone's life.</h2>
       <div class="btn-wrapper">
         <!-- <button mat-stroked-button class="gv-secondary-btn transparent rounded">Donate Now</button> -->
-        <button mat-stroked-button class="gv-secondary-btn transparent rounded" (click)="startCampaign()">START A FUNDRAISER</button>
+        <!-- <button mat-stroked-button class="gv-secondary-btn transparent rounded" (click)="startCampaign()">START A FUNDRAISER</button> -->
       </div>
     </div>
   </div>
@@ -78,22 +78,26 @@
                     <h4 class="title"><a routerLink="/fundraiser/{{campaign.Id}}">{{campaign.CampaignTitle}}</a></h4>
 
                     <div class="user-box clearfix">
-                      <div class="user-img">
+                      <!-- <div class="user-img">
                         {{getFirstLetter(campaign.OrganizerName)}}
-                      </div>
-                      <div class="user-name">{{campaign.OrganizerName}}</div>
+                      </div> -->
+                      <div class="user-name">by {{campaign.OrganizerName}}</div>
                     </div>
         
                     <p class="desc">{{campaign.CampaignDescription}}</p>
                   </div>
                   <div class="row category">
                     <div class="col-6 col-sm-6 col-md-6 campaign-address">
-                      <i class="fa fa-tag"></i>
-                      <span>{{campaign.CategoryName}}</span>
+                      <a routerLink="/category/{{campaign.CategoryName}}">
+                        <i class="fa fa-tag"></i>
+                        <span>{{campaign.CategoryName}}</span>
+                      </a>
                     </div>
                     <div class="col-6 col-sm-6 col-md-6 campaign-address right" [title]="campaign.placeName">
-                      <i class="fa fa-map-marker"></i>
-                      <span>{{campaign.placeName}}</span>
+                      <a routerLink="/search" [queryParams]="{q: campaign.placeName}">
+                        <i class="fa fa-map-marker"></i>
+                        <span>{{campaign.placeName}}</span>
+                      </a>
                     </div>
                   </div>
       
