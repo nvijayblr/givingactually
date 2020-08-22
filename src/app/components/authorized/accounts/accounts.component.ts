@@ -199,7 +199,8 @@ export class AccountsComponent implements OnInit {
     campaign.isWithdrawLoading = true;
     this.http.getWithdrawHistory(campaign.Id).subscribe((result: any) => {
       campaign.isWithdrawLoading = false;
-      campaign.withdrawList = [];
+      console.log(result);
+      campaign.withdrawList = result.WithDrawalList ? result.WithDrawalList : [];
     }, (error) => {
       campaign.isWithdrawLoading = false;
       campaign.withdrawList = [];

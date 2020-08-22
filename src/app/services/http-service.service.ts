@@ -100,9 +100,9 @@ export class HttpService  {
     return this.cancelSearchReq$.asObservable();
   }
 
-  getCampaignByLatLng(Lat, Lon): Observable<any> {
+  getCampaignByLatLng(Lat, Lon, Distance): Observable<any> {
     // tslint:disable-next-line: max-line-length
-    return this.http.get<any>(`${this.rootUrl}api/campaign?Category=All&page=1&page_size=6&SortBy=Distance&order=Asc&Lat=${Lat}&Lon=${Lon}`).pipe(
+    return this.http.get<any>(`${this.rootUrl}api/campaign?Category=All&page=1&page_size=6&SortBy=Distance&order=Asc&Lat=${Lat}&Lon=${Lon}&Distance=${Distance}`).pipe(
       tap((res) => {
       }),
       catchError(err => {

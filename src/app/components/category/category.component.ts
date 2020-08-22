@@ -50,20 +50,11 @@ export class CategoryComponent implements OnInit, OnDestroy {
     label: 'Funded Amount',
     value: 'RaisedAmount'
   }, {
-    label: 'Donors',
-    value: 'Donors'
+    label: 'Days Left',
+    value: 'DaysLeft'
   }, {
-    label: 'Likes',
-    value: 'Likes'
-  }, {
-    label: 'Comments',
-    value: 'Comments'
-  }, {
-    label: 'Endorsements',
-    value: 'Endorsements'
-  }, {
-    label: 'Distance',
-    value: 'Distance'
+    label: 'Supporters',
+    value: 'Totalsupporters'
   }];
 
   sorting = {
@@ -131,7 +122,6 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
 
   applySorting(sorting) {
-    console.log(sorting);
     sorting.order = sorting.order === 'Asc' ? 'Desc' : 'Asc';
     this.page = 1;
     this.sorting = sorting;

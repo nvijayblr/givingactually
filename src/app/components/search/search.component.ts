@@ -23,12 +23,35 @@ export class SearchComponent implements OnInit {
 
   pageEvent: any = {};
   query: any = '';
+  queryString: any = '';
   isLoading = false;
   campaignsList = [];
   total = 0;
   page = 1;
   pageSize = 6;
   isUserLoggedIn = false;
+  lat = '';
+  lng = '';
+  sortingsList = [{
+    label: 'With in 100KM',
+    value: '100',
+    order: 'Asc'
+  }, {
+    label: 'With in 200KM',
+    value: 'CampaignTitle'
+  }, {
+    label: 'With in 500KM',
+    value: 'CategoryName'
+  }, {
+    label: 'All',
+    value: 'All'
+  }];
+
+  sorting = {
+    label: 'With in 100KM',
+    value: '100',
+    order: 'Asc'
+  };
 
   constructor(
     private route: ActivatedRoute,
@@ -40,12 +63,20 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('init...');
     this.isUserLoggedIn = this.authGuardService.isUserLoggedIn();
     this.route.queryParams.subscribe(queryParams => {
+      this.query = '';
+      this.queryString = '';
+      this.lat = '';
+      this.lng = '';
       this.page = 1;
       this.query = queryParams.q;
+      this.queryString = queryParams.q;
       if (queryParams.lat && queryParams.lng) {
-        this.initLocationSearch(queryParams.lat, queryParams.lng);
+        this.lat = queryParams.lat;
+        this.lng = queryParams.lng;
+        this.initLocationSearch(queryParams.lat, queryParams.lng, 'All');
       } else {
         this.initSerach();
       }
@@ -67,11 +98,11 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  initLocationSearch(lat, lng) {
+  initLocationSearch(lat, lng, distance) {
     this.isLoading = true;
     this.http.cancelCompaignByCategoryReq();
     this.campaignsList = [];
-    this.http.getCampaignByLatLng(lat, lng).subscribe((result: any) => {
+    this.http.getCampaignByLatLng(lat, lng, distance).subscribe((result: any) => {
       this.isLoading = false;
       this.campaignsList = result.CampaignLists;
       this.total = result.TotalCampaigns;
@@ -80,6 +111,17 @@ export class SearchComponent implements OnInit {
       this.isLoading = false;
       console.log(error.statusText);
     });
+  }
+
+  onSearchClick() {
+    this.router.navigate(['/search'], {queryParams: {q: this.query}});
+  }
+
+  applySorting(sorting) {
+    sorting.order = sorting.order === 'Asc' ? 'Desc' : 'Asc';
+    this.page = 1;
+    this.sorting = sorting;
+    this.initLocationSearch(this.lat, this.lng, this.sorting.value);
   }
 
   onPaginationChange(event) {

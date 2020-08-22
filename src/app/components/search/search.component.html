@@ -4,8 +4,8 @@
       <div class="search-wrapper small">
         <mat-form-field appearance="outline">
           <mat-icon matPrefix>search</mat-icon>
-          <input type="text" placeholder="Search" matInput autocomplete="off" [(ngModel)]="query" (keyup.enter)="initSerach()" />
-          <button matSuffix mat-stroked-button class="gv-secondary-btn transparent rounded" (click)="initSerach()">Search</button>
+          <input type="text" placeholder="Search" matInput autocomplete="off" [(ngModel)]="query" (keyup.enter)="onSearchClick()" />
+          <button matSuffix mat-stroked-button class="gv-secondary-btn transparent rounded" (click)="onSearchClick()">Search</button>
        </mat-form-field>
       </div>
     </div>
@@ -14,6 +14,36 @@
 
 <section class="gv-page-body">
   <div class="container">
+    <div class="breadcrumb-wrapper">
+      <div class="row">
+        <div class="col-8 col-sm-6 col-md-6">
+            <ul class="breadcrumb">
+              <li><a routerLink="/ga/home" title="Home">Home <mat-icon>keyboard_arrow_right</mat-icon></a></li>
+              <li *ngIf="queryString"><span itemprop="name">{{queryString}}</span></li>
+              <li *ngIf="lat && lng"><span itemprop="name">Location: {{lat}}, {{lng}}</span></li>
+            </ul>
+        </div>
+        <div class="col-4 col-sm-6 col-md-6">
+          <div class="filter-wrp" *ngIf="lat && lng">
+            <div class="sort-by">
+              <strong>{{sorting.label}}</strong>
+            </div>
+            <button mat-icon-button class="filter-btn" [matMenuTriggerFor]="menuFilter"><mat-icon>sort</mat-icon></button>
+            <mat-menu #menuFilter="matMenu">
+              <button 
+                mat-menu-item 
+                *ngFor="let sorting of sortingsList" 
+                [value]="sorting.value"
+                (click)="applySorting(sorting)"
+              >
+                {{sorting.label}}
+              </button>
+            </mat-menu>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="row">
 
         <!-- Category Panel -->

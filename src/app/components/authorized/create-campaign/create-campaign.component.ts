@@ -335,8 +335,9 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
       const dialogRef = this.dialog.open(ConfirmDialogComponent, {
         width: '400px',
         data: {
-          title: 'Completed',
-          message: 'The story has been created successfully. Do you want to register your bank account?',
+          title: 'Fundraiser creation is successful',
+          // tslint:disable-next-line: max-line-length
+          message: 'To speed up the withdrawal process, please add your bank account details now. Adding later may delay withdrawal process.',
           cancelLable: 'Not now',
           okLable: 'Yes'
         }
@@ -346,12 +347,11 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
         if (action === 'ok') {
           this.router.navigate([`/bank-account`], {queryParams: {id: this.campaignId}});
         } else {
-          // tslint:disable-next-line: max-line-length
-          this.showCampaignCompleteMsg('Please register your bank account before withdrawal of the amount. This might take two days for the account verification.');
+          this.router.navigate([`/fundraiser/${this.campaignId}`]);
         }
       });
     } else {
-      this.showCampaignCompleteMsg('The story has been updated successfully.');
+      this.showCampaignCompleteMsg('Fundraiser updation is successful.');
     }
   }
 

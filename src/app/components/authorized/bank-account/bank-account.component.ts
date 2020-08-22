@@ -156,12 +156,32 @@ export class BankAccountComponent implements OnInit, AfterViewInit {
     this.loaderMessage = 'Resistering your withdraw details...';
     this.http.createWithdraw(this.withdrawalForm.value).subscribe((result: any) => {
       this.isLoading = false;
-      this.router.navigate([`/accounts/${this.user.UserId}`]);
+      this.showCompletionMsg();
     }, (error) => {
       this.isLoading = false;
       this.errorMessage = error.error.ResponseMsg;
     });
   }
+
+  showCompletionMsg() {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: {
+        title: 'Withdrawal request successful',
+        // tslint:disable-next-line: max-line-length
+        message: 'Your withdrawal request has been sent to the Admin. You will receive notification email when the amount is transferred to your account.',
+        cancelLable: '',
+        okLable: 'OK'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(action => {
+      if (action === 'ok') {
+        this.router.navigate([`/accounts/${this.user.UserId}`]);
+      }
+    });
+  }
+
 
   gotoAccounts() {
     this.router.navigate([`/accounts/${this.user.UserId}`]);

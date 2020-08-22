@@ -7,7 +7,7 @@
   </div>
 </section>
 
-<section class="gv-page-body">
+<section class="gv-page-body category-page">
   <div class="container">
     <div class="breadcrumb-wrapper">
       <div class="row">
@@ -20,10 +20,10 @@
         <div class="col-4 col-sm-6 col-md-6">
           <div class="filter-wrp">
             <div class="sort-by">
-              <strong>
+              <a [routerLink]="" (click)="applySorting(sorting)">
                 {{sorting.label}}
-                <i class="fa fa-arrow-{{sorting.order === 'Asc' ? 'down' : 'up'}}" aria-hidden="true"></i>
-              </strong>
+                <i class="fa fa-sort-alpha-{{sorting.order === 'Asc' ? 'asc' : 'desc'}}" aria-hidden="true"></i>
+              </a>
             </div>
             <button mat-icon-button class="filter-btn" [matMenuTriggerFor]="menuFilter"><mat-icon>sort</mat-icon></button>
             <mat-menu #menuFilter="matMenu">
