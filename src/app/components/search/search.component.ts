@@ -44,7 +44,7 @@ export class SearchComponent implements OnInit {
     value: 'CategoryName'
   }, {
     label: 'All',
-    value: 'All'
+    value: '0'
   }];
 
   sorting = {

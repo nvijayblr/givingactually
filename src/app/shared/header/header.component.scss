@@ -57,11 +57,11 @@
         height: 50px;
         &.bg-header {
           display: block;
-          transition: all .10s ease-in-out;
+          transition: all 2s ease-in-out;
         }
         &.white-header {
           display: none;
-          transition: all .10s ease-in-out;
+          transition: all 2s ease-in-out;
         }
       }
       .logo-label {

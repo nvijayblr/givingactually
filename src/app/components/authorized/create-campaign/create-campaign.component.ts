@@ -337,7 +337,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
         data: {
           title: 'Fundraiser creation is successful',
           // tslint:disable-next-line: max-line-length
-          message: 'To speed up the withdrawal process, please add your bank account details now. Adding later may delay withdrawal process.',
+          message: `To speed up the withdrawal process, please add beneficiary's bank account details now. Adding later may delay withdrawal process.`,
           cancelLable: 'Not now',
           okLable: 'Yes'
         }
