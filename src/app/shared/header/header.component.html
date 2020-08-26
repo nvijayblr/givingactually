@@ -24,7 +24,7 @@
             <button mat-flat-button class="gv-btn-link" 
               routerLink="/accounts/{{user.UserId}}"
               routerLinkActive="on"
-              [routerLinkActiveOptions]="{ exact: false, __change_detection_hack__: id }"
+              [routerLinkActiveOptions]="{ exact: false, __change_detection_hack__: user.UserId }"
             >
               {{user.DisplayName ? user.DisplayName : user.userName}}
             </button>

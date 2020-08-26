@@ -40,7 +40,7 @@ export class AccountsComponent implements OnInit {
   showPersonalErrorMsg = false;
   loaderMessage = '';
   isStatLoading = false;
-  statistics = {};
+  statistics: any = {};
   donationsList = [];
 
   ngoList: any = {
