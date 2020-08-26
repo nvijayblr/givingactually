@@ -353,9 +353,31 @@ export class HttpService  {
   }
 
 
-  getUserCampaigns(page, pageSize): Observable<any> {
+  getUserCampaigns(userId, page, pageSize): Observable<any> {
     const header: any = this.getAuthHeaders();
-    return this.http.get<any>(`${this.rootUrl}api/campaign/userCampaigns?page=${page}&page_size=${pageSize}`, header).pipe(
+    return this.http.get<any>(`${this.rootUrl}api/campaign/userCampaigns?UserId=${userId}&page=${page}&page_size=${pageSize}`, header).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  getUserStatistics(userId): Observable<any> {
+    const header: any = this.getAuthHeaders();
+    return this.http.get<any>(`${this.rootUrl}api/Campaign/UserStatistics?UserId=${userId}`, header).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
+  getUserDonations(): Observable<any> {
+    const header: any = this.getAuthHeaders();
+    return this.http.get<any>(`${this.rootUrl}api/Campaign/UserDonations`, header).pipe(
       tap((res) => {
       }),
       catchError(err => {

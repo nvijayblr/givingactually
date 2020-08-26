@@ -39,6 +39,9 @@ export class AccountsComponent implements OnInit {
   showPersonalSuccessMsg = false;
   showPersonalErrorMsg = false;
   loaderMessage = '';
+  isStatLoading = false;
+  statistics = {};
+  donationsList = [];
 
   ngoList: any = {
     ngoSectors: [],
@@ -60,7 +63,6 @@ export class AccountsComponent implements OnInit {
   ngOnInit() {
     this.isUserLoggedIn = this.authGuardService.isUserLoggedIn();
     this.user = this.authGuardService.getLoggedInUserDetails();
-
     this.activatedRoute.params.subscribe(routeParams => {
       this.isUserLoggedIn = this.authGuardService.isUserLoggedIn();
       this.user = this.authGuardService.getLoggedInUserDetails();
@@ -68,6 +70,7 @@ export class AccountsComponent implements OnInit {
       if (this.userId === this.user.UserId) {
         this.initPersonalDetails({});
         this.getUserCampaigns();
+        this.getUsersStatistics();
         this.isEditMode = true;
       } else {
         // Show dashboard for other users
@@ -75,6 +78,7 @@ export class AccountsComponent implements OnInit {
         this.isEditMode = false;
         this.user = {};
         this.getUsersDetails();
+        this.getUsersStatistics();
         this.getUserCampaigns();
       }
     });
@@ -90,10 +94,32 @@ export class AccountsComponent implements OnInit {
     });
   }
 
+  getUsersStatistics() {
+    this.isStatLoading = true;
+    this.http.getUserStatistics(this.userId).subscribe((result: any) => {
+      this.statistics = result;
+      this.isStatLoading = false;
+    }, (error) => {
+      this.isStatLoading = false;
+    });
+  }
+
+  getUsersDonations() {
+    this.isStatLoading = true;
+    this.donationsList = [];
+    this.http.getUserDonations().subscribe((result: any) => {
+      this.donationsList = result.MyDonationList;
+      console.log(this.donationsList);
+      this.isStatLoading = false;
+    }, (error) => {
+      this.isStatLoading = false;
+    });
+  }
+
   getUserCampaigns() {
     this.isLoading = true;
     this.http.cancelCompaignsListReq();
-    this.http.getUserCampaigns(this.page, this.pageSize).subscribe((result: any) => {
+    this.http.getUserCampaigns(this.userId, this.page, this.pageSize).subscribe((result: any) => {
       this.campaignsList = result.CampaignLists ? result.CampaignLists : [];
       this.total = result.TotalCampaigns;
       this.isLoading = false;
@@ -241,6 +267,9 @@ export class AccountsComponent implements OnInit {
         });
       }
     }
+    if (tab.index === 2) {
+      this.getUsersDonations();
+    }
   }
 
   startCampaign() {
@@ -249,6 +278,21 @@ export class AccountsComponent implements OnInit {
     } else {
       this.messageService.sendCommonMessage({topic: 'showLogin', reason: 'CreateCampaign'});
     }
+  }
+
+  convertToK(input) {
+    let exp;
+    const rounded = 2;
+    const suffixes = ['K', 'M', 'G', 'T', 'P', 'E'];
+
+    if (Number.isNaN(input)) {
+      return 0;
+    }
+    if (input < 1000) {
+      return input;
+    }
+    exp = Math.floor(Math.log(input) / Math.log(1000));
+    return (input / Math.pow(1000, exp)).toFixed(rounded) + suffixes[exp - 1];
   }
 
   toLocaleString(value) {

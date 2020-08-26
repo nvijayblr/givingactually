@@ -91,8 +91,7 @@
           <div class="row campaign-user-info">
             <div class="col-xs-12 col-sm-4 col-md-4 user-email">
               <h4 class="org-title">Fundraiser by:</h4>
-              <i class="fa fa-envelope"></i>
-              <a [routerLink]="">{{campaign.OrganizerName}}</a>
+              <a routerLink="/accounts/{{campaign.UserId}}">{{campaign.OrganizerName}}</a>
             </div>
             <div class="col-xs-12 col-sm-4 col-md-8 cagegory">
               <!-- Social Share -->

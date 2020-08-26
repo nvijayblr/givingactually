@@ -113,7 +113,7 @@
                 <button mat-stroked-button class="gv-secondary-btn transparent rounded read-more">Preview</button>
                 <div class="user-box clearfix">
                   <div class="user-img">
-                    {{getFirstLetter(campaign.OrganizerName)}}
+                    {{campaign.DisplayInitial}}
                   </div>
                   <div class="user-name"><a routerLink="/accounts/{{campaign.UserId}}">{{campaign.OrganizerName}}</a></div>
                 </div>

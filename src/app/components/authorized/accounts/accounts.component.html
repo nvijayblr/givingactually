@@ -14,24 +14,25 @@
       </div> -->
       <h4 class="user-fullname">{{user.DisplayName}}</h4>
       <div class="user-profile-img">
-        <h4 class="profile-pic-small">{{getFirstLetter(user.DisplayName)}}</h4>
+        <h4 class="profile-pic-small">{{user.DispalyInitiial}}</h4>
       </div>
       <div class="user-stats">
-        <div class="row">
+        <app-progress-bar class="page" [message]="'Loading...'" *ngIf="isStatLoading" style="margin-top: 60px"></app-progress-bar>
+        <div class="row" *ngIf="!isStatLoading">
           <div class="col-xs-12 col-sm-3 col-md-3">
-            <h4 class="count">14</h4>
+            <h4 class="count">{{statistics.TotalCampaigns}}</h4>
             <p class="desc">Total<br/>Campaigns</p>
           </div>
           <div class="col-xs-12 col-sm-3 col-md-3">
-            <h4 class="count">12L</h4>
+            <h4 class="count">₹{{convertToK(statistics.TotalGoals)}}</h4>
             <p class="desc">Total<br/>Goals</p>
           </div>
           <div class="col-xs-12 col-sm-3 col-md-3">
-            <h4 class="count">80K</h4>
+            <h4 class="count">₹{{convertToK(statistics.TotalRecievedMoney)}}</h4>
             <p class="desc">Money<br/>Received</p>
           </div>
           <div class="col-xs-12 col-sm-3 col-md-3">
-            <h4 class="count">100</h4>
+            <h4 class="count">{{statistics.TotalDonors}}</h4>
             <p class="desc">Total<br/>Donors</p>
           </div>
         </div>
@@ -346,7 +347,24 @@
 
           <mat-tab label="Donations" *ngIf="isEditMode">
             <div class="user-campaigns">
-              Donations
+              <div class="withdraw-history">
+                <app-progress-bar class="page" [message]="'Loading...'" *ngIf="isStatLoading"></app-progress-bar>
+                <table width="100%" class="table" *ngIf="!isStatLoading && donationsList.length">
+                  <tr>
+                    <th>CampaignId</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                  </tr>
+                  <tr *ngFor="let donation of donationsList">
+                    <td><a routerLink="/fundraiser/{{donation.CampaignId}}">{{donation.CampaignId}}</a></td>
+                    <td>{{formatDate(donation.DonatedOn)}}</td>
+                    <td>₹{{donation.DonationAmnt}}</td>
+                    <td>{{donation.Status}}</td>
+                  </tr>
+                </table>
+                <div class="no-data" *ngIf="!isStatLoading && !donationsList.length">No data found.</div>
+              </div>
             </div>
           </mat-tab>
 

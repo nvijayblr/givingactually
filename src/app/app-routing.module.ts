@@ -17,7 +17,6 @@ const routes: Routes = [{
   }, {
     path: 'accounts/:userId',
     loadChildren: () => import('./components/authorized/accounts/accounts.module').then(m => m.AccountsModule),
-    canActivate: [AuthGaurd]
   }, {
     path: 'bank-account',
     loadChildren: () => import('./components/authorized/bank-account/bank-account.module').then(m => m.BankAccountModule),
