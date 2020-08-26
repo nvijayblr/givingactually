@@ -120,6 +120,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
     });
 
     this.user = this.authGuardService.getLoggedInUserDetails();
+    this.campaign.OrganizerName = this.user.DisplayName;
     this.initBasicDetails(this.campaign);
     this.initLocationDetails(this.campaign);
     this.initCampaignDescription(this.campaign);

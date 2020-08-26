@@ -38,122 +38,124 @@
 
       <!-- Campaign Panel -->
       <div class="col-xs-12 col-sm-4 col-md-8">
-        <div class="image-carousel">
-          <owl-carousel-o [options]="OwlOptions" style="height: 400px;" #mainCarousel>
-            <ng-template carouselSlide *ngFor="let image of campaign.UploadedImages; let i = index;" [id]="i">
-              <div
-                *ngIf="image.ContentType.indexOf('image')>=0" 
-                class="img-bg" 
-                [ngStyle]="{'background-image': 'url(' + image.FilePath + ')'}">
-              </div>
-              <video
-                *ngIf="image.ContentType.indexOf('video')>=0" 
-                class="video-wrp" 
-                controls 
-                poster="">
-                <source src="{{image.FilePath}}" type="video/mp4">
-                Your browser does not support the video tag.
-              </video>
-            </ng-template>
-            <ng-template carouselSlide *ngIf="!campaign.UploadedImages?.length">
-              <div
-                class="img-bg" 
-                [ngStyle]="{'background-image': 'url(' + campaign.BDisplayPicPath + ')'}">
-              </div>
-            </ng-template>
-          </owl-carousel-o>
-        </div>
-
-        <!-- Carousel Thumbnail -->
-        <div class="image-thumbnail-carousel" *ngIf="campaign.UploadedImages?.length > 1">
-          <owl-carousel-o [options]="OwlThumbnailOptions" style="height: 60px;">
-            <ng-template carouselSlide *ngFor="let image of campaign.UploadedImages; let i = index;">
-              <div
-                *ngIf="image.ContentType.indexOf('image')>=0" 
-                (click)="thumbnailClicked(i);"
-                class="img-bg" 
-                [class.selected]="selectedSlide === i"
-                [ngStyle]="{'background-image': 'url(' + image.FilePath + ')'}">
-              </div>
-              <div
-                *ngIf="image.ContentType.indexOf('video')>=0" 
-                (click)="thumbnailClicked(i)"
-                [class.selected]="selectedSlide === i"
-                class="video-wrp">
-                <mat-icon>play_circle_outline</mat-icon>
-              </div>
-            </ng-template>
-          </owl-carousel-o>
-        </div>
-
-        <!-- User Info -->
-        <div class="row campaign-user-info">
-          <div class="col-xs-12 col-sm-4 col-md-4 user-email">
-            <h4 class="org-title">Fundraiser by:</h4>
-            <i class="fa fa-envelope"></i>
-            <a [routerLink]="">{{campaign.OrganizerName}}</a>
+        <mat-card class="">
+          <div class="image-carousel">
+            <owl-carousel-o [options]="OwlOptions" style="height: 400px;" #mainCarousel>
+              <ng-template carouselSlide *ngFor="let image of campaign.UploadedImages; let i = index;" [id]="i">
+                <div
+                  *ngIf="image.ContentType.indexOf('image')>=0" 
+                  class="img-bg" 
+                  [ngStyle]="{'background-image': 'url(' + image.FilePath + ')'}">
+                </div>
+                <video
+                  *ngIf="image.ContentType.indexOf('video')>=0" 
+                  class="video-wrp" 
+                  controls 
+                  poster="">
+                  <source src="{{image.FilePath}}" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </ng-template>
+              <ng-template carouselSlide *ngIf="!campaign.UploadedImages?.length">
+                <div
+                  class="img-bg" 
+                  [ngStyle]="{'background-image': 'url(' + campaign.BDisplayPicPath + ')'}">
+                </div>
+              </ng-template>
+            </owl-carousel-o>
           </div>
-          <div class="col-xs-12 col-sm-4 col-md-8 cagegory">
-            <!-- Social Share -->
-            <div class="social-share-wrapper">
-              <h4 class="org-title shares">Share this Fundraiser:</h4>
-              <div class="social-secion">
-                <!-- Like -->
-                <button mat-stroked-button 
-                  *ngIf="isUserLoggedIn && !campaign.IsSupportedByCtUser" 
-                  class="gv-secondary-btn like-button"
-                  (click)="likeCampaign(campaign)" 
-                  [disabled]="isLikesLoading" 
-                  [class.loading]="isLikesLoading"
-                  >
-                  <i class="fa fa-thumbs-up"></i> Like
-                </button>
-                <button mat-stroked-button class="gv-secondary-btn btn-bg like-button liked" *ngIf="isUserLoggedIn && campaign.IsSupportedByCtUser">
-                  <i class="fa fa-check"></i> Liked
-                </button>
 
-                <!-- Endorsements -->
-                <button mat-stroked-button 
-                  *ngIf="(isUserLoggedIn && isUserCanEndorse) && !campaign.isCtNGOEndorsed" 
-                  class="gv-secondary-btn like-button"
-                  (click)="showEndorseConfirm()" 
-                  [disabled]="isEndorseLoading" 
-                  [class.loading]="isEndorseLoading"
-                  >
-                  <i class="fa fa-handshake-o"></i> Endorsement
-                </button>
-                <button 
-                  mat-stroked-button 
-                  class="gv-secondary-btn btn-bg like-button liked" 
-                  *ngIf="(isUserLoggedIn && isUserCanEndorse) && campaign.isCtNGOEndorsed">
-                  <i class="fa fa-check"></i> Endorsed
-                </button>
+          <!-- Carousel Thumbnail -->
+          <div class="image-thumbnail-carousel" *ngIf="campaign.UploadedImages?.length > 1">
+            <owl-carousel-o [options]="OwlThumbnailOptions" style="height: 60px;">
+              <ng-template carouselSlide *ngFor="let image of campaign.UploadedImages; let i = index;">
+                <div
+                  *ngIf="image.ContentType.indexOf('image')>=0" 
+                  (click)="thumbnailClicked(i);"
+                  class="img-bg" 
+                  [class.selected]="selectedSlide === i"
+                  [ngStyle]="{'background-image': 'url(' + image.FilePath + ')'}">
+                </div>
+                <div
+                  *ngIf="image.ContentType.indexOf('video')>=0" 
+                  (click)="thumbnailClicked(i)"
+                  [class.selected]="selectedSlide === i"
+                  class="video-wrp">
+                  <mat-icon>play_circle_outline</mat-icon>
+                </div>
+              </ng-template>
+            </owl-carousel-o>
+          </div>
 
-                <!-- Shares -->
-                <span class="social whatsapp" shareButton="whatsapp" (click)="createShares('Whatsapp')"><i class="fa fa-whatsapp"></i></span>
-                <span class="social facebook" shareButton="facebook" (click)="createShares('Facebook')"><i class="fa fa-facebook"></i></span>
-                <span class="social twitter" shareButton="twitter" (click)="createShares('Twitter')"><i class="fa fa-twitter"></i></span>
-                <span class="social linkedin" shareButton="linkedin" (click)="createShares('Linkedin')"><i class="fa fa-linkedin"></i></span>
-                <span class="social pinterest" shareButton="pinterest" (click)="createShares('Pinterest')"><i class="fa fa-pinterest"></i></span>
-                <span class="social email" shareButton="email" (click)="createShares('Email')"><i class="fa fa-envelope-o"></i></span>
+          <!-- User Info -->
+          <div class="row campaign-user-info">
+            <div class="col-xs-12 col-sm-4 col-md-4 user-email">
+              <h4 class="org-title">Fundraiser by:</h4>
+              <i class="fa fa-envelope"></i>
+              <a [routerLink]="">{{campaign.OrganizerName}}</a>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-8 cagegory">
+              <!-- Social Share -->
+              <div class="social-share-wrapper">
+                <h4 class="org-title shares">Share this Fundraiser:</h4>
+                <div class="social-secion">
+                  <!-- Like -->
+                  <button mat-stroked-button 
+                    *ngIf="isUserLoggedIn && !campaign.IsSupportedByCtUser" 
+                    class="gv-secondary-btn like-button"
+                    (click)="likeCampaign(campaign)" 
+                    [disabled]="isLikesLoading" 
+                    [class.loading]="isLikesLoading"
+                    >
+                    <i class="fa fa-thumbs-up"></i> Like
+                  </button>
+                  <button mat-stroked-button class="gv-secondary-btn btn-bg like-button liked" *ngIf="isUserLoggedIn && campaign.IsSupportedByCtUser">
+                    <i class="fa fa-check"></i> Liked
+                  </button>
+
+                  <!-- Endorsements -->
+                  <button mat-stroked-button 
+                    *ngIf="(isUserLoggedIn && isUserCanEndorse) && !campaign.isCtNGOEndorsed" 
+                    class="gv-secondary-btn like-button"
+                    (click)="showEndorseConfirm()" 
+                    [disabled]="isEndorseLoading" 
+                    [class.loading]="isEndorseLoading"
+                    >
+                    <i class="fa fa-handshake-o"></i> Endorsement
+                  </button>
+                  <button 
+                    mat-stroked-button 
+                    class="gv-secondary-btn btn-bg like-button liked" 
+                    *ngIf="(isUserLoggedIn && isUserCanEndorse) && campaign.isCtNGOEndorsed">
+                    <i class="fa fa-check"></i> Endorsed
+                  </button>
+
+                  <!-- Shares -->
+                  <span class="social whatsapp" shareButton="whatsapp" (click)="createShares('Whatsapp')"><i class="fa fa-whatsapp"></i></span>
+                  <span class="social facebook" shareButton="facebook" (click)="createShares('Facebook')"><i class="fa fa-facebook"></i></span>
+                  <span class="social twitter" shareButton="twitter" (click)="createShares('Twitter')"><i class="fa fa-twitter"></i></span>
+                  <span class="social linkedin" shareButton="linkedin" (click)="createShares('Linkedin')"><i class="fa fa-linkedin"></i></span>
+                  <span class="social pinterest" shareButton="pinterest" (click)="createShares('Pinterest')"><i class="fa fa-pinterest"></i></span>
+                  <span class="social email" shareButton="email" (click)="createShares('Email')"><i class="fa fa-envelope-o"></i></span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- Campaign Content -->
-        <div class="campain-section">
-          <h3 class="title">{{campaign.CampaignTitle}}</h3>
-          <div class="campaign-content" [ngClass]="{'full-height': isReadMore}">
-            <div class="desc" [innerHTML]="campaign.campaignDescription.StripedDescription"></div>
-            <div class="desc" [innerHTML]="campaign.campaignDescription.StoryDescription"></div>
-            <div class="read-more-bg">
-              <button mat-stroked-button class="gv-secondary-btn rounded read-more" (click)="onReadMore()">
-                {{isReadMore ? 'Read Less' : 'Read More'}}
-              </button>              
+          <!-- Campaign Content -->
+          <div class="campain-section">
+            <h3 class="title">{{campaign.CampaignTitle}}</h3>
+            <div class="campaign-content" [ngClass]="{'full-height': isReadMore}">
+              <div class="desc" [innerHTML]="campaign.campaignDescription.StripedDescription"></div>
+              <div class="desc" [innerHTML]="campaign.campaignDescription.StoryDescription"></div>
+              <div class="read-more-bg">
+                <button mat-stroked-button class="gv-secondary-btn rounded read-more" (click)="onReadMore()">
+                  {{isReadMore ? 'Read Less' : 'Read More'}}
+                </button>              
+              </div>
             </div>
           </div>
-        </div>
+        </mat-card>
 
         <!-- Updates Tab -->
         <mat-card class="updates-section" *ngIf="campaign.Updates?.length">
