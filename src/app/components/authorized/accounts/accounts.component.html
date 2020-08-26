@@ -10,8 +10,9 @@
     <!-- <app-progress-bar message="Loading Account..." *ngIf="isLoading"></app-progress-bar> -->
     <div class="user-wrapper">
       <!-- <div class="create-btn-wrapper">
-        <button mat-stroked-button class="gv-secondary-btn transparent" routerLink="/ce-campaign" [queryParams]="{c: 't'}">Create Fundraiser</button>
+        <button mat-stroked-button class="gv-secondary-btn transparent" routerLink="/ce-fundraiser" [queryParams]="{c: 't'}">Create Fundraiser</button>
       </div> -->
+      <h4 class="user-fullname">{{user.DisplayName}}</h4>
       <div class="user-profile-img">
         <h4 class="profile-pic-small">{{getFirstLetter(user.DisplayName)}}</h4>
       </div>
@@ -98,7 +99,7 @@
                           <i class="fa fa-tag"></i>
                           {{campaign.CategoryName}}
                         </a></p>
-                        <p class="label"><a routerLink="/ga/home">
+                        <p class="label"><a routerLink="/search" [queryParams]="{q: campaign.placeName}">
                           <i class="fa fa-map-marker"></i>
                           {{campaign.placeName}}
                         </a></p>
@@ -108,12 +109,12 @@
                   </div>
 
                   <div class="col-xs-12 col-sm-4 col-md-4">
+                    <p class="funded-label">{{campaign.RaisedPercentage}}% RAISED OF ₹{{campaign.CampaignTargetMoney}}</p>
                     <div class="funded-chart">
                       <div class="goals">
                         <!-- [ngStyle]="{'width': campaign.RaisedPercentage + '%'}" -->
                         <div class="funded" [ngStyle]="{'width': campaign.RaisedPercentage + '%'}"></div>
                       </div>
-                      <p class="label">{{campaign.RaisedPercentage}}% AMOUNT ACHIEVED OF ₹{{campaign.CampaignTargetMoney}}</p>
                     </div>
                     <div class="inner-box">
                       <h4>₹{{campaign.CampaignTargetMoney}}</h4>
@@ -121,7 +122,11 @@
                     </div>
                     <div class="inner-box">
                       <h4>₹{{campaign.RaisedAmount}}</h4>
-                      <p class="label">Money Raised</p>
+                      <p class="label">Raised</p>
+                    </div>
+                    <div class="inner-box">
+                      <h4>₹{{campaign.WithDrawnAmount}}</h4>
+                      <p class="label">Withdrawn Amount</p>
                     </div>
                     <div class="inner-box">
                       <h4>{{campaign.DonorsTotalCount}}</h4>
@@ -131,10 +136,6 @@
                       <h4>{{campaign.EndorseTotalCount}}</h4>
                       <p class="label">Endorsements</p>
                     </div> -->
-                    <div class="inner-box">
-                      <h4>{{formatDate(campaign.CreatedOn)}}</h4>
-                      <p class="label">Created On</p>
-                    </div>
                     <!-- <div class="inner-box">
                       <h4>{{formatDate(campaign.CampaignTargetDate)}}</h4>
                       <p class="label">Target date</p>
@@ -145,12 +146,12 @@
                     </div>
                   </div>
                 </div>
-                <div class="btn-wrapper left">
+                <div class="btn-wrapper left" *ngIf="isEditMode">
                   <!-- Draft Status -->
                   <div class="draft-state-btns" *ngIf="campaign.CampaignStatus === 'Draft'">
                     <button 
                       mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg" 
-                      routerLink="/ce-campaign" [queryParams]="{id: campaign.Id, step: 1}">
+                      routerLink="/ce-fundraiser" [queryParams]="{id: campaign.Id, step: 1}">
                         Edit
                     </button>
                     <button mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg">Delete</button>
@@ -160,7 +161,7 @@
                   <div class="draft-state-btns" *ngIf="campaign.CampaignStatus === 'InActive'">
                     <button 
                       mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg" 
-                      routerLink="/ce-campaign" [queryParams]="{id: campaign.Id, step: 1}">
+                      routerLink="/ce-fundraiser" [queryParams]="{id: campaign.Id, step: 1}">
                         Edit
                     </button>
                     <button mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg">Activate</button>
@@ -170,7 +171,7 @@
                   <div class="draft-state-btns" *ngIf="campaign.CampaignStatus === 'Pending Approval'">
                     <button 
                       mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg" 
-                      routerLink="/ce-campaign" [queryParams]="{id: campaign.Id, step: 1}">
+                      routerLink="/ce-fundraiser" [queryParams]="{id: campaign.Id, step: 1}">
                         Edit
                     </button>
                     <button mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg">Delete</button>
@@ -180,11 +181,11 @@
                   <div class="draft-state-btns" *ngIf="campaign.CampaignStatus === 'Active'">
                     <button 
                       mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg" 
-                      routerLink="/ce-campaign" [queryParams]="{id: campaign.Id, step: 1}">
+                      routerLink="/ce-fundraiser" [queryParams]="{id: campaign.Id, step: 1}">
                         Edit
                     </button>
                     <button mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg" 
-                      routerLink="/campaign-updates" [queryParams]="{id: campaign.Id}">
+                      routerLink="/fundraiser-updates" [queryParams]="{id: campaign.Id}">
                       Add Updates
                     </button>
                     <button mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg" 
@@ -244,18 +245,23 @@
             </div>
           </mat-tab>
 
-          <mat-tab label="Personal Details">
+          <mat-tab label="Personal Details" *ngIf="isEditMode">
             <app-progress-bar class="page" [message]="loaderMessage ? loaderMessage : 'Loading personal details...'" *ngIf="isPersonalDetLoading" ></app-progress-bar>
             <div class="user-personal-details">
               <form [formGroup]="personalDetailsForm">
                 <mat-form-field appearance="fill">
                   <mat-label>Username</mat-label>
-                  <input matInput placeholder="First name, Last name" formControlName="UserName" autocomplete="off"/>
+                  <input matInput placeholder="Username" formControlName="UserName" autocomplete="off"/>
                 </mat-form-field>
 
                 <mat-form-field appearance="fill">
-                  <mat-label>Display Name</mat-label>
-                  <input matInput placeholder="First name, Last name" formControlName="DPName" autocomplete="off"/>
+                  <mat-label>First Name</mat-label>
+                  <input matInput placeholder="First name" formControlName="FirstName" autocomplete="off"/>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                  <mat-label>Last Name</mat-label>
+                  <input matInput placeholder="Last name" formControlName="LastName" autocomplete="off"/>
                 </mat-form-field>
 
                 <!-- <mat-form-field appearance="fill">
@@ -322,7 +328,7 @@
                   </mat-form-field>
   
                 </div>
-                <div class="cc-btn-wrapper right">
+                <div class="cc-btn-wrapper right" *ngIf="isEditMode">
                   <button mat-button class="gv-secondary-btn flat-btn btn-action" (click)="savePersonalDetails()" [disabled]="isPersonalDetLoading" [class.loading]="isPersonalDetLoading">
                     Update
                   </button>
@@ -338,7 +344,7 @@
             </div>
           </mat-tab>
 
-          <mat-tab label="Donations">
+          <mat-tab label="Donations" *ngIf="isEditMode">
             <div class="user-campaigns">
               Donations
             </div>
@@ -354,7 +360,7 @@
       <div class="col-xs-12 col-sm-4 col-md-4">
         <div class="sticky-right-panel">
           <div class="btn-wrapper">
-            <!-- <button mat-stroked-button class="gv-secondary-btn" routerLink="/ce-campaign" [queryParams]="{c: 't'}">Create Fundraiser</button> -->
+            <!-- <button mat-stroked-button class="gv-secondary-btn" routerLink="/ce-fundraiser" [queryParams]="{c: 't'}">Create Fundraiser</button> -->
           </div>
         </div>
       </div>

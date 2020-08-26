@@ -82,6 +82,8 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
     isOpenFile: false
   }];
   commonSub: Subscription;
+  minDate = moment().format('YYYY-MM-DD');
+  maxDate = moment(moment().add(6, 'months')).format('YYYY-MM-DD');
 
   constructor(
     private fb: FormBuilder,
@@ -157,7 +159,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
 
   // Basic details - Phase 1
   initBasicDetails(campaign) {
-    const targetDate = moment().add(60, 'days').toISOString();
+    const targetDate = moment(moment().add(60, 'days')).format('YYYY-MM-DD');
     this.campaignBasicForm = this.fb.group({
       CampaignTitle: [campaign.CampaignTitle, [Validators.required, Validators.maxLength(50)]],
       CategoryType: [campaign.CategoryName, [Validators.required]],
@@ -173,6 +175,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
       BGroupName: [campaign.BGroupName, [Validators.required]],
       CampaignTargetDate: [campaign.CampaignTargetDate ? campaign.CampaignTargetDate : targetDate, [Validators.required]]
     });
+    this.updateDaysLeft();
   }
 
   basicNextClick(stepper: MatStepper) {
@@ -194,7 +197,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
       this.isLoading = true;
       this.http.updateCampaignBasic(this.campaignId, payload).subscribe((result: any) => {
         this.isLoading = false;
-        this.location.go(`/ce-campaign?id=${this.campaignId}&step=2&c=${this.isCreateMode ? 't' : 'f'}`);
+        this.location.go(`/ce-fundraiser?id=${this.campaignId}&step=2&c=${this.isCreateMode ? 't' : 'f'}`);
         stepper.next();
       }, (error) => {
         this.isLoading = false;
@@ -208,7 +211,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
     this.http.createCampaignBasic(this.campaignBasicForm.value).subscribe((result: any) => {
       this.isLoading = false;
       this.campaignId = result.campaignId;
-      this.location.go(`/ce-campaign?id=${this.campaignId}&step=2&c=${this.isCreateMode ? 't' : 'f'}`);
+      this.location.go(`/ce-fundraiser?id=${this.campaignId}&step=2&c=${this.isCreateMode ? 't' : 'f'}`);
       this.stepper.next();
     }, (error) => {
       this.isLoading = false;
@@ -241,7 +244,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
       return;
     }
     if (!this.displayImageFile && !this.campaign.BDisplayPicPath) {
-      this.locationErrMsg = 'Campaign display picture is mandatory.';
+      this.locationErrMsg = 'Fundraiser display picture is mandatory.';
       this.isCampaignLocationErr = true;
       return;
     }
@@ -257,7 +260,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
     this.http.updateCampaignLocation(this.campaignId, this.campaignLocationForm.value, formData).subscribe((result: any) => {
       this.isLoading = false;
       this.displayImageFile = '';
-      this.location.go(`/ce-campaign?id=${this.campaignId}&step=3&c=${this.isCreateMode ? 't' : 'f'}`);
+      this.location.go(`/ce-fundraiser?id=${this.campaignId}&step=3&c=${this.isCreateMode ? 't' : 'f'}`);
       stepper.next();
     }, (error) => {
       this.isLoading = false;
@@ -361,8 +364,8 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
       data: {
         title: 'Completed',
         message: msg,
-        cancelLable: 'Go to Dashboard',
-        okLable: 'Go to this Fundraiser'
+        cancelLable: '',
+        okLable: 'OK'
       }
     });
 
@@ -435,6 +438,14 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
     };
   }
 
+  updateDaysLeft() {
+    if (this.campaignBasicForm.value.CampaignTargetDate) {
+      const curDate = moment();
+      const selectedDate = moment(this.campaignBasicForm.value.CampaignTargetDate);
+      this.campaign.DaysLeft = selectedDate.diff(curDate, 'days') + 1;
+    }
+  }
+
   // Map related functions
   private getPlaceAutocomplete() {
     console.log(google);
@@ -452,7 +463,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
     const lng = place.geometry.location.lng();
     this.campaignLocationForm.controls.Latitude.setValue(lat);
     this.campaignLocationForm.controls.Longitude.setValue(lng);
-    this.campaignLocationForm.controls.placeName.setValue(place.name);
+    this.campaignLocationForm.controls.placeName.setValue(place.formatted_address);
   }
 
   getFirstLetter(name) {

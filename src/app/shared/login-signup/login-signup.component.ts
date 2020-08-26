@@ -27,6 +27,7 @@ export class LoginSignupComponent implements OnInit {
   mode = 'login';
   isOtpScreen = false;
   isConfirmPasswordError = false;
+  isAcceptTermsError = false;
 
   ngoList: any = {
     ngoSectors: [],
@@ -58,9 +59,10 @@ export class LoginSignupComponent implements OnInit {
       password: ['', Validators.required],
       grant_type: ['password']
     });
-
     this.signupForm = this.fb.group({
-      DPName: ['', Validators.required],
+      FirstName: ['', Validators.required],
+      LastName: ['', Validators.required],
+      DPPath: [''],
       UserName: ['', [Validators.required, Validators.email]],
       Password: ['', Validators.required],
       ConfirmPassword: ['', Validators.required],
@@ -73,6 +75,7 @@ export class LoginSignupComponent implements OnInit {
       cityName: [''],
       stateName: [''],
       countryName: [''],
+      AcceptTerms: [false, [Validators.required]],
     });
 
     this.otpForm = this.fb.group({
@@ -99,15 +102,21 @@ export class LoginSignupComponent implements OnInit {
 
   doSignup() {
     this.isSubmitted = true;
+
     if (this.signupForm.invalid) {
       return;
     }
-    console.log(this.signupForm.controls.Password.value, this.signupForm.controls.ConfirmPassword.value);
+
     if (this.signupForm.controls.Password.value !== this.signupForm.controls.ConfirmPassword.value) {
-      console.log('error');
       this.isConfirmPasswordError = true;
       return;
     }
+
+    if (!this.signupForm.value.AcceptTerms) {
+      this.isAcceptTermsError = true;
+      return;
+    }
+
     this.isLoading = true;
     this.http.signupRequest(this.signupForm.value).subscribe((result: any) => {
       this.isLoading = false;
@@ -195,14 +204,19 @@ export class LoginSignupComponent implements OnInit {
     if (user.provider === 'GOOGLE') {
       payload = {
         userName: user.email,
-        DPName: user.name,
+        FirstName: user.firstName,
+        LastName: user.lastName,
+        DPPath: user.photoUrl,
         provider: user.provider,
         AId: user.id,
       };
     } else {
+      console.log(user);
       payload = {
         userName: user.email,
-        DPName: user.name,
+        FirstName: user.firstName,
+        LastName: user.lastName,
+        DPPath: user.photoUrl,
         provider: user.provider,
         AId: user.id,
       };
@@ -228,7 +242,7 @@ export class LoginSignupComponent implements OnInit {
     this.messageService.sendLoginMessage(session);
     this.dialogRef.close();
     if (this.data.option === 'create') {
-      this.router.navigate(['/ce-campaign'], {queryParams: {c: 't'}});
+      this.router.navigate(['/ce-fundraiser'], {queryParams: {c: 't'}});
     } else {
       this.router.navigate([`/accounts/${result.UserId}`]);
     }
@@ -263,7 +277,6 @@ export class LoginSignupComponent implements OnInit {
         ngoSectors: responses[0],
         ngoTypes: responses[1]
       };
-      console.log(this.ngoList);
     }, err => {
       this.ngoList = {
         ngoSectors: [],

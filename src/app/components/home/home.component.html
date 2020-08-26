@@ -72,18 +72,16 @@
                     <div class="img" [ngStyle]="{'background-image': 'url(' + campaign.BDisplayPicPath + ')'}"></div>
                   </div>
                   <button mat-stroked-button class="gv-secondary-btn transparent rounded read-more" routerLink="/fundraiser/{{campaign.Id}}">View More</button>
+                  <div class="user-box clearfix">
+                    <div class="user-img">
+                      {{getFirstLetter(campaign.OrganizerName)}}
+                    </div>
+                    <div class="user-name"><a routerLink="/accounts/{{campaign.UserId}}">{{campaign.OrganizerName}}</a></div>
+                  </div>
                 </div>
                 <div class="info">
                   <div class="title-desc">
                     <h4 class="title"><a routerLink="/fundraiser/{{campaign.Id}}">{{campaign.CampaignTitle}}</a></h4>
-
-                    <div class="user-box clearfix">
-                      <!-- <div class="user-img">
-                        {{getFirstLetter(campaign.OrganizerName)}}
-                      </div> -->
-                      <div class="user-name">by {{campaign.OrganizerName}}</div>
-                    </div>
-        
                     <p class="desc">{{campaign.CampaignDescription}}</p>
                   </div>
                   <div class="row category">
@@ -96,7 +94,7 @@
                     <div class="col-6 col-sm-6 col-md-6 campaign-address right" [title]="campaign.placeName">
                       <a routerLink="/search" [queryParams]="{q: campaign.placeName}">
                         <i class="fa fa-map-marker"></i>
-                        <span>{{campaign.placeName}}</span>
+                        <span>{{campaign.FullplaceName}}</span>
                       </a>
                     </div>
                   </div>

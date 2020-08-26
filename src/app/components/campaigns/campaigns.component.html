@@ -89,9 +89,9 @@
         <!-- User Info -->
         <div class="row campaign-user-info">
           <div class="col-xs-12 col-sm-4 col-md-4 user-email">
-            <h4 class="org-title">Fundraiser Organizer:</h4>
+            <h4 class="org-title">Fundraiser by:</h4>
             <i class="fa fa-envelope"></i>
-            <a href="mailto:{{campaign.CreatedBy}}" target="_blank">{{campaign.BGroupName}}</a>
+            <a [routerLink]="">{{campaign.OrganizerName}}</a>
           </div>
           <div class="col-xs-12 col-sm-4 col-md-8 cagegory">
             <!-- Social Share -->
@@ -325,17 +325,17 @@
             <div class="support-box campaign">
               <div class="row">
                 <div class="col-md-12">
+                  <p class="funded-label">{{campaign.RaisedPercentage}}% RAISED OF ₹{{toLocaleString(campaign.CampaignTargetMoney)}}</p>
                   <div class="funded-chart">
                     <div class="goals">
                       <div class="funded" [ngStyle]="{'width': campaign.RaisedPercentage + '%'}"></div>
                     </div>
-                    <p class="label">{{campaign.RaisedPercentage}}% AMOUNT ACHIEVED OF ₹{{toLocaleString(campaign.CampaignTargetMoney)}}</p>
                   </div>
                   <div class="row">
                     <div class="col-6 col-xs-6 col-sm-6 col-md-6">
                       <div class="inner-box-left">
                         <h4>₹{{toLocaleString(campaign.RaisedAmount)}}</h4>
-                        <p class="label">Money Raised</p>
+                        <p class="label">Raised</p>
                       </div>
                     </div>
                     <div class="col-6 col-xs-6 col-sm-6 col-md-6">

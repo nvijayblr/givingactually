@@ -230,7 +230,7 @@ button {
 }
 
 .funded-chart {
-  margin: 18px 0 4px;
+  margin: 4px 0 4px;
   .goals {
     position: relative;
     background-color: rgba(181, 181, 181, 0.32);
@@ -327,6 +327,22 @@ button {
       transform: scale(1.3,1.3);
       opacity: 0;
     }
+    .user-box {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgb(0 0 0 / 0.72);
+      width: 100%;
+      height: 50px;
+      margin-bottom: 0;
+      padding: 5px 10px;
+      .user-img {
+        background: rgba(255, 255, 255, 0.32);
+      }
+      .user-name {
+      }
+    }
   }
   .info {
     border: 1px solid rgba(156, 156, 156, 0.12);
@@ -339,6 +355,7 @@ button {
       margin-bottom: 0;
       max-height: 38px;
       overflow: hidden;
+      margin-bottom: 8px !important;
     }
     .desc {
       height: 45px;
@@ -355,7 +372,7 @@ button {
     }
   }
   .funded-chart {
-    margin: 18px 0 8px;
+    margin: 4px 0 8px;
     .goals {
       position: relative;
       background-color: rgba(181, 181, 181, 0.32);
@@ -538,7 +555,7 @@ app-progress-bar.page {
 }
 
 .title-desc {
-  height: 98px;
+  height: 92px;
   overflow: hidden;
   .desc {
     font-size: 14px !important;
@@ -608,16 +625,16 @@ body {
 .user-box {
   margin-bottom: 14px;
   .user-img {
-    font-size: 22px;
+    font-size: 20px;
     font-family: "Roboto";
     font-weight: 400;
     color: rgba(0, 0, 0, 0.62);
     width: 35px;
     height: 35px;
     text-align: center;
-    line-height: 32px;
+    line-height: 35px;
     border-radius: 50%;
-    border: 1px solid #ccc;
+    border: 1px solid rgba(204, 204, 204, 0.62);
     background: rgba(0, 0, 0, 0.04);
     margin-right: 10px;
     display: block;
@@ -627,6 +644,12 @@ body {
     color: rgba(0, 0, 0, 0.52);
     position: relative;
     top: 7px;
+    a, a:link {
+      color: rgba(255, 255, 255, 0.62);
+      &:hover {
+        color: rgba(255, 255, 255, 0.92);
+      }
+    }
   }
 }
 

@@ -68,7 +68,10 @@ export class DonationComponent implements OnInit, AfterViewInit {
       DonorName: [user.DisplayName, [Validators.required]],
       isAnanymous: [''],
       EMail: [user.userName, [Validators.required, Validators.email]],
-      PhoneNumber: ['', [Validators.required]],
+      CountryCode: ['+91', [Validators.required]],
+      PhoneNumber: ['', [Validators.required, Validators.minLength(10),
+          Validators.maxLength(10), Validators.pattern('^[0-9]{10}$')]
+      ],
       PlaceName: ['', [Validators.required]],
     });
   }
@@ -81,7 +84,11 @@ export class DonationComponent implements OnInit, AfterViewInit {
     }
     this.isLoading = true;
     this.loaderMessage = 'Resistering your dontation...';
-    this.http.registerDonation(this.donationForm.value).subscribe((result: any) => {
+    const payload = {
+      ...this.donationForm.value,
+      PhoneNumber: this.donationForm.value.CountryCode + this.donationForm.value.PhoneNumber
+    };
+    this.http.registerDonation(payload).subscribe((result: any) => {
       this.razorPayments = result;
       this.isLoading = false;
       this.makeRazerpayPayment(this.razorPayments);

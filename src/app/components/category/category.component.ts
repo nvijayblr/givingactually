@@ -130,7 +130,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
   startCampaign() {
     if (this.isUserLoggedIn) {
-      this.router.navigate(['/ce-campaign']);
+      this.router.navigate(['/ce-fundraiser']);
     } else {
       this.messageService.sendCommonMessage({topic: 'showLogin', reason: 'CreateCampaign'});
     }

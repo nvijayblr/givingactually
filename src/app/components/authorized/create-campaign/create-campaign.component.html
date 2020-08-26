@@ -23,10 +23,10 @@
 
             <mat-step [stepControl]="campaignBasicForm">
               <form [formGroup]="campaignBasicForm">
-                <ng-template matStepLabel>Campaign Details</ng-template>
+                <ng-template matStepLabel>Fundraiser Profile</ng-template>
                 <mat-form-field appearance="standard">
-                  <mat-label>Campaign Title</mat-label>
-                  <input matInput placeholder="Campaign Title" formControlName="CampaignTitle" maxlength="50" (change)="updatePreview()" autocomplete="off"/>
+                  <mat-label>Fundraiser Title</mat-label>
+                  <input matInput placeholder="Fundraiser Title" formControlName="CampaignTitle" maxlength="50" (change)="updatePreview()" autocomplete="off"/>
                 </mat-form-field>
                 <div class="characters-count campaign-title">{{campaignBasicForm.controls.CampaignTitle.value?.length}} / 50</div>
 
@@ -78,7 +78,7 @@
                   <div class="col-xs-12 col-sm-8 col-md-8">
                     <mat-form-field appearance="fill">
                       <mat-label>Beneficiary Name</mat-label>
-                      <input matInput placeholder="Beneficiary Name" formControlName="BGroupName" (change)="updatePreview()" autocomplete="off"/>
+                      <input matInput placeholder="Beneficiary Name (As per the Bank account)" formControlName="BGroupName" (change)="updatePreview()" autocomplete="off"/>
                     </mat-form-field>
                   </div>
                 </div>
@@ -87,11 +87,17 @@
                   <div class="col-xs-12 col-sm-12 col-md-12">
                     <mat-form-field appearance="fill">
                       <mat-label>Target Date (MM/DD/YYYY)</mat-label>
-                      <input matInput [matDatepicker]="picker" placeholder="Target Date" formControlName="CampaignTargetDate" (change)="updatePreview()" autocomplete="off"/>
+                      <input 
+                        matInput 
+                        [matDatepicker]="picker" 
+                        [min]="minDate" [max]="maxDate"
+                        placeholder="Target Date" 
+                        formControlName="CampaignTargetDate" 
+                        (dateChange)="updateDaysLeft()"
+                        autocomplete="off"/>
                       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                       <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
-                    
                   </div>
                 </div>
 
@@ -109,7 +115,7 @@
 
             <mat-step [stepControl]="campaignLocationForm">
               <form [formGroup]="campaignLocationForm">
-                <ng-template matStepLabel>Campaign Display</ng-template>
+                <ng-template matStepLabel>Fundraiser Display</ng-template>
 
                 <app-image-cropper
                   label="Display Picture"
@@ -156,7 +162,7 @@
 
             <mat-step [stepControl]="campaignDescriptionForm">
               <form [formGroup]="campaignDescriptionForm">
-                <ng-template matStepLabel>Campaign Story</ng-template>
+                <ng-template matStepLabel>Fundraiser Story</ng-template>
                 <!-- <mat-form-field appearance="standard">
                   <mat-label>Description</mat-label>
                   <textarea matInput placeholder="Description" formControlName="firstCtrl" autocomplete="off"></textarea>
@@ -245,16 +251,16 @@
                   <img *ngIf="croppedImage" [src]="croppedImage" class="cropped-image" />
                 </div>
                 <button mat-stroked-button class="gv-secondary-btn transparent rounded read-more">Preview</button>
+                <div class="user-box clearfix">
+                  <div class="user-img">
+                    {{getFirstLetter(campaign.OrganizerName)}}
+                  </div>
+                  <div class="user-name"><a routerLink="/accounts/{{campaign.UserId}}">{{campaign.OrganizerName}}</a></div>
+                </div>
               </div>
               <div class="info">
                 <div class="title-desc">
                   <h4 class="title"><a routerLink="/fundraiser/{{campaign.Id}}" title={{campaign.CampaignTitle}}>{{campaign.CampaignTitle}}</a></h4>
-                  <div class="user-box clearfix">
-                    <!-- <div class="user-img">
-                      {{getFirstLetter(campaign.OrganizerName)}}
-                    </div> -->
-                    <div class="user-name">by {{campaign.OrganizerName}}</div>
-                  </div>
                   <div class="desc" [innerHTML]="campaign.campaignDescription.StripedDescription"></div>
                 </div>
                 <div class="row category">

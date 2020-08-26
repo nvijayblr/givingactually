@@ -77,21 +77,32 @@
       <div class="signup-form">
         <form [formGroup]="signupForm" class="custom-login-wrapper">
           <div class="row">
-            <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="col-xs-12 col-sm-12 col-md-12">
               <mat-form-field class="full-width" appearance="outline">
-                <mat-label>Email / Username</mat-label>
+                <mat-label>Email</mat-label>
                 <input matInput placeholder="Email" formControlName="UserName">
                 <mat-error>
                   Please provide a valid email address.
                 </mat-error>
               </mat-form-field>
             </div>
+          </div>
+          <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-6">
               <mat-form-field class="full-width" appearance="outline">
-                <mat-label>Name</mat-label>
-                <input matInput placeholder="Name" cdkFocusInitial formControlName="DPName">
+                <mat-label>First Name</mat-label>
+                <input matInput placeholder="First Name" cdkFocusInitial formControlName="FirstName">
                 <mat-error>
-                  Please provide a valid name.
+                  Please provide a valid first name.
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Last Name</mat-label>
+                <input matInput placeholder="Last Name" cdkFocusInitial formControlName="LastName">
+                <mat-error>
+                  Please provide a valid last name.
                 </mat-error>
               </mat-form-field>
             </div>
@@ -184,10 +195,22 @@
             </div>
           </div>
 
-          <div class="btn-wrpper" style="margin-top: 20px; text-align: center;">
-            <button mat-raised-button color="primary" (click)="doSignup()" class="btn-google" [disabled]="isLoading" [class.loading]="isLoading">
-              Sign up
-            </button>
+          <div class="btn-wrpper" style="margin-top: 20px; text-align: left;">
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12">
+                <mat-checkbox formControlName="AcceptTerms" color="primary" (change)="isAcceptTermsError=false">
+                  Accept the <a routerLink="">term and conditions.</a>
+                </mat-checkbox>
+                <div class="mat-error custom-mat-error" style="top: -5px; left: 2px;" *ngIf="isAcceptTermsError">
+                  Please read and accept the terms and conditions.
+                </div>
+              </div>
+            </div>
+            <div style="text-align: center;">
+              <button mat-raised-button color="primary" (click)="doSignup()" class="btn-google" [disabled]="isLoading" [class.loading]="isLoading">
+                Sign up
+              </button>
+            </div>
           </div>
           <div class="btn-wrpper" style="text-align: center;">
             Already have an account?

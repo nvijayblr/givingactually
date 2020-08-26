@@ -27,11 +27,11 @@ const routes: Routes = [{
     loadChildren: () => import('./components/authorized/bank-account/bank-account.module').then(m => m.BankAccountModule),
     canActivate: [AuthGaurd]
   }, {
-    path: 'ce-campaign',
+    path: 'ce-fundraiser',
     loadChildren: () => import('./components/authorized/create-campaign/create-campaign.module').then(m => m.CreateCampaignModule),
     canActivate: [AuthGaurd]
   }, {
-    path: 'campaign-updates',
+    path: 'fundraiser-updates',
     loadChildren: () => import('./components/authorized/campaign-updates/campaign-updates.module').then(m => m.CampaignUpdatesModule),
     canActivate: [AuthGaurd]
   }, {

@@ -125,16 +125,16 @@
                   <div class="img" [ngStyle]="{'background-image': 'url(' + campaign.BDisplayPicPath + ')'}"></div>
                 </div>
                 <button mat-stroked-button class="gv-secondary-btn transparent rounded read-more">Preview</button>
+                <div class="user-box clearfix">
+                  <div class="user-img">
+                    {{getFirstLetter(campaign.OrganizerName)}}
+                  </div>
+                  <div class="user-name"><a routerLink="/accounts/{{campaign.UserId}}">{{campaign.OrganizerName}}</a></div>
+                </div>
               </div>
               <div class="info">
                 <div class="title-desc">
                   <h4 class="title"><a routerLink="/fundraiser/{{campaign.Id}}" title={{campaign.CampaignTitle}}>{{campaign.CampaignTitle}}</a></h4>
-                  <div class="user-box clearfix">
-                    <!-- <div class="user-img">
-                      {{getFirstLetter(campaign.OrganizerName)}}
-                    </div> -->
-                    <div class="user-name">by {{campaign.OrganizerName}}</div>
-                  </div>
                   <div class="desc" [innerHTML]="campaign.campaignDescription.StripedDescription"></div>
                 </div>
                 <div class="row category">

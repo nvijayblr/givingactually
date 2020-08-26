@@ -133,7 +133,7 @@ export class SearchComponent implements OnInit {
 
   startCampaign() {
     if (this.isUserLoggedIn) {
-      this.router.navigate(['/ce-campaign']);
+      this.router.navigate(['/ce-fundraiser']);
     } else {
       this.messageService.sendCommonMessage({topic: 'showLogin', reason: 'CreateCampaign'});
     }

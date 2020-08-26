@@ -79,12 +79,22 @@ export class BankAccountComponent implements OnInit, AfterViewInit {
     this.bankAccountForm = this.fb.group({
       CampaignId: [this.campaignId],
       BenName: [this.bankAccount.BenName, [Validators.required]],
-      AccountNumber: [this.bankAccount.AccountNumber, [Validators.required]],
-      IFSC: [this.bankAccount.IFSC, [Validators.required]],
-      BankName: [this.bankAccount.BankName, [Validators.required]],
+      AccountNumber: [this.bankAccount.AccountNumber, [Validators.required, Validators.pattern('[0-9]{9,18}')]],
+      IFSC: [this.bankAccount.IFSC, [Validators.required, Validators.pattern('^[A-Z]{4}0[A-Z0-9]{6}$')]],
+      BankName: [this.bankAccount.BankName, [Validators.required, Validators.minLength(3)]],
       BankBranch: [this.bankAccount.BankBranch, [Validators.required]]
     });
   }
+
+  // IFSC Validation - SBIN0125620
+  // It should be 11 characters long.
+  // The first four characters should be upper case alphabets.
+  // The fifth character should be 0.
+  // The last six characters usually numeric, but can also be alphabetic.
+
+  // Account Number
+  // According to RBI Reserve Bank of India -> The bank should have 9-18 digits
+  // https://www.rbi.org.in/scripts/PublicationReportDetails.aspx?ID=695#UAN
 
   initWithdrawals() {
     this.isBankAccountErr = false;

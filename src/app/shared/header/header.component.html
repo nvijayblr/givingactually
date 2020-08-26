@@ -21,7 +21,11 @@
           </button>
 
           <div class="logged-in-wrp" *ngIf="user.isLoggedIn">
-            <button mat-flat-button class="gv-btn-link" routerLink="/accounts/{{user.UserId}}">
+            <button mat-flat-button class="gv-btn-link" 
+              routerLink="/accounts/{{user.UserId}}"
+              routerLinkActive="on"
+              [routerLinkActiveOptions]="{ exact: false, __change_detection_hack__: id }"
+            >
               {{user.DisplayName ? user.DisplayName : user.userName}}
             </button>
             <button mat-flat-button class="gv-btn-link" (click)="doLogout()">

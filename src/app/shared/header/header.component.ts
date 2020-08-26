@@ -112,7 +112,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   startCampaign() {
     if (this.isUserLoggedIn) {
-      this.router.navigate(['/ce-campaign'], {queryParams: {c: 't'}});
+      this.router.navigate(['/ce-fundraiser'], {queryParams: {c: 't'}});
     } else {
       this.messageService.sendCommonMessage({topic: 'showLogin', reason: 'CreateCampaign'});
     }

@@ -54,10 +54,22 @@
                 <input matInput placeholder="Email" formControlName="EMail" autocomplete="off"/>
               </mat-form-field>
 
-              <mat-form-field appearance="fill">
-                <mat-label>Phone Number</mat-label>
-                <input matInput placeholder="Phone Number" formControlName="PhoneNumber" autocomplete="off"/>
-              </mat-form-field>
+              <div class="row">
+                <div class="col-xs-12 col-sm-4 col-md-4">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Code</mat-label>
+                    <mat-select formControlName="CountryCode">
+                      <mat-option value="+91">+91 (IN)</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-xs-12 col-sm-8 col-md-8">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Phone Number</mat-label>
+                    <input matInput placeholder="Phone Number" formControlName="PhoneNumber" autocomplete="off"/>
+                  </mat-form-field>
+                    </div>
+              </div>
 
               <mat-form-field appearance="fill">
                 <mat-label>City</mat-label>
@@ -99,16 +111,16 @@
                   <div class="img" [ngStyle]="{'background-image': 'url(' + campaign.BDisplayPicPath + ')'}"></div>
                 </div>
                 <button mat-stroked-button class="gv-secondary-btn transparent rounded read-more">Preview</button>
+                <div class="user-box clearfix">
+                  <div class="user-img">
+                    {{getFirstLetter(campaign.OrganizerName)}}
+                  </div>
+                  <div class="user-name"><a routerLink="/accounts/{{campaign.UserId}}">{{campaign.OrganizerName}}</a></div>
+                </div>
               </div>
               <div class="info">
                 <div class="title-desc">
                   <h4 class="title"><a routerLink="/fundraiser/{{campaign.Id}}" title={{campaign.CampaignTitle}}>{{campaign.CampaignTitle}}</a></h4>
-                  <div class="user-box clearfix">
-                    <!-- <div class="user-img">
-                      {{getFirstLetter(campaign.OrganizerName)}}
-                    </div> -->
-                    <div class="user-name">by {{campaign.OrganizerName}}</div>
-                  </div>
                   <div class="desc" [innerHTML]="campaign.campaignDescription.StripedDescription"></div>
                 </div>
                 <div class="row category">

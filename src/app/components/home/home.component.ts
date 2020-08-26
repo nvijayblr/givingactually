@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
 
   OwlOptions: OwlOptions = {
     loop: true,
-    autoplay: true,
+    autoplay: false,
     autoplayTimeout: 3000,
     autoplaySpeed: 700,
     mouseDrag: true,
@@ -76,7 +76,7 @@ export class HomeComponent implements OnInit {
 
   startCampaign() {
     if (this.isUserLoggedIn) {
-      this.router.navigate(['/ce-campaign']);
+      this.router.navigate(['/ce-fundraiser']);
     } else {
       this.messageService.sendCommonMessage({topic: 'showLogin', reason: 'CreateCampaign'});
     }

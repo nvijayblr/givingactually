@@ -45,28 +45,49 @@ export class AccountsComponent implements OnInit {
     ngoTypes: []
   };
 
-  bankAccountDetailsForm: FormGroup;
-  isbankAccountDetLoading = false;
-
   isUserLoggedIn = false;
+  isEditMode = false;
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private http: HttpService,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private authGuardService: AuthGuardService,
     private messageService: MessageService) { }
 
   ngOnInit() {
     this.isUserLoggedIn = this.authGuardService.isUserLoggedIn();
     this.user = this.authGuardService.getLoggedInUserDetails();
-    this.userId = this.route.snapshot.params.userId;
-    if (this.userId) {
-      this.initPersonalDetails({});
-      this.getUserCampaigns();
-      this.initBankAccountDetails();
-    }
+
+    this.activatedRoute.params.subscribe(routeParams => {
+      this.isUserLoggedIn = this.authGuardService.isUserLoggedIn();
+      this.user = this.authGuardService.getLoggedInUserDetails();
+      this.userId = this.route.snapshot.params.userId;
+      if (this.userId === this.user.UserId) {
+        this.initPersonalDetails({});
+        this.getUserCampaigns();
+        this.isEditMode = true;
+      } else {
+        // Show dashboard for other users
+        this.initPersonalDetails({});
+        this.isEditMode = false;
+        this.user = {};
+        this.getUsersDetails();
+        this.getUserCampaigns();
+      }
+    });
+
+  }
+
+  getUsersDetails() {
+    this.http.getUserDetails(this.userId).subscribe((result: any) => {
+      this.isPersonalDetLoading = false;
+      this.user = result;
+    }, (error) => {
+      this.isPersonalDetLoading = false;
+    });
   }
 
   getUserCampaigns() {
@@ -105,7 +126,8 @@ export class AccountsComponent implements OnInit {
   initPersonalDetails(user) {
     this.personalDetailsForm = this.fb.group({
       UserName: [{value: user.UserName, disabled: true}],
-      DPName: [user.DisplayName, [Validators.required, Validators.maxLength(120)]],
+      FirstName: [user.FirstName, [Validators.required, Validators.maxLength(120)]],
+      LastName: [user.LastName, [Validators.required, Validators.maxLength(120)]],
       IsNGO: [user.IsNGO],
       CanEndorse: [user.CanEndorse],
       NGOSector: [user.NGOSectorName],
@@ -184,16 +206,6 @@ export class AccountsComponent implements OnInit {
 
   }
 
-  initBankAccountDetails() {
-    this.bankAccountDetailsForm = this.fb.group({
-      AccountName: [''],
-      AccountNumber: [''],
-      BankName: [''],
-      IFSCCode: [''],
-      BranchAddress: [''],
-    });
-  }
-
   showWithdrawHistory(campaign) {
     campaign.isShowWithdrawHistory = true;
     campaign.isWithdrawLoading = true;
@@ -229,15 +241,11 @@ export class AccountsComponent implements OnInit {
         });
       }
     }
-    // Load bank account details.
-    if (tab.index === 2) {
-      this.initBankAccountDetails();
-    }
   }
 
   startCampaign() {
     if (this.isUserLoggedIn) {
-      this.router.navigate(['/ce-campaign']);
+      this.router.navigate(['/ce-fundraiser']);
     } else {
       this.messageService.sendCommonMessage({topic: 'showLogin', reason: 'CreateCampaign'});
     }
