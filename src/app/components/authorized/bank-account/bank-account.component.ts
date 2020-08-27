@@ -143,7 +143,7 @@ export class BankAccountComponent implements OnInit, AfterViewInit {
     this.isLoading = true;
     this.loaderMessage = 'Loding details...';
     this.http.cancelCompaignDetailsReq();
-    this.http.getCompaignDetails(campaignId).subscribe((result: any) => {
+    this.http.getCompaignSummary(campaignId).subscribe((result: any) => {
       this.campaign = result ? result : {};
       this.isLoading = false;
       if (this.isWithdrawal) {

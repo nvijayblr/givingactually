@@ -9,6 +9,9 @@ import { ServicesComponent } from './services/services.component';
 import { ContactusComponent } from './contactus/contactus.component';
 import { FaqComponent } from './faq/faq.component';
 import { HighlightsComponent } from './highlights/highlights.component';
+import { PrivacyComponent } from './privacy/privacy.component';
+import { TermsComponent } from './terms/terms.component';
+import { DisclaimerComponent } from './disclaimer/disclaimer.component';
 
 
 @NgModule({
@@ -19,6 +22,9 @@ import { HighlightsComponent } from './highlights/highlights.component';
     ContactusComponent,
     FaqComponent,
     HighlightsComponent,
+    PrivacyComponent,
+    TermsComponent,
+    DisclaimerComponent,
   ],
   imports: [
     CommonModule,

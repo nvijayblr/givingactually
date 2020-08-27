@@ -327,20 +327,27 @@ button {
       transform: scale(1.3,1.3);
       opacity: 0;
     }
-    .user-box {
+    .supporters-info {
       position: absolute;
       left: 0;
       right: 0;
       bottom: 0;
       background: rgb(0 0 0 / 0.72);
       width: 100%;
-      height: 50px;
+      height: 42px;
       margin-bottom: 0;
       padding: 5px 10px;
-      .user-img {
-        background: rgba(255, 255, 255, 0.32);
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 13px;
+      margin: 0;
+      .days { 
+        padding: 5px 0;
       }
-      .user-name {
+      .supporters {
+        padding: 5px 0;
+        text-align: right;
+        border-left: 1px solid rgba(255, 255, 255, 0.42);
       }
     }
   }
@@ -389,6 +396,7 @@ button {
   }
   .funded-info {
     font-weight: 500;
+    margin-top: 15px;
     .funded {
       .label {
         color: rgba(17, 17, 17, 0.42);
@@ -401,18 +409,6 @@ button {
       &.goals {
         text-align: right;
       }
-    }
-  }
-  .supporters-info {
-    border-top: 1px solid #dcdcdc;
-    margin-top: 15px;
-    padding-top: 12px;
-    font-weight: 400;
-    color: rgba(0, 0, 0, 0.42);
-    font-size: 13px;
-    .supporters {
-      text-align: right;
-      border-left: 1px solid #ccc;
     }
   }
   .campaign-address {
@@ -624,7 +620,8 @@ body {
 
 
 .user-box {
-  margin-bottom: 14px;
+  padding-top: 8px;
+  font-weight: 400;
   .user-img {
     font-size: 16px;
     font-family: "Roboto";
@@ -646,9 +643,9 @@ body {
     position: relative;
     top: 7px;
     a, a:link {
-      color: rgba(255, 255, 255, 0.62);
+      color: rgba(0, 0, 0, 0.62);
       &:hover {
-        color: rgba(255, 255, 255, 0.92);
+        color: rgba(0, 0, 0, 0.92);
       }
     }
   }

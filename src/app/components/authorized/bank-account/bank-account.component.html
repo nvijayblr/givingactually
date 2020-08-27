@@ -125,17 +125,19 @@
                   <div class="img" [ngStyle]="{'background-image': 'url(' + campaign.BDisplayPicPath + ')'}"></div>
                 </div>
                 <button mat-stroked-button class="gv-secondary-btn transparent rounded read-more">Preview</button>
-                <div class="user-box clearfix">
-                  <div class="user-img">
-                    {{campaign.DisplayInitial}}
+                <div class="row supporters-info">
+                  <div class="col-6 col-sm-4 col-md-6 days">
+                    {{campaign.DaysLeft}} days left
                   </div>
-                  <div class="user-name"><a routerLink="/accounts/{{campaign.UserId}}">{{campaign.OrganizerName}}</a></div>
+                  <div class="col-6 col-sm-4 col-md-6 supporters">
+                    {{campaign.Totalsupporters}} supporters
+                  </div>
                 </div>
               </div>
               <div class="info">
                 <div class="title-desc">
                   <h4 class="title"><a routerLink="/fundraiser/{{campaign.Id}}" title={{campaign.CampaignTitle}}>{{campaign.CampaignTitle}}</a></h4>
-                  <div class="desc" [innerHTML]="campaign.campaignDescription.StripedDescription"></div>
+                  <div class="desc" [innerHTML]="campaign.CampaignDescription"></div>
                 </div>
                 <div class="row category">
                   <div class="col-6 col-sm-6 col-md-6 campaign-address">
@@ -144,17 +146,11 @@
                       <span>{{campaign.CategoryName}}</span>
                     </a>
                   </div>
-                  <div class="col-6 col-sm-6 col-md-6 campaign-address right" [title]="campaign.placeName">
+                  <div class="col-6 col-sm-6 col-md-6 campaign-address right" [title]="campaign.FullplaceName">
                     <a routerLink="/search" [queryParams]="{q: campaign.placeName}">
                       <i class="fa fa-map-marker"></i>
                       <span>{{campaign.placeName}}</span>
                     </a>
-                  </div>
-                </div>
-
-                <div class="funded-chart">
-                  <div class="goals">
-                    <div class="funded" [ngStyle]="{'width': campaign.RaisedPercentage + '%'}"></div>
                   </div>
                 </div>
 
@@ -168,13 +164,18 @@
                     <!-- <span class="label">GOAL</span> -->
                   </div>
                 </div>
-                <div class="row supporters-info">
-                  <div class="col-6 col-sm-4 col-md-6 days">
-                    {{campaign.DaysLeft}} days left
+
+                <div class="funded-chart">
+                  <div class="goals">
+                    <div class="funded" [ngStyle]="{'width': campaign.RaisedPercentage + '%'}"></div>
                   </div>
-                  <div class="col-6 col-sm-4 col-md-6 supporters">
-                    {{campaign.Totalsupporters}} supporters
+                </div>
+
+                <div class="user-box clearfix">
+                  <div class="user-img">
+                    {{campaign.DisplayInitial}}
                   </div>
+                  <div class="user-name"><a routerLink="/accounts/{{campaign.UserId}}">{{campaign.OrganizerName}}</a></div>
                 </div>
 
               </div>

@@ -228,6 +228,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
       Latitude: [campaign.Latitude, Validators.required],
       Longitude: [campaign.Longitude, Validators.required],
     });
+    this.campaign.placeName = campaign.CampainOrganizer.placeNmae;
     this.croppedImage = campaign.BDisplayPicPath;
   }
 
@@ -410,6 +411,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
     this.http.cancelCompaignDetailsReq();
     this.http.getCompaignDetails(campaignId).subscribe((result: any) => {
       this.campaign = result ? result : {};
+
       this.initBasicDetails(this.campaign);
       this.initLocationDetails(this.campaign);
       this.initCampaignDescription(this.campaign);
@@ -465,6 +467,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
     this.campaignLocationForm.controls.Latitude.setValue(lat);
     this.campaignLocationForm.controls.Longitude.setValue(lng);
     this.campaignLocationForm.controls.placeName.setValue(place.formatted_address);
+    this.campaign.placeName = place.name;
   }
 
   getFirstLetter(name) {

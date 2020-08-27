@@ -43,7 +43,7 @@
       <!-- User Campaigns -->
       <div class="col-xs-12 col-sm-4 col-md-8">
         <mat-tab-group (selectedTabChange)="tabChange($event)">  
-          <mat-tab label="My Campaigns">
+          <mat-tab label="{{isEditMode ? 'My Fundraisers' : 'Fundraisers'}}">
             <div class="user-campaigns">
 
               <app-progress-bar class="page" [message]="'Loading Fundraisers...'" *ngIf="isLoading" ></app-progress-bar>
@@ -100,7 +100,7 @@
                           <i class="fa fa-tag"></i>
                           {{campaign.CategoryName}}
                         </a></p>
-                        <p class="label"><a routerLink="/search" [queryParams]="{q: campaign.placeName}">
+                        <p class="label"><a routerLink="/search" [queryParams]="{q: campaign.placeName}" [title]="campaign.FullplaceName">
                           <i class="fa fa-map-marker"></i>
                           {{campaign.placeName}}
                         </a></p>
@@ -351,13 +351,13 @@
                 <app-progress-bar class="page" [message]="'Loading...'" *ngIf="isStatLoading"></app-progress-bar>
                 <table width="100%" class="table" *ngIf="!isStatLoading && donationsList.length">
                   <tr>
-                    <th>CampaignId</th>
+                    <th>Fundraiser</th>
                     <th>Date</th>
                     <th>Amount</th>
                     <th>Status</th>
                   </tr>
                   <tr *ngFor="let donation of donationsList">
-                    <td><a routerLink="/fundraiser/{{donation.CampaignId}}">{{donation.CampaignId}}</a></td>
+                    <td><a routerLink="/fundraiser/{{donation.CampaignId}}">View Fundraiser</a></td>
                     <td>{{formatDate(donation.DonatedOn)}}</td>
                     <td>₹{{donation.DonationAmnt}}</td>
                     <td>{{donation.Status}}</td>

@@ -557,6 +557,18 @@ export class HttpService  {
     );
   }
 
+  getCompaignSummary(campaignId): Observable<any> {
+    const header: any = this.getAuthHeaders();
+    return this.http.get<any>(`${this.rootUrl}api/Campaign/CampaignSummary?id=${campaignId}`, header).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+      takeUntil(this.onCancelCompaignDetailsReq())
+    );
+  }
+
 
 
 }
