@@ -12,6 +12,23 @@
       bottom: 100px;
       width: 620px;
       max-width: 100%;
+      text-shadow: 5px 5px 4px rgba(0, 0, 0, 0.6);
+    }
+    .offer-title {
+      position: absolute;
+      bottom: 220px;
+      width: 290px;
+      text-align: center;
+      color: #fff;
+      right: 210px;
+      font-size: 30px;
+      font-weight: 400;
+      text-shadow: 6px 5px 3px rgba(0, 0, 0, 0.6);
+      .zero {
+        font-size: 80px;
+        margin-right: 7px;
+        text-shadow: 9px 8px 5px rgba(0, 0, 0, 0.6);
+      }
     }
     .btn-wrapper {
       position: absolute;
@@ -290,4 +307,53 @@ button {
 
 .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.how-to-use-wrapper {
+  padding: 70px 0 30px 0;
+  .title {
+    text-align: center;
+    margin-bottom: 14px;
+    font-weight: 600;
+    color: #444;
+  }
+  .desc {
+    text-align: center;
+    font-size: 18px;
+    color: #444;
+    max-width: 650px;
+    margin: 10px auto;
+  }
+  .steps-wrapper {
+    width: 570px;
+    margin: auto;
+    .btn-wrapper {
+      text-align: center;
+    }
+  }
+  .steps {
+    margin: 50px 0;
+    .step {
+      float: left;
+      font-size: 100px;
+      line-height: 100px;
+      color: #696969;
+      margin-right: 10px;
+      font-weight: 300;
+    }
+    .steps-det {
+      float: left;
+      margin-top: 12px;
+      width: 500px;
+      .step-title {
+        font-weight: 500;
+        font-size: 18px;
+        margin-bottom: 6px;
+        color: #17bc9c;
+      }
+      .step-desc {
+        font-size: 16px;
+      }
+    }
+  }
 }
