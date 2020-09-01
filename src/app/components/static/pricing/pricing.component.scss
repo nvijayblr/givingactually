@@ -1,0 +1,62 @@
+.pricing-wrapper {
+  text-align: center;
+  .main-heading {
+    text-align: center;
+    margin: 20px 0 30px;
+    font-weight: 400;
+    font-size: 32px;
+  }
+  .title {
+    margin: 20px 0 0;
+    font-weight: 400;
+    font-size: 24px;
+  }
+  .desc {
+    font-size: 14px;
+    color: #696969;
+  }
+  .card-title {
+    margin: 20px 0 0;
+    font-weight: 400;
+    font-size: 16px;
+    margin-top: 84px;
+  }
+
+  .mat-card {
+    width: 80%;
+    margin: 24px auto;
+    padding: 24px;
+  }
+  .breakup-card {
+    text-align: left;
+    font-size: 18px;
+  }
+  .right-align {
+    text-align: right;
+    font-weight: 400;
+    margin-bottom: 12px;
+  }
+  .value {
+    text-align: left;
+    margin-bottom: 12px;
+  }
+  .goal-amount {
+    margin-top: 40px;
+    text-align: center;
+    .amount {
+      margin-top: 14px;
+      font-weight: 500;
+      font-size: 32px;
+      color: #17bc9c;
+    }
+  }
+  .mat-form-field {
+    font-size: 20px;
+    font-weight: 300;
+  }
+
+}
+.mat-slider-thumb-label {
+  width: 38px !important;
+  height: 38px !important;
+}

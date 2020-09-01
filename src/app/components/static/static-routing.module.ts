@@ -10,6 +10,9 @@ import { HighlightsComponent } from './highlights/highlights.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { TermsComponent } from './terms/terms.component';
 import { DisclaimerComponent } from './disclaimer/disclaimer.component';
+import { TeamsComponent } from './teams/teams.component';
+import { CareersComponent } from './careers/careers.component';
+import { PricingComponent } from './pricing/pricing.component';
 
 const routes: Routes = [
   {
@@ -35,6 +38,15 @@ const routes: Routes = [
       }, {
         path: 'highlights',
         component: HighlightsComponent
+      }, {
+        path: 'teams',
+        component: TeamsComponent
+      }, {
+        path: 'careers',
+        component: CareersComponent
+      }, {
+        path: 'pricing',
+        component: PricingComponent
       }, {
         path: 'privacy',
         component: PrivacyComponent

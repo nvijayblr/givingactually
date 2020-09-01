@@ -202,6 +202,12 @@ button {
     margin-bottom: 20px;
     line-height: 26px;
   }
+  .page-bd {
+    li {
+      list-style: disc;
+      margin: 16px;
+    }
+  }
 }
 
 .owl-theme .owl-dots .owl-dot.active span, .owl-theme .owl-dots .owl-dot:hover span {
@@ -359,9 +365,9 @@ button {
     padding: 20px;
     background: rgba(255, 255, 255, 0.82);
     .title {
-      font-size: 16px;
+      font-size: 18px;
       margin-bottom: 0;
-      max-height: 38px;
+      max-height: 44px;
       overflow: hidden;
       margin-bottom: 8px !important;
     }
@@ -397,6 +403,7 @@ button {
   .funded-info {
     font-weight: 500;
     margin-top: 15px;
+    font-size: 16px;
     .funded {
       .label {
         color: rgba(17, 17, 17, 0.42);
@@ -623,33 +630,44 @@ body {
   padding-top: 8px;
   font-weight: 400;
   .user-img {
-    font-size: 16px;
+    font-size: 11px;
     font-family: "Roboto";
-    font-weight: 400;
+    font-weight: 200;
     color: rgba(0, 0, 0, 0.62);
-    width: 35px;
-    height: 35px;
+    width: 26px;
+    height: 26px;
     text-align: center;
-    line-height: 35px;
+    line-height: 26px;
     border-radius: 50%;
     border: 1px solid rgba(204, 204, 204, 0.62);
     background: rgba(0, 0, 0, 0.04);
-    margin-right: 10px;
+    margin-right: 6px;
     display: block;
     float: left;
   }
   .user-name {
     color: rgba(0, 0, 0, 0.52);
     position: relative;
-    top: 7px;
-    a, a:link {
-      color: rgba(0, 0, 0, 0.62);
-      &:hover {
-        color: rgba(0, 0, 0, 0.92);
-      }
-    }
+    top: 5px;
+    font-size: 12px;
+    // a, a:link {
+    //   color: rgba(0, 0, 0, 0.62);
+    //   &:hover {
+    //     color: rgba(0, 0, 0, 0.92);
+    //   }
+    // }
   }
 }
+
+.flex-containers {
+  display: flex;
+  &.space-between {
+    justify-content: space-between;
+  }
+  &.center {
+    justify-content: center;
+  }
+} 
 
 // Media Query
 
@@ -765,6 +783,21 @@ body {
     max-width: 100%;
     width: 100%;
     padding: 0 10px;
+    top: 180px;
+  }
+  .home-slider .slider-bg .title {
+    font-size: 23px;
+    line-height: 34px !important;
+    bottom: 50px !important;
+  }
+  .home-slider .slider-bg .offer-title {
+    right: calc(100% - 355px) !important;;
+  }
+  .how-to-use-wrapper .steps-wrapper {
+    width: 100% !important;
+    .steps .steps-det {
+      width: 70% !important;
+    }
   }
 }
 // End of the responsiveness

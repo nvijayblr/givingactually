@@ -1,0 +1,111 @@
+<section class="common-page-slider">
+  <div class="slider-bg">
+    <div class="container">
+      <h2 class="title">Free Fundraising For All</h2>
+    </div>
+  </div>
+</section>
+
+<section class="gv-common-page-body">
+  <div class="container">
+    <div class="breadcrumb-wrapper">
+      <ul class="breadcrumb">
+        <li><a routerLink="/ga/home" title="Home">Home <mat-icon>keyboard_arrow_right</mat-icon></a></li>
+        <li><span itemprop="name"> Pricing</span></li>
+      </ul>
+    </div>
+
+    <div class="pricing-wrapper">
+      <h2 class="title">Fundraiser Goal Estimator</h2>
+      <p class="desc">Check detailed breakup & plan how much you would like to raise</p>
+
+      <h2 class="card-title">I want to raise about</h2>
+      <mat-card>
+        <h3 class="position">
+          <mat-slider
+            style="width: 80%;"
+            thumbLabel
+            [displayWith]="formatLabel"
+            tickInterval="auto"
+            min="10000"
+            max="1000000"
+            [(ngModel)]="pricing.rasiseAmt" (ngModelChange)="generateBreakup()">
+          </mat-slider>
+        </h3>
+        <h4 class="desc">
+          <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-6 text-right">
+              <mat-form-field appearance="fill">
+                <mat-label>Currency</mat-label>
+                <mat-select [(ngModel)]="pricing.currency">
+                  <mat-option value="INR">INR</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 text-left">
+              <mat-form-field appearance="fill">
+                <mat-label>Amount</mat-label>
+                <input matInput type="number" placeholder="Amount" autocomplete="off" [(ngModel)]="pricing.rasiseAmt" (ngModelChange)="generateBreakup()"/>
+              </mat-form-field>
+            </div>
+          </div>
+        </h4>
+      </mat-card>
+
+      <h2 class="card-title second">& I believe, INR contributions might total to</h2>
+      <mat-card>
+        <h3 class="position">
+          <mat-slider
+            style="width: 80%;"
+            thumbLabel
+            tickInterval="auto"
+            min="0"
+            max="100"
+            [(ngModel)]="pricing.fundRaisePercent"
+            (ngModelChange)="generateBreakup()"
+          >
+          </mat-slider>
+        </h3>
+        <h4 class="desc">
+          <mat-form-field appearance="fill">
+            <mat-label>% of all funds raised</mat-label>
+            <input matInput type="number" placeholder="% of all funds raised" autocomplete="off" [(ngModel)]="pricing.fundRaisePercent" (ngModelChange)="generateBreakup()"/>
+          </mat-form-field>
+        </h4>
+      </mat-card>
+
+      <h2 class="title" style="margin: 80px 0 0;">Detailed breakup</h2>
+      <mat-card class="breakup-card">
+        <div class="row">
+          <div class="col-6 col-sm-6 col-md-6 right-align">
+            Want to raise (₹) :
+          </div>
+          <div class="col-6 col-sm-6 col-md-6 value">
+            {{toLocaleString(pricing.rasiseAmt)}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 col-sm-6 col-md-6 right-align">
+            Platform fee (₹) :
+          </div>
+          <div class="col-6 col-sm-6 col-md-6 value">
+            {{toLocaleString(pricing.platformFee)}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 col-sm-6 col-md-6 right-align">
+            Payment Gateway charges (₹) :
+          </div>
+          <div class="col-6 col-sm-6 col-md-6 value">
+            {{toLocaleString(pricing.paymentGatewayFee)}}
+          </div>
+        </div>
+        <div class="goal-amount">
+          <h3 class="title">Consider setting a goal amount of approx.</h3>
+          <h2 class="amount">₹{{toLocaleString(pricing.goalAmount)}}</h2>
+        </div>
+      </mat-card>
+
+    </div>
+  </div>
+</section>

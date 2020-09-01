@@ -1,0 +1,30 @@
+.careers-wrapper {
+  .main-heading {
+    text-align: center;
+    margin: 20px 0 30px;
+    font-weight: 400;
+    font-size: 32px;
+  }
+  .title {
+    margin: 20px 0 14px;
+    font-weight: 400;
+    font-size: 24px;
+  }
+  .opening {
+    width: 290px;
+    float: left;
+    margin-right: 24px;
+    border: 1px solid #e6e6e6;
+    padding: 24px;
+    .position {
+      font-weight: 400;
+      font-size: 19px;
+      margin: 20px 0 0 0;
+    }
+    .desc {
+      font-weight: 200;
+      font-size: 13px;
+      margin: 8px 0 20px 0;
+    }
+  }
+}

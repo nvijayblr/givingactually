@@ -12,6 +12,9 @@ import { HighlightsComponent } from './highlights/highlights.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { TermsComponent } from './terms/terms.component';
 import { DisclaimerComponent } from './disclaimer/disclaimer.component';
+import { TeamsComponent } from './teams/teams.component';
+import { CareersComponent } from './careers/careers.component';
+import { PricingComponent } from './pricing/pricing.component';
 
 
 @NgModule({
@@ -25,6 +28,9 @@ import { DisclaimerComponent } from './disclaimer/disclaimer.component';
     PrivacyComponent,
     TermsComponent,
     DisclaimerComponent,
+    CareersComponent,
+    PricingComponent,
+    TeamsComponent,
   ],
   imports: [
     CommonModule,

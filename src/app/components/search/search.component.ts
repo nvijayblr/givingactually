@@ -38,10 +38,10 @@ export class SearchComponent implements OnInit {
     order: 'Asc'
   }, {
     label: 'With in 200KM',
-    value: 'CampaignTitle'
+    value: '200'
   }, {
     label: 'With in 500KM',
-    value: 'CategoryName'
+    value: '500'
   }, {
     label: 'All',
     value: '0'
