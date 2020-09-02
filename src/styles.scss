@@ -690,8 +690,13 @@ body {
   .home-slider .slider-bg .title {
     width: 376px !important;
   }
-  .header.masthead .main-nav, .category-list-wrapper {
+  .header.masthead .main-nav, .filter-wrapper,
+  .header.masthead .main-nav, .left-arrow,
+  .header.masthead .main-nav, .right-arrow{
     display: none;
+  }
+  .header.masthead .main-nav, .category-list {
+    width: 100% !important;
   }
   .login-singup {
     max-width: calc(100% - 20px) !important;

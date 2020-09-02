@@ -63,6 +63,96 @@ export class CategoryComponent implements OnInit, OnDestroy {
     order: 'Asc'
   };
 
+
+  // Category List
+  categoryList = [{
+    title: 'All',
+    icon: 'fa-globe',
+    key: 'All'
+  }, {
+    title: 'Agriculture',
+    icon: 'fa-tree',
+    key: 'Agriculture'
+  }, {
+    title: 'Animals',
+    icon: 'fa-tag',
+    key: 'Animals'
+  }, {
+    title: 'Annadhanam',
+    icon: 'fa-sun-o',
+    key: 'Annadhanam'
+  }, {
+    title: 'Charity',
+    icon: 'fa-venus',
+    key: 'Charity'
+  }, {
+    title: 'Education',
+    icon: 'fa-book',
+    key: 'Education'
+  }, {
+    title: 'Elderly Care',
+    icon: 'fa-wheelchair',
+    key: 'ElderlyCare'
+  }, {
+    title: 'Emergency',
+    icon: 'fa-ambulance',
+    key: 'Emergency'
+  }, {
+    title: 'Funeral',
+    icon: 'fa-life-ring',
+    key: 'Funeral'
+  }, {
+    title: 'Medical',
+    icon: 'fa-heartbeat',
+    key: 'Medical'
+  }, {
+    title: 'Nutrition',
+    icon: 'fa-cutlery',
+    key: 'Nutrition'
+  }, {
+    title: 'Spirituality',
+    icon: 'fa-circle-o-notch',
+    key: 'Spirituality'
+  }, {
+    title: 'Sports',
+    icon: 'fa-futbol-o',
+    key: 'Sports'
+  }, {
+    title: 'Volunteer',
+    icon: 'fa-handshake-o',
+    key: 'Volunteer'
+  }, {
+    title: 'Others',
+    icon: 'fa-snowflake-o',
+    key: 'Others'
+  }];
+
+  OwlCategoryOptions: OwlOptions = {
+    loop: false,
+    autoplay: false,
+    autoplayTimeout: 6000,
+    autoplaySpeed: 700,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    dots: false,
+    margin: 5,
+    navSpeed: 700,
+    navText: [ '<i class="fa-chevron-left"></i>', '<i class="fa-chevron-right></i>"' ],
+    autoWidth: true,
+    items: 8,
+    nav: false,
+    responsive: {
+      0: {
+        items: 3
+      },
+      740: {
+        items: 8
+      }
+    },
+  };
+
+
   isUserLoggedIn = false;
   commonSub: Subscription;
 
@@ -126,6 +216,10 @@ export class CategoryComponent implements OnInit, OnDestroy {
     this.page = 1;
     this.sorting = sorting;
     this.getCampainsByCategory(this.categoryName);
+  }
+
+  gotoCategory(category) {
+    this.router.navigate([`/category/${category.key}`]);
   }
 
   startCampaign() {

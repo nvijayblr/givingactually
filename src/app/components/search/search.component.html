@@ -26,17 +26,17 @@
         <div class="col-4 col-sm-6 col-md-6">
           <div class="filter-wrp" *ngIf="lat && lng">
             <div class="sort-by">
-              <strong>{{sorting.label}}</strong>
+              <strong>{{distance.label}}</strong>
             </div>
             <button mat-icon-button class="filter-btn" [matMenuTriggerFor]="menuFilter"><mat-icon>sort</mat-icon></button>
             <mat-menu #menuFilter="matMenu">
               <button 
                 mat-menu-item 
-                *ngFor="let sorting of sortingsList" 
-                [value]="sorting.value"
-                (click)="applySorting(sorting)"
+                *ngFor="let distance of distanceList" 
+                [value]="distance.value"
+                (click)="applyDistanceSorting(distance)"
               >
-                {{sorting.label}}
+                {{distance.label}}
               </button>
             </mat-menu>
           </div>
@@ -123,7 +123,7 @@
             <button mat-stroked-button class="gv-secondary-btn rounded" (click)="startCampaign()">Start a Fundraiser</button>
           </div>
           <!-- Pagination -->
-          <!-- <div class="pagination-wrapper" [hidden]="isLoading">
+          <div class="pagination-wrapper" [hidden]="isLoading">
             <mat-paginator 
               [hidden]="total < pageSize"
               *ngIf="total"
@@ -133,7 +133,7 @@
               [showFirstLastButtons]="true"
               (page)="pageEvent = onPaginationChange($event)">
             </mat-paginator>
-          </div> -->
+          </div>
 
       </div>
       <!-- End of Category Panel -->

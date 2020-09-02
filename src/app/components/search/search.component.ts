@@ -32,7 +32,7 @@ export class SearchComponent implements OnInit {
   isUserLoggedIn = false;
   lat = '';
   lng = '';
-  sortingsList = [{
+  distanceList = [{
     label: 'With in 100KM',
     value: '100',
     order: 'Asc'
@@ -47,7 +47,7 @@ export class SearchComponent implements OnInit {
     value: '0'
   }];
 
-  sorting = {
+  distance = {
     label: 'With in 100KM',
     value: '100',
     order: 'Asc'
@@ -76,7 +76,7 @@ export class SearchComponent implements OnInit {
       if (queryParams.lat && queryParams.lng) {
         this.lat = queryParams.lat;
         this.lng = queryParams.lng;
-        this.initLocationSearch(queryParams.lat, queryParams.lng, 'All');
+        this.initLocationSearch(queryParams.lat, queryParams.lng, '100');
       } else {
         this.initSerach();
       }
@@ -87,7 +87,7 @@ export class SearchComponent implements OnInit {
     this.isLoading = true;
     this.http.cancelCompaignByCategoryReq();
     this.campaignsList = [];
-    this.http.getSearchCampaigns(this.query).subscribe((result: any) => {
+    this.http.getSearchCampaigns(this.query, this.page, this.pageSize).subscribe((result: any) => {
       this.isLoading = false;
       this.campaignsList = result.CampaignLists;
       this.total = result.TotalCampaigns;
@@ -102,7 +102,7 @@ export class SearchComponent implements OnInit {
     this.isLoading = true;
     this.http.cancelCompaignByCategoryReq();
     this.campaignsList = [];
-    this.http.getCampaignByLatLng(lat, lng, distance).subscribe((result: any) => {
+    this.http.getCampaignByLatLng(lat, lng, distance, this.page, this.pageSize).subscribe((result: any) => {
       this.isLoading = false;
       this.campaignsList = result.CampaignLists;
       this.total = result.TotalCampaigns;
@@ -117,17 +117,22 @@ export class SearchComponent implements OnInit {
     this.router.navigate(['/search'], {queryParams: {q: this.query}});
   }
 
-  applySorting(sorting) {
-    sorting.order = sorting.order === 'Asc' ? 'Desc' : 'Asc';
+  applyDistanceSorting(distance) {
+    distance.order = distance.order === 'Asc' ? 'Desc' : 'Asc';
     this.page = 1;
-    this.sorting = sorting;
-    this.initLocationSearch(this.lat, this.lng, this.sorting.value);
+    this.pageSize = 6;
+    this.distance = distance;
+    this.initLocationSearch(this.lat, this.lng, this.distance.value);
   }
 
   onPaginationChange(event) {
     this.page = event.pageIndex + 1;
     this.pageSize = event.pageSize;
-    this.initSerach();
+    if (this.lat && this.lng) {
+      this.initLocationSearch(this.lat, this.lng, this.distance.value);
+    } else {
+      this.initSerach();
+    }
     window.scrollTo(0, 0);
   }
 
