@@ -100,7 +100,7 @@
                           <i class="fa fa-tag"></i>
                           {{campaign.CategoryName}}
                         </a></p>
-                        <p class="label"><a routerLink="/search" [queryParams]="{q: campaign.placeName}" [title]="campaign.FullplaceName">
+                        <p class="label"><a routerLink="/search" [queryParams]="{lat: campaign.Latitude, lng: campaign.Longitude}" [title]="campaign.FullplaceName">
                           <i class="fa fa-map-marker"></i>
                           {{campaign.placeName}}
                         </a></p>

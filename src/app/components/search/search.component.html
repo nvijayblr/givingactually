@@ -81,8 +81,8 @@
                       <span>{{campaign.CategoryName}}</span>
                     </a>
                   </div>
-                  <div class="col-6 col-sm-6 col-md-6 campaign-address right" [title]="campaign.FullplaceName">
-                    <a routerLink="/search" [queryParams]="{q: campaign.placeName}">
+                  <div class="col-6 col-sm-6 col-md-6 campaign-address right">
+                    <a routerLink="/search" [queryParams]="{lat: campaign.Latitude, lng: campaign.Longitude}" [title]="campaign.FullplaceName">
                       <i class="fa fa-map-marker"></i>
                       <span>{{campaign.placeName}}</span>
                     </a>
