@@ -17,14 +17,16 @@
           </button>
         </div>
         <div class="category-list">
-          <owl-carousel-o [options]="OwlCategoryOptions" #owlCar>
+          <owl-carousel-o [options]="OwlCategoryOptions" #owlCar (initialized)="owlInitialized()">
             <!-- Items -->
-            <ng-template carouselSlide *ngFor="let category of categoryList">
-              <div class="category-item" [class.selected]="category.key === categoryName" (tap)="gotoCategory(category)">
-                <div class="cat-icon"><i class="fa {{category.icon}}"></i></div>
-                <h3 class="cat-title">{{category.title}}</h3>
-              </div>
-            </ng-template>
+            <ng-container *ngFor="let category of categoryList">
+              <ng-template carouselSlide [id]="category.id">
+                <div class="category-item" [class.selected]="category.key === categoryName" (tap)="gotoCategory(category)">
+                  <div class="cat-icon"><i class="fa {{category.icon}}"></i></div>
+                  <h3 class="cat-title">{{category.title}}</h3>
+                </div>
+              </ng-template>
+            </ng-container>
           </owl-carousel-o>
         </div>
         <div class="right-arrow">

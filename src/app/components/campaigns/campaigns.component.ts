@@ -8,6 +8,7 @@ import { ShareService } from 'ngx-sharebuttons';
 import { Subscriber } from 'rxjs';
 import { AuthGuardService } from '../../services/auth-guard.service';
 import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
+import { Title , Meta } from '@angular/platform-browser';
 
 import * as moment from 'moment';
 
@@ -99,7 +100,8 @@ export class CampaignsComponent implements OnInit {
     private http: HttpService,
     private authGuardService: AuthGuardService,
     public dialog: MatDialog,
-    private router: Router, ) {
+    private router: Router,
+    private meta: Meta ) {
     this.userSession = this.authGuardService.getLoggedInUserDetails();
     this.isUserLoggedIn = this.authGuardService.isUserLoggedIn();
     if (this.userSession && this.userSession.canEndorse === 'True') {
@@ -128,6 +130,24 @@ export class CampaignsComponent implements OnInit {
       if (!this.campaign.Id) {
         this.router.navigate([`/home`]);
       }
+      //
+      this.meta.updateTag({ name: 'title', content: this.campaign.CampaignTitle });
+      this.meta.updateTag({ name: 'description', content: this.campaign.campaignDescription.StripedDescription });
+      this.meta.updateTag({ name: 'image', content: this.campaign.BDisplayPicPath });
+      this.meta.updateTag({ name: 'author', content: this.campaign.OrganizerName });
+
+
+      this.meta.updateTag({ property: 'og:title', content: this.campaign.CampaignTitle });
+      this.meta.updateTag({ property: 'og:description', content: this.campaign.campaignDescription.StripedDescription });
+      this.meta.updateTag({ property: 'og:url', content: location.href });
+      this.meta.updateTag({ property: 'og:image', content: this.campaign.BDisplayPicPath });
+
+      this.meta.updateTag({ property: 'twitter:title', content: this.campaign.CampaignTitle });
+      this.meta.updateTag({ property: 'twitter:description', content: this.campaign.campaignDescription.StripedDescription });
+      this.meta.updateTag({ property: 'twitter:url', content: location.href });
+      this.meta.updateTag({ property: 'twitter:image:src', content: this.campaign.BDisplayPicPath });
+
+
     }, (error) => {
       // this.campaign = {};
       this.isCampaignError = true;

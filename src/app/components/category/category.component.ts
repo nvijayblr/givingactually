@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { HttpService } from '../../services/http-service.service';
@@ -21,6 +21,7 @@ customPaginatorIntl.itemsPerPageLabel = 'Campaigns per page:';
   ]
 })
 export class CategoryComponent implements OnInit, OnDestroy {
+  @ViewChild('owlCar', {static: true}) owlCar;
 
   pageEvent: any = {};
   categoryName: any = '';
@@ -68,63 +69,78 @@ export class CategoryComponent implements OnInit, OnDestroy {
   categoryList = [{
     title: 'All',
     icon: 'fa-globe',
-    key: 'All'
+    key: 'All',
+    id: 'All'
   }, {
     title: 'Agriculture',
     icon: 'fa-tree',
-    key: 'Agriculture'
+    key: 'Agriculture',
+    id: 'Agriculture'
   }, {
     title: 'Animals',
-    icon: 'fa-tag',
-    key: 'Animals'
+    icon: 'fa-paw',
+    key: 'Animals',
+    id: 'Animals'
   }, {
     title: 'Annadhanam',
     icon: 'fa-sun-o',
-    key: 'Annadhanam'
+    key: 'Annadhanam',
+    id: 'Annadhanam'
   }, {
     title: 'Charity',
     icon: 'fa-venus',
-    key: 'Charity'
+    key: 'Charity',
+    id: 'Charity'
   }, {
     title: 'Education',
     icon: 'fa-book',
-    key: 'Education'
+    key: 'Education',
+    id: 'Education'
   }, {
     title: 'Elderly Care',
-    icon: 'fa-wheelchair',
-    key: 'ElderlyCare'
+    icon: 'fa-blind',
+    key: 'Elderly Care',
+    id: 'ElderlyCare'
   }, {
     title: 'Emergency',
     icon: 'fa-ambulance',
-    key: 'Emergency'
+    key: 'Emergency',
+    id: 'Emergency'
   }, {
     title: 'Funeral',
     icon: 'fa-life-ring',
-    key: 'Funeral'
+    key: 'Funeral',
+    id: 'Funeral'
   }, {
     title: 'Medical',
     icon: 'fa-heartbeat',
-    key: 'Medical'
+    key: 'Medical',
+    id: 'Medical'
   }, {
     title: 'Nutrition',
     icon: 'fa-cutlery',
-    key: 'Nutrition'
+    key: 'Nutrition',
+    id: 'Nutrition'
   }, {
     title: 'Spirituality',
     icon: 'fa-circle-o-notch',
-    key: 'Spirituality'
+    key: 'Spirituality',
+    id: 'Spirituality'
   }, {
     title: 'Sports',
     icon: 'fa-futbol-o',
-    key: 'Sports'
+    key: 'Sports',
+    id: 'Sports'
   }, {
     title: 'Volunteer',
     icon: 'fa-handshake-o',
-    key: 'Volunteer'
+    key: 'Volunteer',
+    id: 'Volunteer'
   }, {
     title: 'Others',
     icon: 'fa-snowflake-o',
-    key: 'Others'
+    key: 'Others',
+    id: 'Others'
   }];
 
   OwlCategoryOptions: OwlOptions = {
@@ -175,6 +191,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
       this.page = 1;
       this.categoryName = params.categoryId;
       this.getCampainsByCategory(this.categoryName);
+      this.owlInitialized();
     });
 
     this.categoryName = this.route.snapshot.params.categoryId;
@@ -228,6 +245,11 @@ export class CategoryComponent implements OnInit, OnDestroy {
     } else {
       this.messageService.sendCommonMessage({topic: 'showLogin', reason: 'CreateCampaign'});
     }
+  }
+
+  owlInitialized() {
+    const actCategory = this.categoryList.filter(category => category.key === this.categoryName);
+    this.owlCar.to((actCategory && actCategory.length) ? actCategory[0].id : '');
   }
 
   toLocaleString(value) {

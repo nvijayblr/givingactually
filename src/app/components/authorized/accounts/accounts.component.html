@@ -18,20 +18,20 @@
       </div>
       <div class="user-stats" style="min-height: 80px;">
         <app-progress-bar class="page" [message]="'Loading...'" *ngIf="isStatLoading" style="margin-top: 60px"></app-progress-bar>
-        <div class="flex-containers space-between" *ngIf="!isStatLoading">
-          <div class="flex-item">
+        <div class="flex-containers space-between stat-container" *ngIf="!isStatLoading">
+          <div class="flex-item clearfix">
             <h4 class="count">{{statistics.TotalCampaigns}}</h4>
             <p class="desc">Total<br/>Campaigns</p>
           </div>
-          <div class="flex-item">
+          <div class="flex-item clearfix">
             <h4 class="count">₹{{convertToK(statistics.TotalGoals)}}</h4>
             <p class="desc">Total<br/>Goals</p>
           </div>
-          <div class="flex-item">
+          <div class="flex-item clearfix">
             <h4 class="count">₹{{convertToK(statistics.TotalRecievedMoney)}}</h4>
             <p class="desc">Money<br/>Received</p>
           </div>
-          <div class="flex-item">
+          <div class="flex-item clearfix">
             <h4 class="count">{{statistics.TotalDonors}}</h4>
             <p class="desc">Total<br/>Donors</p>
           </div>
