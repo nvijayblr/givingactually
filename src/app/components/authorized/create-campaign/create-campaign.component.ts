@@ -84,6 +84,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
   commonSub: Subscription;
   minDate = moment().format('YYYY-MM-DD');
   maxDate = moment(moment().add(6, 'months')).format('YYYY-MM-DD');
+  currentLatLng: any = {};
 
   constructor(
     private fb: FormBuilder,
@@ -124,6 +125,11 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
     this.initBasicDetails(this.campaign);
     this.initLocationDetails(this.campaign);
     this.initCampaignDescription(this.campaign);
+
+    this.http.getGeoLocation().then(pos => {
+      this.currentLatLng = pos;
+    });
+
   }
 
   ngAfterViewInit() {
@@ -238,6 +244,11 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   locationNextClick(stepper: MatStepper) {
+    const { placeName, Latitude, Longitude } = this.campaignLocationForm.value;
+    if (placeName && (!Latitude && !Latitude)) {
+      this.campaignLocationForm.controls.Latitude.setValue(this.currentLatLng.lat);
+      this.campaignLocationForm.controls.Longitude.setValue(this.currentLatLng.lng);
+    }
     this.isCampaignLocationErr = false;
     this.locationErrMsg = '';
 
@@ -307,7 +318,6 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   uploadGalleryImgVideos() {
-
     let isUploadFound = false;
     const formData: any = new FormData();
     this.galleryImgVideos.map((imageVideo) => {
@@ -451,7 +461,6 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
 
   // Map related functions
   private getPlaceAutocomplete() {
-    console.log(google);
     const autocomplete = new google.maps.places.Autocomplete(this.addresstext.nativeElement, {
         types: ['geocode']  // 'establishment' / 'address' / 'geocode'
     });

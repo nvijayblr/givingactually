@@ -14,7 +14,8 @@
       </div> -->
       <h4 class="user-fullname">{{user.DisplayName}}</h4>
       <div class="user-profile-img">
-        <h4 class="profile-pic-small">{{user.DispalyInitiial}}</h4>
+        <div class="profile-pic-small img" *ngIf="user.DPPAth" [ngStyle]="{'background-image': 'url(' + user.DPPAth + ')'}"></div>
+        <h4 class="profile-pic-small" *ngIf="!user.DPPAth">{{user.DispalyInitiial}}</h4>
       </div>
       <div class="user-stats" style="min-height: 80px;">
         <app-progress-bar class="page" [message]="'Loading...'" *ngIf="isStatLoading" style="margin-top: 60px"></app-progress-bar>
@@ -24,11 +25,11 @@
             <p class="desc">Total<br/>Campaigns</p>
           </div>
           <div class="flex-item clearfix">
-            <h4 class="count">₹{{convertToK(statistics.TotalGoals)}}</h4>
+            <h4 class="count">₹ {{convertToK(statistics.TotalGoals)}}</h4>
             <p class="desc">Total<br/>Goals</p>
           </div>
           <div class="flex-item clearfix">
-            <h4 class="count">₹{{convertToK(statistics.TotalRecievedMoney)}}</h4>
+            <h4 class="count">₹ {{convertToK(statistics.TotalRecievedMoney)}}</h4>
             <p class="desc">Money<br/>Received</p>
           </div>
           <div class="flex-item clearfix">
@@ -110,7 +111,7 @@
                   </div>
 
                   <div class="col-xs-12 col-sm-4 col-md-4">
-                    <p class="funded-label">{{campaign.RaisedPercentage}}% RAISED OF ₹{{campaign.CampaignTargetMoney}}</p>
+                    <p class="funded-label">{{campaign.RaisedPercentage}}% RAISED OF ₹ {{campaign.CampaignTargetMoney}}</p>
                     <div class="funded-chart">
                       <div class="goals">
                         <!-- [ngStyle]="{'width': campaign.RaisedPercentage + '%'}" -->
@@ -118,15 +119,15 @@
                       </div>
                     </div>
                     <div class="inner-box">
-                      <h4>₹{{campaign.CampaignTargetMoney}}</h4>
+                      <h4>₹ {{campaign.CampaignTargetMoney}}</h4>
                       <p class="label">Goal</p>
                     </div>
                     <div class="inner-box">
-                      <h4>₹{{campaign.RaisedAmount}}</h4>
+                      <h4>₹ {{campaign.RaisedAmount}}</h4>
                       <p class="label">Raised</p>
                     </div>
                     <div class="inner-box">
-                      <h4>₹{{campaign.WithDrawnAmount}}</h4>
+                      <h4>₹ {{campaign.WithDrawnAmount}}</h4>
                       <p class="label">Withdrawn Amount</p>
                     </div>
                     <div class="inner-box">
@@ -218,7 +219,7 @@
                       </tr>
                       <tr *ngFor="let withdraw of campaign.withdrawList">
                         <td>{{formatDate(withdraw.CreatedOn)}}</td>
-                        <td>₹{{withdraw.WithdrawalAmount}}</td>
+                        <td>₹ {{withdraw.WithdrawalAmount}}</td>
                         <td>{{withdraw.WithDrawalStatus}}</td>
                       </tr>
                     </table>
@@ -264,6 +265,16 @@
                   <mat-label>Last Name</mat-label>
                   <input matInput placeholder="Last name" formControlName="LastName" autocomplete="off"/>
                 </mat-form-field>
+
+                <app-image-cropper
+                  *ngIf="isPersonalDetailsIntilized"
+                  label="Profile Picture"
+                  [preview]="user.DPPAth"
+                  aspectRatio= 1
+                  resizedWidth= 96
+                  resizedHeight= 96
+                  (imageCroppedCompleted)="displayImageCroppedCompleted($event)"
+                ></app-image-cropper>
 
                 <!-- <mat-form-field appearance="fill">
                   <mat-label>About</mat-label>
@@ -348,8 +359,8 @@
           <mat-tab label="Donations" *ngIf="isEditMode">
             <div class="user-campaigns">
               <div class="withdraw-history">
-                <app-progress-bar class="page" [message]="'Loading...'" *ngIf="isStatLoading"></app-progress-bar>
-                <table width="100%" class="table" *ngIf="!isStatLoading && donationsList.length">
+                <app-progress-bar class="page" [message]="'Loading...'" *ngIf="isDonationLoading"></app-progress-bar>
+                <table width="100%" class="table" *ngIf="!isDonationLoading && donationsList.length">
                   <tr>
                     <th>Fundraiser</th>
                     <th>Date</th>
@@ -359,7 +370,7 @@
                   <tr *ngFor="let donation of donationsList">
                     <td><a routerLink="/fundraiser/{{donation.CampaignId}}">View Fundraiser</a></td>
                     <td>{{formatDate(donation.DonatedOn)}}</td>
-                    <td>₹{{donation.DonationAmnt}}</td>
+                    <td>₹ {{donation.DonationAmnt}}</td>
                     <td>{{donation.Status}}</td>
                   </tr>
                 </table>

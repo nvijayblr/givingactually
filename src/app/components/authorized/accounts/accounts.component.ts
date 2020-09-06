@@ -41,8 +41,9 @@ export class AccountsComponent implements OnInit {
   loaderMessage = '';
   isStatLoading = false;
   statistics: any = {};
+  isDonationLoading = false;
   donationsList = [];
-
+  isPersonalDetailsIntilized = false;
   ngoList: any = {
     ngoSectors: [],
     ngoTypes: []
@@ -50,6 +51,9 @@ export class AccountsComponent implements OnInit {
 
   isUserLoggedIn = false;
   isEditMode = false;
+
+  croppedImage: any = '';
+  displayImageFile: any;
 
   constructor(
     private fb: FormBuilder,
@@ -68,6 +72,7 @@ export class AccountsComponent implements OnInit {
       this.user = this.authGuardService.getLoggedInUserDetails();
       this.userId = this.route.snapshot.params.userId;
       if (this.userId === this.user.UserId) {
+        this.getUsersDetails();
         this.initPersonalDetails({});
         this.getUserCampaigns();
         this.getUsersStatistics();
@@ -105,14 +110,13 @@ export class AccountsComponent implements OnInit {
   }
 
   getUsersDonations() {
-    this.isStatLoading = true;
+    this.isDonationLoading = true;
     this.donationsList = [];
     this.http.getUserDonations().subscribe((result: any) => {
       this.donationsList = result.MyDonationList;
-      console.log(this.donationsList);
-      this.isStatLoading = false;
+      this.isDonationLoading = false;
     }, (error) => {
-      this.isStatLoading = false;
+      this.isDonationLoading = false;
     });
   }
 
@@ -140,6 +144,7 @@ export class AccountsComponent implements OnInit {
     this.isPersonalDetLoading = true;
     this.showPersonalSuccessMsg = false;
     this.showPersonalErrorMsg = false;
+    this.isPersonalDetailsIntilized = false;
     this.loaderMessage = 'Loading Personal Details...';
     this.http.getUserDetails(this.userId).subscribe((result: any) => {
       this.isPersonalDetLoading = false;
@@ -163,7 +168,9 @@ export class AccountsComponent implements OnInit {
       cityName: [user.cityName],
       stateName: [user.stateName],
       countryName: [user.countryName],
+      DPPath: [user.DPPAth]
     });
+    this.isPersonalDetailsIntilized = true;
     this.setNGOValidators();
   }
 
@@ -209,6 +216,14 @@ export class AccountsComponent implements OnInit {
     // this.personalDetailsForm.markAllAsTouched();
   }
 
+  displayImageCroppedCompleted(cropped) {
+    this.croppedImage = cropped.image;
+    this.displayImageFile = cropped.file;
+  }
+
+  uploadProfilePicture() {
+  }
+
   savePersonalDetails() {
     if (!this.personalDetailsForm.valid) {
       this.showPersonalErrorMsg = true;
@@ -219,17 +234,34 @@ export class AccountsComponent implements OnInit {
     this.showPersonalSuccessMsg = false;
     this.loaderMessage = 'Saving...';
     this.isPersonalDetLoading = true;
+
+    const formData: any = new FormData();
+    if (this.displayImageFile) {
+      formData.append('file', this.displayImageFile);
+      this.http.uploadProfilePicutre(formData).subscribe((result: any) => {
+        this.personalDetailsForm.controls.DPPath.setValue(result.UserDPpath ? result.UserDPpath : '');
+        this.user.DPPAth = result.UserDPpath ? result.UserDPpath : '';
+        this.displayImageFile = '';
+        this.savePersonalDetails();
+      }, (error) => {
+        this.displayImageFile = '';
+        this.savePersonalDetails();
+      });
+      return;
+    }
+
     const psersonalDetails = {
       ...this.personalDetailsForm.value,
       UserId: this.userId
     };
+
+
     this.http.updateUserPersonalDetails(psersonalDetails).subscribe((result: any) => {
       this.isPersonalDetLoading = false;
       this.showPersonalSuccessMsg = true;
     }, (error) => {
       this.isPersonalDetLoading = false;
     });
-
   }
 
   showWithdrawHistory(campaign) {

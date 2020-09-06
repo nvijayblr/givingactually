@@ -63,7 +63,6 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('init...');
     this.isUserLoggedIn = this.authGuardService.isUserLoggedIn();
     this.route.queryParams.subscribe(queryParams => {
       this.query = '';

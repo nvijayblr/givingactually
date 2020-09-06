@@ -201,6 +201,7 @@ export class LoginSignupComponent implements OnInit {
 
   doSocialLogin(user) {
     let payload = {};
+    console.log(user);
     if (user.provider === 'GOOGLE') {
       payload = {
         userName: user.email,
@@ -211,7 +212,6 @@ export class LoginSignupComponent implements OnInit {
         AId: user.id,
       };
     } else {
-      console.log(user);
       payload = {
         userName: user.email,
         FirstName: user.firstName,

@@ -31,7 +31,7 @@
                     <mat-label>Amount</mat-label>
                     <input matInput type="number" placeholder="Amount" formControlName="DonationAmnt" autocomplete="off"/>
                     <mat-error *ngIf="donationForm.controls.DonationAmnt.errors?.min">
-                      The donation amount should be minimum ₹50. 
+                      The donation amount should be minimum ₹ 50. 
                     </mat-error>
                     <mat-error *ngIf="donationForm.controls.DonationAmnt.errors?.max">
                       The donation amount should not be exceeded the target amount. Max ({{remainDonationAmt}})
@@ -46,7 +46,7 @@
               </mat-form-field>
 
               <mat-checkbox class="mat-form-field" formControlName="isAnanymous">
-                Make your Donation as Ananymous
+                Make your Donation as Anonymous
               </mat-checkbox>
 
               <mat-form-field appearance="fill">
@@ -113,10 +113,10 @@
                 <button mat-stroked-button class="gv-secondary-btn transparent rounded read-more">Preview</button>
                 <div class="row supporters-info">
                   <div class="col-6 col-sm-4 col-md-6 days">
-                    {{campaign.DaysLeft}} days left
+                    <span class="value">{{campaign.DaysLeft}}</span> days left
                   </div>
                   <div class="col-6 col-sm-4 col-md-6 supporters">
-                    {{campaign.Totalsupporters}} supporters
+                    <span class="value">{{campaign.Totalsupporters}}</span> supporters
                   </div>
                 </div>
               </div>
@@ -142,11 +142,11 @@
 
                 <div class="row funded-info">
                   <div class="col-xs-12 col-sm-4 col-md-6 funded">
-                    ₹{{toLocaleString(campaign.RaisedAmount)}}
+                    ₹ {{toLocaleString(campaign.RaisedAmount)}}
                     <!-- <span class="label">FUNDED</span> -->
                   </div>
                   <div class="col-xs-12 col-sm-4 col-md-6 funded goals">
-                    ₹{{toLocaleString(campaign.CampaignTargetMoney)}}
+                    ₹ {{toLocaleString(campaign.CampaignTargetMoney)}}
                     <!-- <span class="label">GOAL</span> -->
                   </div>
                 </div>
@@ -159,7 +159,8 @@
 
                 <div class="user-box clearfix">
                   <div class="user-img">
-                    {{campaign.DisplayInitial}}
+                    <div class="img" *ngIf="campaign.UserDPImage" [ngStyle]="{'background-image': 'url(' + campaign.UserDPImage + ')'}"></div>                      
+                    <span *ngIf="!campaign.UserDPImage">{{campaign.DisplayInitial}}</span>
                   </div>
                   <div class="user-name"><a routerLink="/accounts/{{campaign.UserId}}">{{campaign.OrganizerName}}</a></div>
                 </div>

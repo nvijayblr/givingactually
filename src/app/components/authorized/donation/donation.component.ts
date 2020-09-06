@@ -64,7 +64,7 @@ export class DonationComponent implements OnInit, AfterViewInit {
     this.donationForm = this.fb.group({
       CampaignId: [this.campaignId],
       DonationMoneyType: ['INR', [Validators.required]],
-      DonationAmnt: ['', [, Validators.min(50), Validators.required]],
+      DonationAmnt: ['', [, Validators.min(50), Validators.max(500000), Validators.required]],
       DonorName: [user.DisplayName, [Validators.required]],
       isAnanymous: [''],
       EMail: [user.userName, [Validators.required, Validators.email]],
@@ -168,7 +168,11 @@ export class DonationComponent implements OnInit, AfterViewInit {
       this.campaign = result ? result : {};
       this.isLoading = false;
       this.remainDonationAmt = this.campaign.CampaignTargetMoney - this.campaign.RaisedAmount;
-      this.donationForm.controls.DonationAmnt.setValidators([Validators.min(50), Validators.max(this.remainDonationAmt)]);
+      this.remainDonationAmt = this.remainDonationAmt > 500000 ? 500000 : this.remainDonationAmt ;
+      this.donationForm.controls.DonationAmnt.setValidators([
+        Validators.min(50),
+        Validators.max(this.remainDonationAmt)
+      ]);
     }, (error) => {
       this.campaign = {};
       this.isLoading = false;

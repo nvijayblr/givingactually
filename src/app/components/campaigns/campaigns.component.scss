@@ -70,6 +70,12 @@
         margin-right: 16px;
         display: block;
         float: left;
+        overflow: hidden;
+        .img {
+          height: 100%;
+          width: 100%;
+          background-size: cover;
+        }
       }
       .user-info {
         font-size: 14px;      
@@ -94,7 +100,7 @@
     }
     .label {
       font-size: 11px;
-      margin-top: 12px;
+      margin-top: 8px;
     }
     .inner-box-right {
       text-align: right;
@@ -331,6 +337,12 @@
       margin-right: 16px;
       display: block;
       float: right;
+      overflow: hidden;
+      .img {
+        width: 100%;
+        height: 100%;
+        background-size: cover;        
+      }
     }    
   }
 }
@@ -477,4 +489,7 @@ button {
   button {
     width: 100%;
   }
+}
+.raised-box .label {
+  margin-top: 2px !important;
 }

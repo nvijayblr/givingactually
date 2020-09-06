@@ -18,6 +18,9 @@ export class ImageCropperComponent implements OnInit {
   @Input() isOpenFile = false;
   @Input() label = 'Select Image';
   @Input() preview = '';
+  @Input() aspectRatio = 6 / 4;
+  @Input() resizedWidth = 0;
+  @Input() resizedHeight = 0;
   @Output() imageCroppedCompleted = new EventEmitter<any>();
 
   imageChangedEvent: any = '';
@@ -32,6 +35,7 @@ export class ImageCropperComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log(this.preview);
     if (this.isOpenFile) {
       console.log(this.fileInput);
       const fileElement: HTMLElement = this.fileInput.nativeElement;

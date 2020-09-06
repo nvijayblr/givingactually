@@ -457,6 +457,17 @@ export class HttpService  {
     );
   }
 
+  uploadProfilePicutre(formdata): Observable<any> {
+    const header: any = this.getAuthHeaders();
+    return this.http.post<any>(`${this.rootUrl}api/User/UploadDisplayPic`, formdata, header).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+    );
+  }
+
   // Payment (Donation)
   registerDonation(payload): Observable<any> {
     const header: any = this.getAuthHeaders();

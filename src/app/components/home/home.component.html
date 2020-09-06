@@ -78,10 +78,10 @@
                   <button mat-stroked-button class="gv-secondary-btn transparent rounded read-more" routerLink="/fundraiser/{{campaign.Id}}">View More</button>
                   <div class="row supporters-info">
                     <div class="col-6 col-sm-4 col-md-6 days">
-                      {{campaign.DaysLeft}} days left
+                      <span class="value">{{campaign.DaysLeft}}</span> days left
                     </div>
                     <div class="col-6 col-sm-4 col-md-6 supporters">
-                      {{campaign.Totalsupporters}} supporters
+                      <span class="value">{{campaign.Totalsupporters}}</span> supporters
                     </div>
                   </div>
                 </div>
@@ -107,11 +107,11 @@
       
                   <div class="row funded-info">
                     <div class="col-6 col-sm-4 col-md-6 funded">
-                      ₹{{toLocaleString(campaign.RaisedAmount)}}
+                      ₹ {{toLocaleString(campaign.RaisedAmount)}}
                       <!-- <span class="label">FUNDED</span> -->
                     </div>
                     <div class="col-6 col-sm-4 col-md-6 funded goals">
-                      ₹{{toLocaleString(campaign.CampaignTargetMoney)}}
+                      ₹ {{toLocaleString(campaign.CampaignTargetMoney)}}
                       <!-- <span class="label">GOAL</span> -->
                     </div>
                   </div>
@@ -124,7 +124,8 @@
       
                   <div class="user-box clearfix">
                     <div class="user-img">
-                      {{campaign.DisplayInitial}}
+                      <div class="img" *ngIf="campaign.UserDPImage" [ngStyle]="{'background-image': 'url(' + campaign.UserDPImage + ')'}"></div>                      
+                      <span *ngIf="!campaign.UserDPImage">{{campaign.DisplayInitial}}</span>
                     </div>
                     <div class="user-name"><a routerLink="/accounts/{{campaign.UserId}}">{{campaign.OrganizerName}}</a></div>
                   </div>
@@ -138,29 +139,30 @@
 
         <!-- How to use -->
         <div class="how-to-use-wrapper">
-          <h2 class="title">The simplest way to raise funds! No loans. No debts. No worries.</h2>
-          <p class="desc">Giving Actually helps you launch fundraisers for you and your loved ones. 
-            Be it medical treatment or giving wings to your inner artist, you can always count on us.</p>
+          <h2 class="title">Raising fund for a good cause made easy!!</h2>
+          <p class="desc">Giving Actually provides you a easy to use platform to raise funds for a good cause either for yourself or for your loved ones. 
+            The world is filled with people with golden arts who will make a difference in your life.</p>
           <div class="steps-wrapper">
             <div class="steps clearfix">
               <div class="step">1</div>
               <div class="steps-det">
                 <div class="step-title">Start your fundraiser</div>
-                <div class="step-desc">It’ll take only 2 minutes. Just tell us a few details about you and the ones you are raising funds for.</div>
+                <div class="step-desc">You start a fundraise in easy steps by providing the right details supported by pictures and/or videos. It takes only couple of minutes!!</div>
               </div>
             </div>
             <div class="steps clearfix">
               <div class="step">2</div>
               <div class="steps-det">
                 <div class="step-title">Share your fundraiser</div>
-                <div class="step-desc">All you need to do is share the fundraiser with your friends and family. In no time, support will start pouring in.</div>
+                <div class="step-desc">Make your fundraiser visible to many by sharing with your networks of friends and family using social media such as WhatsApp, Facebook and Twitter. 
+                  This will ensure that the fundraiser will reach the right people who will donate for your cause.</div>
               </div>
             </div>
             <div class="steps clearfix">
               <div class="step">3</div>
               <div class="steps-det">
-                <div class="step-title">Instantly Withdraw Funds</div>
-                <div class="step-desc">The funds raised can be withdrawn without any hassle directly to your bank account.</div>
+                <div class="step-title">Withdraw funds</div>
+                <div class="step-desc">The beneficiary withdraws the amount that is raised and utilizes for the cause.</div>
               </div>
             </div>
             <div class="btn-wrapper">
