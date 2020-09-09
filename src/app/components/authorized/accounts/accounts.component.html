@@ -98,7 +98,7 @@
                       </h3>
                       <div class="inner-box-top">
                         <p class="label"><a routerLink="/category/{{campaign.CategoryName}}">
-                          <i class="fa fa-tag"></i>
+                          <i class="fa {{campaign.CategoryName | categoryicon: campaign.CategoryName}}"></i>
                           {{campaign.CategoryName}}
                         </a></p>
                         <p class="label"><a routerLink="/search" [queryParams]="{lat: campaign.Latitude, lng: campaign.Longitude}" [title]="campaign.FullplaceName">

@@ -19,7 +19,7 @@
         <div class="category-list">
           <owl-carousel-o [options]="OwlCategoryOptions" #owlCar (initialized)="owlInitialized()">
             <!-- Items -->
-            <ng-container *ngFor="let category of categoryList">
+            <ng-container *ngFor="let category of categories">
               <ng-template carouselSlide [id]="category.id">
                 <div class="category-item" [class.selected]="category.key === categoryName" (tap)="gotoCategory(category)">
                   <div class="cat-icon"><i class="fa {{category.icon}}"></i></div>
@@ -108,7 +108,7 @@
                 <div class="row category">
                   <div class="col-6 col-sm-6 col-md-6 campaign-address">
                     <a routerLink="/category/{{campaign.CategoryName}}">
-                      <i class="fa fa-tag"></i>
+                      <i class="fa {{campaign.CategoryName | categoryicon: campaign.CategoryName}}"></i>
                       <span>{{campaign.CategoryName}}</span>
                     </a>
                   </div>

@@ -23,10 +23,10 @@ export class AppComponent implements OnInit, OnDestroy {
     private http: HttpService,
     public common: CommonService,
     private messageService: MessageService) {
+      this.initCategories();
   }
 
   ngOnInit() {
-    this.initCategories();
     this.commonSub = this.messageService.getCommonMessage().subscribe(message => {
       if (message.topic === 'toggleMobileNav') {
         this.hamburgerNav.open();
@@ -35,16 +35,17 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   initCategories() {
-    this.isLoading = true;
-    this.http.getCategories().subscribe((result: any) => {
-      this.common.setCategories(result ? result : []);
-      this.categories = result ? result : [];
-      this.isLoading = false;
-      this.messageService.sendCommonMessage({topic: 'categoryLoaded', reason: 'categoryLoadedCompleted'});
-    }, (error) => {
-      this.common.categories = [];
-      this.isLoading = false;
-    });
+
+    // this.isLoading = true;
+    // this.http.getCategories().subscribe((result: any) => {
+    //   this.common.setCategories(result ? result : []);
+    //   this.categories = result ? result : [];
+    //   this.isLoading = false;
+    //   this.messageService.sendCommonMessage({topic: 'categoryLoaded', reason: 'categoryLoadedCompleted'});
+    // }, (error) => {
+    //   this.common.categories = [];
+    //   this.isLoading = false;
+    // });
   }
 
   ngOnDestroy() {

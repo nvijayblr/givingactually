@@ -56,9 +56,9 @@
                 class="nav-category-item" 
                 mat-menu-item 
                 *ngFor="let category of categories"
-                routerLink="/category/{{category}}"
-                [ngClass]="{'active': categoryName === category}"
-                >{{category}}</button>
+                routerLink="/category/{{category.key}}"
+                [ngClass]="{'active': categoryName === category.key}"
+                ><i class="fa {{category.icon}} fa-cat-icon"></i>{{category.title}}</button>
             </mat-menu>
             <button mat-button routerLink="/category/All">Browse Fundraisers</button>
             <button mat-button (click)="gotoCampaignsNearMe()">Near by Fundraisers</button>

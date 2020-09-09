@@ -102,6 +102,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
 
   ngOnInit() {
     this.user = this.authGuardService.getLoggedInUserDetails();
+    this.categories = this.common.categories;
     // this.initDropdownData();
     this.route.queryParams.subscribe(queryParams => {
       if (queryParams.c === 't') {

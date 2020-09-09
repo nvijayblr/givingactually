@@ -93,7 +93,7 @@
                   <div class="row category">
                     <div class="col-6 col-sm-6 col-md-6 campaign-address">
                       <a routerLink="/category/{{campaign.CategoryName}}">
-                        <i class="fa fa-tag"></i>
+                        <i class="fa {{campaign.CategoryName | categoryicon: campaign.CategoryName}}"></i>
                         <span>{{campaign.CategoryName}}</span>
                       </a>
                     </div>

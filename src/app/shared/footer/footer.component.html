@@ -13,14 +13,14 @@
           <li><a routerLink="/ga/teams">Teams</a></li>
           <li><a routerLink="/ga/careers">Careers</a></li>
           <li><a routerLink="/ga/services">Services</a></li>
-          <li><a routerLink="/ga/contact-us">Contact us</a></li>
+          <li><a routerLink="/ga/contact-us">Contact us</a></li>  
         </ul>
       </div>
       <div class="col-xs-12 col-sm-4 col-md-3 footer-nav">
         <h3 class="title">CATEGORIES</h3>
         <ul>
           <li *ngFor="let category of categoriesFirstFive">
-            <a routerLink="/category/{{category}}">{{category}}</a>
+            <a routerLink="/category/{{category.key}}"><i class="fa {{category.icon}} fa-cat-icon"></i>{{category.title}}</a>
           </li>
         </ul>
       </div>

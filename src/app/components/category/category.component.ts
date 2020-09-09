@@ -65,84 +65,6 @@ export class CategoryComponent implements OnInit, OnDestroy {
   };
 
 
-  // Category List
-  categoryList = [{
-    title: 'All',
-    icon: 'fa-globe',
-    key: 'All',
-    id: 'All'
-  }, {
-    title: 'Agriculture',
-    icon: 'fa-tree',
-    key: 'Agriculture',
-    id: 'Agriculture'
-  }, {
-    title: 'Animals',
-    icon: 'fa-paw',
-    key: 'Animals',
-    id: 'Animals'
-  }, {
-    title: 'Annadhanam',
-    icon: 'fa-sun-o',
-    key: 'Annadhanam',
-    id: 'Annadhanam'
-  }, {
-    title: 'Charity',
-    icon: 'fa-venus',
-    key: 'Charity',
-    id: 'Charity'
-  }, {
-    title: 'Education',
-    icon: 'fa-book',
-    key: 'Education',
-    id: 'Education'
-  }, {
-    title: 'Elderly Care',
-    icon: 'fa-blind',
-    key: 'Elderly Care',
-    id: 'ElderlyCare'
-  }, {
-    title: 'Emergency',
-    icon: 'fa-ambulance',
-    key: 'Emergency',
-    id: 'Emergency'
-  }, {
-    title: 'Funeral',
-    icon: 'fa-life-ring',
-    key: 'Funeral',
-    id: 'Funeral'
-  }, {
-    title: 'Medical',
-    icon: 'fa-heartbeat',
-    key: 'Medical',
-    id: 'Medical'
-  }, {
-    title: 'Nutrition',
-    icon: 'fa-cutlery',
-    key: 'Nutrition',
-    id: 'Nutrition'
-  }, {
-    title: 'Spirituality',
-    icon: 'fa-circle-o-notch',
-    key: 'Spirituality',
-    id: 'Spirituality'
-  }, {
-    title: 'Sports',
-    icon: 'fa-futbol-o',
-    key: 'Sports',
-    id: 'Sports'
-  }, {
-    title: 'Volunteer',
-    icon: 'fa-handshake-o',
-    key: 'Volunteer',
-    id: 'Volunteer'
-  }, {
-    title: 'Others',
-    icon: 'fa-snowflake-o',
-    key: 'Others',
-    id: 'Others'
-  }];
-
   OwlCategoryOptions: OwlOptions = {
     loop: false,
     autoplay: false,
@@ -183,6 +105,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.categories = this.common.categories;
     this.isUserLoggedIn = this.authGuardService.isUserLoggedIn();
     this.route.queryParams.subscribe(queryParams => {
     });
@@ -204,7 +127,8 @@ export class CategoryComponent implements OnInit, OnDestroy {
       if (message.topic === 'categoryLoaded') {
         this.categories = this.common.categories;
       }
-    });  }
+    });
+  }
 
   getCampainsByCategory(category) {
     this.isLoading = true;
@@ -248,7 +172,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
 
   owlInitialized() {
-    const actCategory = this.categoryList.filter(category => category.key === this.categoryName);
+    const actCategory = this.categories.filter(category => category.key === this.categoryName);
     this.owlCar.to((actCategory && actCategory.length) ? actCategory[0].id : '');
   }
 

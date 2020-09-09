@@ -12,6 +12,7 @@ import { LoginSignupComponent } from './login-signup/login-signup.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { ImageCropperComponent } from './image-cropper/image-cropper.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { CategoryIconPipe } from './../services/categoryicon.pipe';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     ProgressBarComponent,
     ImageCropperComponent,
     ConfirmDialogComponent,
+    CategoryIconPipe
   ],
   exports: [
     FormsModule,
@@ -42,7 +44,8 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     ProgressBarComponent,
     ImageCropperComponent,
     ConfirmDialogComponent,
-    CarouselModule
+    CarouselModule,
+    CategoryIconPipe
   ],
   providers: [DatePipe],
   entryComponents: [
