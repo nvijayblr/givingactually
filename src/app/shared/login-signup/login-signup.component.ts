@@ -199,9 +199,13 @@ export class LoginSignupComponent implements OnInit {
     });
   }
 
+  reloadCurrentRoute() {
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+    this.router.navigate([location.pathname]));
+  }
+
   doSocialLogin(user) {
     let payload = {};
-    console.log(user);
     if (user.provider === 'GOOGLE') {
       payload = {
         userName: user.email,
@@ -226,6 +230,7 @@ export class LoginSignupComponent implements OnInit {
     this.http.socialLoginRequest(payload).subscribe((result: any) => {
       this.isLoading = false;
       this.setLoginSessionAndRouting(result, true);
+      this.reloadCurrentRoute();
     }, (error) => {
       this.isLoading = false;
       this.errorMessage = error.error.ResponseMsg;

@@ -21,7 +21,7 @@ export class CommonService  {
     id: 'Animals'
   }, {
     title: 'Annadhanam',
-    icon: 'fa-sun-o',
+    icon: 'fa-lemon-o',
     key: 'Annadhanam',
     id: 'Annadhanam'
   }, {
@@ -37,7 +37,7 @@ export class CommonService  {
   }, {
     title: 'Elderly Care',
     icon: 'fa-blind',
-    key: 'Elderly Care',
+    key: 'ElderlyCare',
     id: 'ElderlyCare'
   }, {
     title: 'Emergency',

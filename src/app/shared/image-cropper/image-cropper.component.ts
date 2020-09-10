@@ -35,7 +35,6 @@ export class ImageCropperComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.preview);
     if (this.isOpenFile) {
       console.log(this.fileInput);
       const fileElement: HTMLElement = this.fileInput.nativeElement;
