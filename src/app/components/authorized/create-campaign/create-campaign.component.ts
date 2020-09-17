@@ -171,10 +171,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
     this.campaignBasicForm = this.fb.group({
       CampaignTitle: [campaign.CampaignTitle, [Validators.required, Validators.maxLength(50)]],
       CategoryType: [campaign.CategoryName, [Validators.required]],
-      CampaignTargetMoneyType: [
-        campaign.CampaignTargetMoneyType ? campaign.CampaignTargetMoneyType : 'INR',
-        [Validators.required]
-      ],
+      CampaignTargetMoneyType: ['INR'],
       CampaignTargetMoney: [campaign.CampaignTargetMoney, [Validators.required, Validators.min(2000), Validators.maxLength(10000000)]],
       BeneficiaryType: [
         campaign.BeneficiaryType ? campaign.BeneficiaryType : 'Myself',
