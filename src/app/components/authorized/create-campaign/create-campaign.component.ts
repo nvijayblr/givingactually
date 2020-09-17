@@ -383,7 +383,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
       if (action === 'ok') {
         this.router.navigate([`/fundraiser/${this.campaignId}`]);
       } else {
-        this.router.navigate([`/accounts/${this.user.UserId}`]);
+        this.router.navigate([`/fundraiser/${this.campaignId}`]);
       }
     });
   }
