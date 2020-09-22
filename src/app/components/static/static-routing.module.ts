@@ -13,6 +13,7 @@ import { DisclaimerComponent } from './disclaimer/disclaimer.component';
 import { TeamsComponent } from './teams/teams.component';
 import { CareersComponent } from './careers/careers.component';
 import { PricingComponent } from './pricing/pricing.component';
+import { HowItWorksComponent } from './how-it-works/how-it-works.component';
 
 const routes: Routes = [
   {
@@ -56,6 +57,9 @@ const routes: Routes = [
       }, {
         path: 'disclaimer',
         component: DisclaimerComponent
+      }, {
+        path: 'how-it-works',
+        component: HowItWorksComponent
       }
     ]
   }

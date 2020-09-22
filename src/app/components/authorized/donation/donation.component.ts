@@ -90,13 +90,38 @@ export class DonationComponent implements OnInit, AfterViewInit {
     };
     this.http.registerDonation(payload).subscribe((result: any) => {
       this.razorPayments = result;
+      if (this.razorPayments.CanDonate) {
+        if (this.razorPayments.Amount <= this.razorPayments.EligibleTarget) {
+          this.makeRazerpayPayment(this.razorPayments);
+        } else {
+          this.showMaxDonationAmountMsg();
+        }
+      } else {
+        this.showMaxDonationAmountMsg();
+      }
       this.isLoading = false;
-      this.makeRazerpayPayment(this.razorPayments);
     }, (error) => {
       this.isLoading = false;
       this.errorMessage = error.error.ResponseMsg;
     });
   }
+
+  showMaxDonationAmountMsg() {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '300px',
+      data: {
+        title: 'Donation',
+        message: `Please choose your donation amount below ₹ ${this.razorPayments.EligibleTarget}`,
+        cancelLable: '',
+        okLable: 'OK'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(action => {
+      this.getCampaignDetails(this.campaignId);
+    });
+  }
+
 
   makeRazerpayPayment(payment) {
     const aThis = this;

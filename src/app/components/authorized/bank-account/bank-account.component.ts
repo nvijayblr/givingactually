@@ -115,7 +115,7 @@ export class BankAccountComponent implements OnInit, AfterViewInit {
     this.loaderMessage = 'Resistering your bank account details...';
     this.http.createBankAccount(this.bankAccountForm.value).subscribe((result: any) => {
       this.isAccountLoading = false;
-      this.router.navigate([`/accounts/${this.user.UserId}`]);
+      this.router.navigate([`/fundraiser/${this.campaignId}`]);
     }, (error) => {
       this.isAccountLoading = false;
       this.errorMessage = error.error.ResponseMsg;
