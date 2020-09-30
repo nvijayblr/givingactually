@@ -11,7 +11,7 @@ import { AuthGuardService } from './auth-guard.service';
 export class HttpService  {
 
   private rootUrl = 'https://developement.givingactually.com/';
-  private prodUrl = 'http://productionapi.givingactually.com/';
+  private prodUrl = 'https://productionapi.givingactually.com/';
 
   constructor(
     private http: HttpClient,
