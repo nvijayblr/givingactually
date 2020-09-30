@@ -4,23 +4,26 @@ import { tap, catchError } from 'rxjs/operators';
 import { Observable, throwError, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AuthGuardService } from './auth-guard.service';
-import * as env from './../../assets/config/env.json';
+// import * as env from './../../assets/config/env.json';
 
 @Injectable({ providedIn: 'root' })
 
 export class HttpService  {
 
   private rootUrl = 'https://developement.givingactually.com/';
+  private prodUrl = 'http://productionapi.givingactually.com/';
 
   constructor(
     private http: HttpClient,
     private authGuardService: AuthGuardService
   ) {
-    const baseUrl = (env as any).default.baseUrl;
-    if (baseUrl) {
-      this.rootUrl = baseUrl;
+    // const baseUrl = (env as any).default.baseUrl;
+    // if (baseUrl) {
+    //   this.rootUrl = baseUrl;
+    // }
+    if (window && window.location.origin === 'https://givingactually.com') {
+      this.rootUrl = this.prodUrl;
     }
-    console.log(this.rootUrl);
   }
 
 
