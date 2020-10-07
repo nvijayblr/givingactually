@@ -21,7 +21,8 @@ export class HttpService  {
     // if (baseUrl) {
     //   this.rootUrl = baseUrl;
     // }
-    if (window && window.location.origin === 'https://givingactually.com') {
+    // tslint:disable-next-line: max-line-length
+    if (window && (window.location.origin === 'https://www.givingactually.com' || window.location.origin === 'https://givingactually.com')) {
       this.rootUrl = this.prodUrl;
     }
   }
