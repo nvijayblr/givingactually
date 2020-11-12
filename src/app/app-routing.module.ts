@@ -40,6 +40,9 @@ const routes: Routes = [{
     path: 'ga',
     loadChildren: () => import('./components/static/static.module').then(m => m.StaticModule)
   }, {
+    path: 'admin',
+    loadChildren: () => import('./components/admin/admin.module').then(m => m.AdminModule)
+  }, {
     path: '', redirectTo: '/home', pathMatch: 'full'
   }, {
     path: '**', redirectTo: '/home', pathMatch: 'full'

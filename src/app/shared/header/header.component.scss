@@ -180,3 +180,25 @@
   display: inline-block;
   width: 24px;
 }
+
+// Admin styles
+.admin-header {
+  .sub-nav {
+    li {
+      padding: 0 10px !important;
+      &.active {
+        background-color: #fff;
+        a {
+          color: #000 !important;
+          position: relative;
+          top: 1px;
+        }
+      }
+      a {
+        margin: 0 !important;
+        border-right: 0 !important;
+        padding: 0 !important;
+      }
+    }
+  }
+}

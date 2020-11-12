@@ -93,7 +93,8 @@ export class CampaignsComponent implements OnInit {
 
   commentsFormGroup: FormGroup;
   donationForm: FormGroup;
-
+  isAdmin = false;
+  
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -110,6 +111,7 @@ export class CampaignsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isAdmin = this.authGuardService.isAdmin;
     this.commentsFormGroup = this.fb.group({
       CommentText: ['', [Validators.required, Validators.maxLength(1000)]]
     });

@@ -1,0 +1,67 @@
+<div class="campaigns-list">
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="page-title">Users</h3>
+    </div>
+    <div class="col-md-6" style="text-align: right;">
+      <input
+        *ngIf="!isLoading"
+        type="text"
+        style="padding:8px; width:420px;"
+        placeholder="Filter by fundraiser email..."
+        (keyup)="updateFilter($event)"
+      />
+    </div>
+  </div>
+  <app-progress-bar message="Loading users..." *ngIf="isLoading"></app-progress-bar>
+  <div class="table-wrp" *ngIf="!isLoading">
+    <ngx-datatable
+      #table
+      class="material"
+      [columnMode]="ColumnMode.force"
+      [rows]="users"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      rowHeight="auto"
+      [limit]="10"
+    >
+    <ngx-datatable-column name="Email" prop="UserName" [flexGrow]="2">
+      <ng-template ngx-datatable-cell-template let-row="row">
+        <a routerLink="/accounts/{{row.Id}}" target="_blank">{{row.UserName}}</a>
+      </ng-template>
+    </ngx-datatable-column>
+
+      <ngx-datatable-column name="First name" prop="FirstName" [flexGrow]="2"></ngx-datatable-column>
+
+      <ngx-datatable-column name="Last name" prop="LastName" [flexGrow]="2"></ngx-datatable-column>
+      
+      <ngx-datatable-column name="NGO" prop="IsNGO" [flexGrow]="2">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          <span *ngIf="!row.IsNGO">No</span>
+          <div *ngIf="row.IsNGO">
+            {{row.NGOTypeName}} <br>
+            {{row.NGOSectorName}} | {{row.RegisterationNo}} <br>
+            {{row.NGOAddress}}
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+      
+      <ngx-datatable-column name="City" prop="cityName" [flexGrow]="2"></ngx-datatable-column>
+
+      <ngx-datatable-column name="State" prop="stateName" [flexGrow]="2"></ngx-datatable-column>
+
+      <ngx-datatable-column name="Email" prop="UserName" [flexGrow]="2">
+        <ng-template ngx-datatable-cell-template let-row="row" let-rowIndex="rowIndex">
+          <button mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg" *ngIf="!row.IsAcLocked"
+              [class.loading]="row.actionLoading && action==='lock'" (click)="showWConfirm('lock', rowIndex)">Lock</button>
+          <button mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg" *ngIf="row.IsAcLocked"
+              [class.loading]="row.actionLoading && action==='unlock'" (click)="showWConfirm('unlock', rowIndex)">Unlock</button>
+
+          <button mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg" 
+              [class.loading]="row.actionLoading && action==='delete'" (click)="showWConfirm('delete', rowIndex)">Delete</button>
+        </ng-template>
+      </ngx-datatable-column>
+  
+    </ngx-datatable>
+  </div>
+</div>

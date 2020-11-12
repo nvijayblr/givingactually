@@ -21,7 +21,7 @@
   <div class="container">
     <div class="breadcrumb-wrapper">
       <ul class="breadcrumb">
-        <li><a routerLink="/ga/home" title="Home">Home <mat-icon>keyboard_arrow_right</mat-icon></a></li>
+        <li><a routerLink="/home" title="Home">Home <mat-icon>keyboard_arrow_right</mat-icon></a></li>
         <li><a routerLink="/category/{{campaign.CategoryName}}" title="{{campaign.CategoryName}}">{{campaign.CategoryName}} <mat-icon>keyboard_arrow_right</mat-icon></a></li>
         <li><span itemprop="name">{{campaign.CampaignTitle}}</span></li>
       </ul>
@@ -289,6 +289,29 @@
       <!-- Right Panel -->
       <div class="col-xs-12 col-sm-4 col-md-4">
         <div class="sticky-right-panel">
+
+          <!-- Admin Actions Buttons -->
+          <!-- <mat-card class="benificiary-section" *ngIf="isAdmin">
+            <div class="support-box user">
+              <div class="admin-action-wrapper">
+                <button 
+                  mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg" 
+                  routerLink="/ce-fundraiser" [queryParams]="{id: campaign.Id, step: 1}">
+                    Edit
+                </button>
+                <button 
+                  mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg" 
+                  routerLink="/ce-fundraiser" [queryParams]="{id: campaign.Id, step: 1}">
+                    Deactivate
+                </button>
+                <button mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg" 
+                  routerLink="/fundraiser-updates" [queryParams]="{id: campaign.Id}">
+                  Add Updates
+                </button>
+              </div>
+            </div>
+          </mat-card> -->
+
 
           <!-- Campainer Benificiary -->
           <mat-card class="benificiary-section">

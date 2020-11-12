@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MaterialModule } from './modules/material.module';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
@@ -22,7 +23,8 @@ import { CategoryIconPipe } from './../services/categoryicon.pipe';
     FormsModule,
     RouterModule,
     ReactiveFormsModule,
-    CarouselModule
+    CarouselModule,
+    NgxDatatableModule
   ],
   declarations: [
     HeaderComponent,
@@ -45,7 +47,8 @@ import { CategoryIconPipe } from './../services/categoryicon.pipe';
     ImageCropperComponent,
     ConfirmDialogComponent,
     CarouselModule,
-    CategoryIconPipe
+    CategoryIconPipe,
+    NgxDatatableModule
   ],
   providers: [DatePipe],
   entryComponents: [

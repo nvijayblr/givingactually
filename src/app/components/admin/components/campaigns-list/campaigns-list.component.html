@@ -1,0 +1,80 @@
+<div class="campaigns-list">
+  <div class="row">
+    <div class="col-md-4">
+      <h3 class="page-title">Fundraisers</h3>
+    </div>
+    <div class="col-md-4">
+      <mat-radio-group class="filter-form-group" [(ngModel)]="type" (change)="campaignsTypeChange($event)" [disabled]="isLoading">
+        <mat-radio-button value="GetAdminCampaigns">All</mat-radio-button>
+        <mat-radio-button value="GetNewCampaigns">Created Newly</mat-radio-button>
+        <mat-radio-button value="GetUnApprovalCampaigns">Waiting for Approval</mat-radio-button>
+        <mat-radio-button value="GetFraudulenceCampaigns">Fradulance</mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div class="col-md-4" style="text-align: right;">
+      <input
+        [disabled]="isLoading"
+        type="text"
+        style="padding:8px; width:420px;"
+        placeholder="Filter by fundraiser title..."
+        (keyup)="updateFilter($event)"
+      />
+    </div>
+  </div>
+  <app-progress-bar message="Loading Fundraisers..." *ngIf="isLoading"></app-progress-bar>
+  <div class="table-wrp" *ngIf="!isLoading">
+    <ngx-datatable
+      #table
+      class="material"
+      [columnMode]="ColumnMode.force"
+      [rows]="campaigns"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      rowHeight="auto"
+      [limit]="10"
+    >
+    <ngx-datatable-column name="Title" prop="CampaignTitle" [flexGrow]="2">
+      <ng-template ngx-datatable-cell-template let-row="row">
+        <a routerLink="/fundraiser/{{row.Id}}" target="_blank">{{row.CampaignTitle}}</a>
+      </ng-template>
+    </ngx-datatable-column>
+
+      <ngx-datatable-column name="Category" prop="CategoryName" [flexGrow]="2"></ngx-datatable-column>
+
+      <ngx-datatable-column name="Organizer Name" prop="OrganizerName" [flexGrow]="2">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          <a routerLink="/accounts/{{row.UserId}}" target="_blank">{{row.OrganizerName}}</a>
+        </ng-template>
+      </ngx-datatable-column>
+      
+      <ngx-datatable-column name="Target Money" prop="CampaignTargetMoney" [flexGrow]="2">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          ₹ {{row.CampaignTargetMoney}}
+        </ng-template>
+      </ngx-datatable-column>
+      
+      <ngx-datatable-column name="Raised Amount" prop="RaisedAmount" [flexGrow]="2">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          ₹ {{row.RaisedAmount}}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="Target Date" prop="CampaignTargetDate" [flexGrow]="2">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          {{ row.CampaignTargetDate | date:'dd, MMM yyyy' }}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="Place" prop="placeName" [flexGrow]="2"></ngx-datatable-column>
+
+      <ngx-datatable-column name="Action" prop="action"  [flexGrow]="2" *ngIf="showButtons">
+        <ng-template #buttonsTemplate let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+          <button mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg" (click)="approveCampaigns(row, rowIndex)" [disabled]="row.loading" [class.loading]="row.loading">
+            Approve
+          </button>
+        </ng-template>
+      </ngx-datatable-column>
+
+    </ngx-datatable>
+  </div>
+</div>

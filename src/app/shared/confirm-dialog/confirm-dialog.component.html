@@ -2,6 +2,14 @@
   <h1 mat-dialog-title>{{data.title}}</h1>
   <div mat-dialog-content>
     <p>{{data.message}}</p>
+    <div *ngIf="showReason" class="form-wrapper">
+      <form class="reason-form">
+        <mat-form-field appearance="fill">
+          <mat-label>Reason</mat-label>
+          <input matInput placeholder="Reason" name="reasons" [(ngModel)]="reasons">
+        </mat-form-field>
+      </form>
+    </div>
   </div>
   <div class="footer">
     <button mat-stroked-button class="gv-secondary-btn" 

@@ -1,8 +1,8 @@
-<footer class="footer">
+<footer class="footer" *ngIf="!isAdminPage">
   <div class="container">
     <div class="row">
       <div class="col-xs-12 col-sm-4 col-md-3">
-        <a class="logo" routerLink="/ga/home">
+        <a class="logo" routerLink="/home">
           <img src="./../assets/images/logo-gv-white.png" alt="Giving Actually">
         </a>
       </div>
@@ -12,7 +12,7 @@
           <li><a routerLink="/ga/about-us">About Us</a></li>
           <li><a routerLink="/ga/teams">Teams</a></li>
           <li><a routerLink="/ga/careers">Careers</a></li>
-          <li><a routerLink="/ga/services">Services</a></li>
+          <!-- <li><a routerLink="/ga/services">Services</a></li> -->
           <li><a routerLink="/ga/contact-us">Contact us</a></li>  
         </ul>
       </div>
@@ -29,10 +29,27 @@
         <ul>
           <li><a routerLink="/ga/pricing">Pricing</a></li>
           <li><a routerLink="/ga/faq">FAQ</a></li>
-          <li><a routerLink="/ga/highlights">Highlights</a></li>
+          <!-- <li><a routerLink="/ga/highlights">Highlights</a></li> -->
         </ul>
       </div>
     </div>
+    <div class="footer-copyright">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          Copyright &copy; <a href="">givingactually.com</a>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6 text-right terms">
+          <a routerLink="/ga/privacy">Privacy</a> 
+          <a routerLink="/ga/terms-conditions">Terms</a>
+          <a routerLink="/ga/disclaimer">Disclaimer</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<footer class="footer" *ngIf="isAdminPage" style="padding: 0;">
+  <div class="full-container">
     <div class="footer-copyright">
       <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-6">

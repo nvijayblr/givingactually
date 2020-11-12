@@ -32,6 +32,10 @@ export class HttpService  {
   private cancelCompaignDetailsReq$ = new Subject<void>();
   private cancelCompaignByCategoryReq$ = new Subject<void>();
   private cancelSearchReq$ = new Subject<void>();
+  private cancelAdminCompaignsListReq$ = new Subject<void>();
+  private cancelAdminUsersListReq$ = new Subject<void>();
+  private cancelAdminBankAccountsListReq$ = new Subject<void>();
+  private cancelAdminWithdrawalsListReq$ = new Subject<void>();
 
   getTopCompaignsList(): Observable<any> {
     return this.http.get<any>(`${this.rootUrl}api/Campaign/TopCampaigns/`).pipe(
@@ -583,6 +587,126 @@ export class HttpService  {
   getCompaignSummary(campaignId): Observable<any> {
     const header: any = this.getAuthHeaders();
     return this.http.get<any>(`${this.rootUrl}api/Campaign/CampaignSummary?id=${campaignId}`, header).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+      takeUntil(this.onCancelCompaignDetailsReq())
+    );
+  }
+
+  // Admin related APIs
+  adminGetCampaigns(type): Observable<any> {
+    const header: any = this.getAuthHeaders();
+    return this.http.get<any>(`${this.rootUrl}api/Admin/${type}`, header).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+      takeUntil(this.onCancelAdminCompaignsListReq())
+    );
+  }
+
+  public cancelAdminCompaignsListReq() {
+    this.cancelAdminCompaignsListReq$.next();
+  }
+
+  public onCancelAdminCompaignsListReq() {
+    return this.cancelAdminCompaignsListReq$.asObservable();
+  }
+
+  approveCampaign(campaignId): Observable<any> {
+    const header: any = this.getAuthHeaders();
+    return this.http.get<any>(`${this.rootUrl}api/Admin/ApproveCampaign?CampaignId=${campaignId}`, header).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+      takeUntil(this.onCancelCompaignDetailsReq())
+    );
+  }
+
+
+  adminGetUsersList(): Observable<any> {
+    const header: any = this.getAuthHeaders();
+    return this.http.get<any>(`${this.rootUrl}api/Admin/GetUsers`, header).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+      takeUntil(this.onCancelAdminUsersListReq())
+    );
+  }
+
+  public cancelAdminUsersListReq() {
+    this.cancelAdminUsersListReq$.next();
+  }
+
+  public onCancelAdminUsersListReq() {
+    return this.cancelAdminUsersListReq$.asObservable();
+  }
+
+  adminBankAccountsList(): Observable<any> {
+    const header: any = this.getAuthHeaders();
+    return this.http.get<any>(`${this.rootUrl}api/Admin/BankDetailForApproval`, header).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+      takeUntil(this.onCancelAdminBankAccountsListReq())
+    );
+  }
+
+  public cancelAdminBankAccountsListReq() {
+    this.cancelAdminBankAccountsListReq$.next();
+  }
+
+  public onCancelAdminBankAccountsListReq() {
+    return this.cancelAdminBankAccountsListReq$.asObservable();
+  }
+
+  approveRejectBankAccount(payload, action): Observable<any> {
+    const header: any = this.getAuthHeaders();
+    // tslint:disable-next-line: max-line-length
+    return this.http.post<any>(`${this.rootUrl}api/Admin/${action === 'approve' ? 'ApproveBank' : 'RejectBank'}`, payload, header).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+      takeUntil(this.onCancelCompaignDetailsReq())
+    );
+  }
+
+  adminWithdrawalsListList(): Observable<any> {
+    const header: any = this.getAuthHeaders();
+    return this.http.get<any>(`${this.rootUrl}api/Admin/WithdrawalListForApproval`, header).pipe(
+      tap((res) => {
+      }),
+      catchError(err => {
+        return throwError(err);
+      }),
+      takeUntil(this.onCancelAdminWithdrawalsListReq())
+    );
+  }
+
+  public cancelAdminWithdrawalsListReq() {
+    this.cancelAdminWithdrawalsListReq$.next();
+  }
+
+  public onCancelAdminWithdrawalsListReq() {
+    return this.cancelAdminWithdrawalsListReq$.asObservable();
+  }
+
+  approveRejectWithdrawalRequest(payload, action): Observable<any> {
+    const header: any = this.getAuthHeaders();
+    // tslint:disable-next-line: max-line-length
+    return this.http.post<any>(`${this.rootUrl}api/Admin/${action === 'approve' ? 'ApproveWithdraw' : 'RejectWithdraw'}`, payload, header).pipe(
       tap((res) => {
       }),
       catchError(err => {

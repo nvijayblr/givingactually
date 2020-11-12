@@ -7,12 +7,15 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
   styleUrls: ['./confirm-dialog.component.scss']
 })
 export class ConfirmDialogComponent implements OnInit {
+  reasons = '';
+  showReason  = false;
 
   constructor(
     public dialog: MatDialogRef<ConfirmDialogComponent>,
     private ngZone: NgZone,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
+    this.showReason = data.showReason;
     this.dialog.disableClose = true;
   }
 
@@ -21,7 +24,11 @@ export class ConfirmDialogComponent implements OnInit {
 
   onCloseDialog(action) {
     this.ngZone.run(() => {
-      this.dialog.close(action);
+      if (this.showReason) {
+        this.dialog.close({action, reasons: this.reasons});
+      } else {
+        this.dialog.close(action);
+      }
     });
   }
 

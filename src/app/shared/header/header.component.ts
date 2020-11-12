@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, HostListener, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { SocialAuthService } from 'angularx-social-login';
 import { LoginSignupComponent } from './../login-signup/login-signup.component';
 import { CommonService } from '../../services/common.service';
@@ -26,6 +26,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   commonSub: Subscription;
   isUserLoggedIn = false;
+  isAdmin = false;
+  isAdminPage = false;
+  menu = '/admin/fundraisers';
 
   @HostListener('window:scroll')
   checkScroll() {
@@ -55,12 +58,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // console.log(this.categoryName, this.authGuardService.getLoggedInUserDetails());
     this.isUserLoggedIn = this.authGuardService.isUserLoggedIn();
     this.user = this.authGuardService.getLoggedInUserDetails();
+    this.isAdmin = this.authGuardService.isAdmin;
     this.router.events.subscribe(params => {
+      if (params instanceof NavigationEnd) {
+        this.menu = params.url;
+      }
       // console.log(this.router.routerState.root);
       // this.categoryName = params.categoryId;
     });
     this.subscription = this.messageService.getLoginMessage().subscribe(user => {
       this.user = user;
+      setTimeout(() => {
+        this.isAdmin = this.authGuardService.isAdmin;
+      }, 500);
     });
     this.commonSub = this.messageService.getCommonMessage().subscribe(message => {
       if (message.topic === 'logout') {
@@ -71,6 +81,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
       if (message.topic === 'categoryLoaded') {
         this.categories = this.common.categories;
+      }
+      if (message.topic === 'adminPage') {
+        this.isAdminPage = message.isAdminPage;
       }
     });
   }

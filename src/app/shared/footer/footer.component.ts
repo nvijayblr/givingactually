@@ -14,6 +14,8 @@ export class FooterComponent implements OnInit, OnDestroy {
   categoriesFirstFive: any = [];
   categoriesSecondFive: any = [];
   commonSub: Subscription;
+  isAdmin = false;
+  isAdminPage = false;
 
   constructor(public common: CommonService, private messageService: MessageService) { }
 
@@ -31,6 +33,9 @@ export class FooterComponent implements OnInit, OnDestroy {
           this.categoriesFirstFive = JSON.parse(JSON.stringify(this.common.categories)).splice(0, 5);
           this.categoriesSecondFive = JSON.parse(JSON.stringify(this.common.categories)).splice(5, 5);
         }
+      }
+      if (message.topic === 'adminPage') {
+        this.isAdminPage = message.isAdminPage;
       }
     });
   }

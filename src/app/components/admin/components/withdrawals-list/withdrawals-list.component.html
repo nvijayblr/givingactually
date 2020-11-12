@@ -1,0 +1,56 @@
+<div class="campaigns-list">
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="page-title">Withdrawal Requests</h3>
+    </div>
+    <div class="col-md-6" style="text-align: right;">
+      <input
+        *ngIf="!isLoading"
+        type="text"
+        style="padding:8px; width:420px;"
+        placeholder="Filter by name..."
+        (keyup)="updateFilter($event)"
+      />
+    </div>
+  </div>
+  <app-progress-bar message="Loading Withdrawal Requests..." *ngIf="isLoading"></app-progress-bar>
+  <div class="table-wrp" *ngIf="!isLoading">
+    <ngx-datatable
+      #table
+      class="material"
+      [columnMode]="ColumnMode.force"
+      [rows]="withdrawalsList"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      rowHeight="auto"
+      [limit]="10"
+    >
+    <!-- <ngx-datatable-column name="Campaign" prop="CampaignTitle" [flexGrow]="2">
+          <ng-template ngx-datatable-cell-template let-row="row">
+            <a routerLink="/fundraiser/{{row.CampaignId}}" target="_blank">{{row.CampaignTitle}}</a>
+          </ng-template>
+        </ngx-datatable-column>
+    -->
+      <ngx-datatable-column name="Name" prop="CreatedBy" [flexGrow]="2"></ngx-datatable-column>
+
+      <ngx-datatable-column name="Request on" prop="CreatedOn" [flexGrow]="2"></ngx-datatable-column>
+      
+      <ngx-datatable-column name="WithdrawalAmount" prop="WithdrawalAmount" [flexGrow]="2"></ngx-datatable-column>
+
+      <ngx-datatable-column name="WithDrawalReason" prop="WithDrawalReason" [flexGrow]="2"></ngx-datatable-column>
+
+      <ngx-datatable-column name="Rejected Reason" prop="RejectedReason" [flexGrow]="2"></ngx-datatable-column>
+
+      <ngx-datatable-column name="Email" prop="UserName" [flexGrow]="2">
+        <ng-template ngx-datatable-cell-template let-row="row" let-rowIndex="rowIndex">
+          <button mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg" 
+              (click)="showWConfirm(row, 'approve', rowIndex)" [disabled]="row.loading" [class.loading]="row.loading">Approve</button>
+          
+          <button mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg" *ngIf="!row.isRejected"
+              (click)="showWConfirm(row, 'reject', rowIndex)" [disabled]="row.loading" [class.loading]="row.loading">Reject</button>
+        </ng-template>
+      </ngx-datatable-column>
+  
+    </ngx-datatable>
+  </div>
+</div>
