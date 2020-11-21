@@ -208,6 +208,14 @@
                     <!-- <button mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg">Inactive</button>
                     <button mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg">Extend Duration</button> -->
                   </div>
+                  
+                  <div class="draft-state-btns" *ngIf="campaign.CampaignStatus !== 'Active'">
+                    <button mat-stroked-button class="gv-secondary-btn btn-sm flat-btn btn-bg" 
+                      routerLink="/bank-account" [queryParams]="{id: campaign.Id}">
+                      {{campaign.isBankAdded ? 'Edit Bank Account':'Add Bank Account'}}
+                    </button>
+                  </div>
+
 
                   <div class="withdraw-history" *ngIf="campaign.isShowWithdrawHistory">
                     <app-progress-bar class="page" [message]="'Loading...'" *ngIf="campaign.isWithdrawLoading"></app-progress-bar>

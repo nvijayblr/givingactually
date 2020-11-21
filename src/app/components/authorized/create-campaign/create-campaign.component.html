@@ -178,13 +178,13 @@
                 <mat-error 
                   *ngIf="
                     (campaignDescriptionForm.controls.StoryDescription.value?.length < 500 ||
-                    campaignDescriptionForm.controls.StoryDescription.value?.length > 5000) && isCampaignDescriptionErr" 
+                    campaignDescriptionForm.controls.StoryDescription.value?.length > 10000) && isCampaignDescriptionErr" 
                   class="form-error description-error">
-                  Description should be minimum 500 characters and maximum 5000 characters.
+                  Description should be minimum 500 characters and maximum 10000 characters.
                 </mat-error>
                 <div class="characters-count">
                   {{campaignDescriptionForm.controls.StoryDescription.value ? campaignDescriptionForm.controls.StoryDescription.value?.length : 0}} 
-                  / 5000 (includes the HTML characters)
+                  / 10000 (includes the HTML characters)
                 </div>
   
                 <div class="row" *ngFor="let attachment of galleryImgVideos; let i = index">

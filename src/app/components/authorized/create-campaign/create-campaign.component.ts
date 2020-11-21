@@ -284,7 +284,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit, OnDestroy
   initCampaignDescription(campaign) {
     this.campaignDescriptionForm = this.fb.group({
       StoryDescription: [campaign.campaignDescription.StoryDescription,
-        [Validators.required, Validators.minLength(500), Validators.maxLength(5000)]
+        [Validators.required, Validators.minLength(500), Validators.maxLength(10000)]
       ]
     });
     this.galleryImgVideos = campaign.UploadedImages ? campaign.UploadedImages : [];

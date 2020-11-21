@@ -145,7 +145,6 @@
           <div class="campain-section">
             <h3 class="title">{{campaign.CampaignTitle}}</h3>
             <div class="campaign-content" [ngClass]="{'full-height': isReadMore}">
-              <div class="desc" [innerHTML]="campaign.campaignDescription.StripedDescription"></div>
               <div class="desc" [innerHTML]="campaign.campaignDescription.StoryDescription"></div>
               <div class="read-more-bg">
                 <button mat-stroked-button class="gv-secondary-btn rounded read-more" (click)="onReadMore()">
