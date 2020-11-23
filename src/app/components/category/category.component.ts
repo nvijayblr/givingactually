@@ -82,10 +82,12 @@ export class CategoryComponent implements OnInit, OnDestroy {
     nav: false,
     responsive: {
       0: {
-        items: 3
+        items: 3,
+        center: true,
       },
       740: {
-        items: 8
+        items: 8,
+        center: false,
       }
     },
   };

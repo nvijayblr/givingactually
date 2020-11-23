@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { RouterOutlet, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
 import { HttpService } from './services/http-service.service';
 import { CommonService } from './services/common.service';
@@ -22,6 +22,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private http: HttpService,
     public common: CommonService,
+    private router: Router,
     private messageService: MessageService) {
       this.initCategories();
   }
@@ -46,6 +47,12 @@ export class AppComponent implements OnInit, OnDestroy {
     //   this.common.categories = [];
     //   this.isLoading = false;
     // });
+  }
+
+  gotoCampaignsNearMe() {
+    this.http.getGeoLocation().then(pos => {
+      this.router.navigate([`/search`], {queryParams: { lat: pos.lat, lng: pos.lng }});
+    });
   }
 
   ngOnDestroy() {

@@ -4,9 +4,10 @@
       <mat-icon>close</mat-icon>
     </button>
     <mat-nav-list>
+      <a (click)="hamburgerNav.close()" routerLink="/home" mat-list-item>Home</a>
       <a (click)="hamburgerNav.close()" routerLink="/category/All" mat-list-item>Browse Fundraisers</a>
-      <a (click)="hamburgerNav.close()" href="#" mat-list-item>Near by Fundraisers</a>
-      <a (click)="hamburgerNav.close()" href="#" mat-list-item>How it Works</a>
+      <a (click)="hamburgerNav.close()" (click)="gotoCampaignsNearMe()" mat-list-item>Near by Fundraisers</a>
+      <a (click)="hamburgerNav.close()" routerLink="/ga/how-it-works" mat-list-item>How it Works</a>
       <a 
         *ngFor="let category of categories" 
         mat-list-item

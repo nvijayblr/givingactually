@@ -701,6 +701,17 @@ body {
 
 
 // Media Query
+@media only screen and (max-width: 500px) { 
+  .video-wrapper {
+    .video-wrp {
+      width: 100%;
+    }
+  }
+  .footer .footer-nav {
+    width: 33.33%;
+    padding: 0 5px;
+  }
+}
 
 @media only screen and (max-width: 720px) { 
   body {
@@ -711,7 +722,6 @@ body {
       }
     }
   }
-  
   .hamburger-icon {
     display: block !important;
   }  
@@ -722,8 +732,7 @@ body {
     width: 376px !important;
   }
   .header.masthead .main-nav, .filter-wrapper,
-  .header.masthead .main-nav, .left-arrow,
-  .header.masthead .main-nav, .right-arrow{
+  .header.masthead .main-nav {
     display: none;
   }
   .header.masthead .main-nav, .category-list {
@@ -837,6 +846,23 @@ body {
   }
   .stat-container {
     display: block !important;
+  }
+  .category-list-wrapper {
+    position: relative;
+    button.prev-next-btn {
+      margin-top: 0 !important;
+    }    
+    .left-arrow {
+      position: absolute;
+      right: 30px;
+    }
+    .right-arrow {
+      position: absolute;
+      right: 0;
+    }
+    .category-list {
+      margin-top: 44px;
+    }
   }
 }
 // End of the responsiveness
