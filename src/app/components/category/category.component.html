@@ -17,6 +17,7 @@
           </button>
         </div>
         <div class="category-list">
+          <app-progress-bar class="loader component" message="Loading Fundraisers..." *ngIf="isLoading"></app-progress-bar>
           <owl-carousel-o [options]="OwlCategoryOptions" #owlCar (initialized)="owlInitialized()">
             <!-- Items -->
             <ng-container *ngFor="let category of categories">

@@ -84,10 +84,12 @@ export class CategoryComponent implements OnInit, OnDestroy {
       0: {
         items: 3,
         center: true,
+        loop: true,
       },
       740: {
         items: 8,
         center: false,
+        loop: false,
       }
     },
   };

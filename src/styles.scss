@@ -219,6 +219,17 @@ button {
 }
 .loader {
   margin: auto;
+  &.component {
+    box-shadow: none;
+    border: 0;
+    background: rgba(255, 255, 255,0.92);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;    
+  }
 }
 .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
   background-color: #008b6e;
@@ -851,14 +862,17 @@ body {
     position: relative;
     button.prev-next-btn {
       margin-top: 0 !important;
+      width: 54px !important;
+      margin-left: 0;
     }    
     .left-arrow {
       position: absolute;
-      right: 30px;
+      left: 0;
     }
     .right-arrow {
       position: absolute;
       right: 0;
+      width: 70px !important;
     }
     .category-list {
       margin-top: 44px;
