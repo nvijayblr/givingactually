@@ -28,6 +28,12 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    let url: any = location.href;
+    if (url.indexOf('rurl') >= 0) {
+      url = url.split('/');
+      const fId = url[url.length - 1];
+      this.router.navigate([`/g/fundraiser/${fId}`]);
+    }
     this.commonSub = this.messageService.getCommonMessage().subscribe(message => {
       if (message.topic === 'toggleMobileNav') {
         this.hamburgerNav.open();
