@@ -75,7 +75,7 @@
                   <div class="thumb">
                     <div class="img" [ngStyle]="{'background-image': 'url(' + campaign.BDisplayPicPath + ')'}"></div>
                   </div>
-                  <button mat-stroked-button class="gv-secondary-btn transparent rounded read-more" routerLink="/g/fundraiser/{{campaign.Id}}">View More</button>
+                  <button mat-stroked-button class="gv-secondary-btn transparent rounded read-more" routerLink="/fundraiser/{{campaign.Id}}">View More</button>
                   <div class="row supporters-info">
                     <div class="col-6 col-sm-4 col-md-6 days">
                       <span class="value">{{campaign.DaysLeft}}</span> days left
@@ -87,7 +87,7 @@
                 </div>
                 <div class="info">
                   <div class="title-desc">
-                    <h4 class="title"><a routerLink="/g/fundraiser/{{campaign.Id}}">{{campaign.CampaignTitle}}</a></h4>
+                    <h4 class="title"><a routerLink="/fundraiser/{{campaign.Id}}">{{campaign.CampaignTitle}}</a></h4>
                     <p class="desc">{{campaign.CampaignDescription}}</p>
                   </div>
                   <div class="row category">

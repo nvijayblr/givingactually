@@ -32,7 +32,7 @@ export class AppComponent implements OnInit, OnDestroy {
     if (url.indexOf('rurl') >= 0) {
       url = url.split('/');
       const fId = url[url.length - 1];
-      this.router.navigate([`/g/fundraiser/${fId}`]);
+      this.router.navigate([`/fundraiser/${fId}`]);
     }
     this.commonSub = this.messageService.getCommonMessage().subscribe(message => {
       if (message.topic === 'toggleMobileNav') {
