@@ -136,22 +136,20 @@ export class CampaignsComponent implements OnInit {
         desc = desc.substring(0, 256).trim() + '...';
       }
       this.meta.updateTag({ name: 'title', content: this.campaign.CampaignTitle });
-      this.meta.updateTag({ name: 'description', content: desc });
+      this.meta.updateTag({ name: 'description', content: '' });
       this.meta.updateTag({ name: 'image', content: this.campaign.BDisplayPicPath });
       this.meta.updateTag({ name: 'author', content: this.campaign.OrganizerName });
 
 
       this.meta.updateTag({ property: 'og:title', content: this.campaign.CampaignTitle });
-      this.meta.updateTag({ property: 'og:description', content: desc });
+      this.meta.updateTag({ property: 'og:description', content: '' });
       this.meta.updateTag({ property: 'og:url', content: location.href });
       this.meta.updateTag({ property: 'og:image', content: this.campaign.BDisplayPicPath });
 
       this.meta.updateTag({ property: 'twitter:title', content: this.campaign.CampaignTitle });
-      this.meta.updateTag({ property: 'twitter:description', content: desc });
+      this.meta.updateTag({ property: 'twitter:description', content: '' });
       this.meta.updateTag({ property: 'twitter:url', content: location.href });
       this.meta.updateTag({ property: 'twitter:image:src', content: this.campaign.BDisplayPicPath });
-
-
     }, (error) => {
       // this.campaign = {};
       this.isCampaignError = true;
