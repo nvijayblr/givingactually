@@ -61,7 +61,13 @@
   margin: 0;
   padding: 10px;
 }
-
+.attachment-wrapper {
+  .gallery-preview {
+    img {
+      max-width: 100%;
+    }
+  }
+}
 .mat-stepper-horizontal {
   .mat-horizontal-content-container {
     padding: 0 24px 0 24px;

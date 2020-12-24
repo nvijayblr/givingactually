@@ -21,6 +21,12 @@
     }
   }
 }
+.light-bg.campaign-item {
+  .draft-state-btns {
+    display: inline-block;
+  }
+}
+
 .create-btn-wrapper {
   position: relative;
   top: -130px;

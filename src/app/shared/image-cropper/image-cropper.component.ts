@@ -18,9 +18,9 @@ export class ImageCropperComponent implements OnInit {
   @Input() isOpenFile = false;
   @Input() label = 'Select Image';
   @Input() preview = '';
-  @Input() aspectRatio = 6 / 4;
-  @Input() resizedWidth = 0;
-  @Input() resizedHeight = 0;
+  @Input() aspectRatio = 600/315;
+  @Input() resizedWidth = 600;
+  @Input() resizedHeight = 315;
   @Output() imageCroppedCompleted = new EventEmitter<any>();
 
   imageChangedEvent: any = '';
