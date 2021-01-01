@@ -482,3 +482,23 @@
 
   </div>
 </section>
+
+<section  class="stick-footer">
+  <div class="row">
+    <div class="col-6 donate">
+      <button 
+      mat-stroked-button
+      *ngIf="!isLoading && !isCampaignError" 
+      class="gv-secondary-btn rounded"
+      routerLink="/donation" [queryParams]="{id: campaign.Id}">
+        <i class="fa fa-heart"></i>
+        Donate Now
+      </button>
+    </div>
+    <div class="col-6 social-share-wrapper">
+      <span class="social whatsapp" shareButton="whatsapp" [description]='' (click)="createShares('Whatsapp')"><i class="fa fa-whatsapp"></i></span>
+      <span class="social facebook" shareButton="facebook" [description]='' (click)="createShares('Facebook')"><i class="fa fa-facebook"></i></span>
+      <span class="social twitter" shareButton="twitter" [description]='' (click)="createShares('Twitter')"><i class="fa fa-twitter"></i></span>
+    </div>
+  </div>
+</section>
