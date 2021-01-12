@@ -1,0 +1,8 @@
+
+- Home | Browse Fundraisers | Near By Fundraisers | Search | Profile Icon
+- START A NEW FUNDRAISER - BIG
+- Reduce banner height
+- Hearts - spelling
+- Add category carousel in home page
+- Sticky footer - ketto.org
+- Mobile View - Sort (https://givingactually.com/category/All)

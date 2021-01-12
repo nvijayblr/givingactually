@@ -68,6 +68,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
     this.subscription = this.messageService.getLoginMessage().subscribe(user => {
       this.user = user;
+      console.log('this.user...', this.user)
       setTimeout(() => {
         this.isAdmin = this.authGuardService.isAdmin;
       }, 500);
